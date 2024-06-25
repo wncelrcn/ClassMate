@@ -13,7 +13,7 @@ using Android.Graphics;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "Study Companion App", Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "Study Companion App", Theme = "@style/AppTheme", MainLauncher = false)]
     public class Login : AppCompatActivity
     {
         Button loginButton;

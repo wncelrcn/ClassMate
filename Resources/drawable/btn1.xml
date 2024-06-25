@@ -1,0 +1,40 @@
+﻿<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+	
+	<item android:state_pressed="true">
+		<layer-list>
+		<shape>
+			<solid android:color="#E0E0E0"/>
+			<!-- Light grey when pressed -->
+			<stroke
+                android:width="2dp"
+                android:color="#000000"/>
+			<!-- Black border -->
+			<corners android:radius="24dp"/>
+			<padding
+                android:left="16dp"
+                android:top="16dp"
+                android:right="16dp"
+                android:bottom="16dp" />
+		</shape>
+		</layer-list>
+	</item>
+	<item>
+		<layer-list>
+		<shape>
+			<solid android:color="#FFFFFF"/>
+			<!-- White color for the button background -->
+			<stroke
+                android:width="2dp"
+                android:color="#000000"/>
+			<!-- Black border -->
+			<corners android:radius="24dp"/>
+			<padding
+                android:left="16dp"
+                android:top="16dp"
+                android:right="16dp"
+                android:bottom="16dp" />
+		</shape>
+			</layer-list>
+	</item>
+</selector>

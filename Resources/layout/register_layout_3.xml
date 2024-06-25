@@ -18,7 +18,7 @@
             android:id="@+id/button1" />
       
         <TextView
-            android:text="Login"
+            android:text="What’s your Student ID?"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,43 +26,29 @@
             android:minHeight="25px"
             android:layout_marginVertical="20dp"
             android:id="@+id/title" />
-
         <TextView
-            android:text="Enter your username and password."
+            android:text="We protect our community by making sure everyone on StudyApp is a student."
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:id="@+id/textView4" />
-
+            android:id="@+id/textView1" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/usernameTxt"
-            android:hint="Enter your username"
-            android:layout_marginVertical="10dp" />
+            android:hint="Enter your Student ID"
+            android:layout_marginVertical="20dp" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/passwordTxt"
-            android:hint="Enter your password"
-            android:layout_marginVertical="10dp" />
 
-        <TextView
-            android:id="@+id/registerTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:clickable="true"
-            android:text="Don't have an account? Sign up here!" />
+        
     </LinearLayout>
 
     <Button
-        android:text="Log In"
+        android:text="Next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="20dp"
-        android:id="@+id/loginBtn" />
+        android:id="@+id/nextBtn" />
+
 </RelativeLayout>

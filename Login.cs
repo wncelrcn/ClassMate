@@ -10,13 +10,14 @@ using Android.Views;
 using Android.Content;
 using Mod3RESTTask;
 using Android.Graphics;
+using Android.Media;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "Study Companion App", Theme = "@style/AppTheme", MainLauncher = false)]
+    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
     public class Login : AppCompatActivity
     {
-        Button loginButton;
+        Button loginButton, returnBtn;
         EditText loginText, passwordText;
         TextView registerText, titleText;
 
@@ -32,13 +33,18 @@ namespace IT123P_FinalMP
             passwordText = FindViewById<EditText>(Resource.Id.passwordTxt);
             registerText = FindViewById<TextView>(Resource.Id.registerTxt);
 
+            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
+
+            
+
             // title
             titleText = FindViewById<TextView>(Resource.Id.title);
 
             FontHandler fontHandler = new FontHandler(this, "Raleway-Bold.ttf");
             fontHandler.SetFont(titleText);
 
-            //loginButton.Click += LoginButton_Click;
+            loginButton.Click += LoginButton_Click;
+            returnBtn.Click += ReturnBtn_Click;
 
             string text = "Don't have an account? Sign up here!";
             SpannableString spannableString = new SpannableString(text);
@@ -52,9 +58,6 @@ namespace IT123P_FinalMP
 
 
         }
-
-        
-
 
         private class CustomClickableSpan : ClickableSpan
         {
@@ -78,6 +81,29 @@ namespace IT123P_FinalMP
                 ds.UnderlineText = false; // Remove underline
             }
         }
+
+        private void LoginButton_Click(object sender, System.EventArgs e)
+        {
+            string username = loginText.Text;
+            string password = passwordText.Text;
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                Toast.MakeText(this, "Please fill up all fields", ToastLength.Short).Show();
+            }
+            else
+            {
+                Toast.MakeText(this, "Add Login Validation and Proceed to Home Page", ToastLength.Short).Show();
+            }
+        
+        }
+
+        public void ReturnBtn_Click(object sender, System.EventArgs e)
+        {
+            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Returning...", typeof(Landing));
+            nextActivityHandler.NavigateToNextActivity();
+        }
+
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

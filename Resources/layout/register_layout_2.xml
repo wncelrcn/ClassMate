@@ -15,10 +15,10 @@
             android:text="return"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button1" />
+            android:id="@+id/returnBtn" />
       
         <TextView
-            android:text="What’s your Student ID?"
+            android:text="What’s your Full Name?"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:layout_marginVertical="20dp"
             android:id="@+id/title" />
         <TextView
-            android:text="We protect our community by making sure everyone on StudyApp is a student."
+            android:text="Add the name you are called in school."
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,8 +35,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/usernameTxt"
-            android:hint="Enter your Student ID"
+            android:id="@+id/nameTxt"
+            android:hint="Enter your Full Name"
             android:layout_marginVertical="20dp" />
 
 

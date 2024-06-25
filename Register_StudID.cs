@@ -9,41 +9,45 @@ using AndroidX.AppCompat.App;
 using Android.Views;
 using Android.Content;
 using Mod3RESTTask;
-using Android.Graphics;
-using System.Runtime.Remoting.Contexts;
-using System;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = true)]
-    public class Landing : AppCompatActivity
+    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
+    public class Register_StudID : AppCompatActivity
     {
-        Button signUpBtn, loginBtn;
+
+        Button returnBtn, nextBtn;
+        EditText studID;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.landing_layout);
+            SetContentView(Resource.Layout.register_layout_1);
 
-            signUpBtn = FindViewById<Button>(Resource.Id.signUpBtn);
-            loginBtn = FindViewById<Button>(Resource.Id.loginBtn);
+            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
+           
+            nextBtn = FindViewById<Button>(Resource.Id.nextBtn);
 
-            signUpBtn.Click += SignUpBtn_Click;
-            loginBtn.Click += LoginBtn_Click;
+            studID = FindViewById<EditText>(Resource.Id.studIDTxt);
+
+            returnBtn.Click += ReturnBtn_Click;
+            nextBtn.Click += NextBtn_Click;
+
+            
 
         }
 
-        public void SignUpBtn_Click(object sender, EventArgs e)
+        public void ReturnBtn_Click(object sender, System.EventArgs e)
         {
-            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(Register));
+            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Returning...", typeof(Register));
             nextActivityHandler.NavigateToNextActivity();
         }
 
-        public void LoginBtn_Click(object sender, EventArgs e)
+        public void NextBtn_Click(object sender, System.EventArgs e)
         {
-            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(Login));
+            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_Name));
             nextActivityHandler.NavigateToNextActivity();
         }
 

@@ -65,6 +65,12 @@
     <Compile Include="Login.cs" />
     <Compile Include="NextActivityHandler.cs" />
     <Compile Include="Register.cs" />
+    <Compile Include="Register_Course.cs" />
+    <Compile Include="Register_Identity.cs" />
+    <Compile Include="Register_Name.cs" />
+    <Compile Include="Register_PrivatePolicy.cs" />
+    <Compile Include="Register_School.cs" />
+    <Compile Include="Register_StudID.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

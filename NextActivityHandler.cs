@@ -23,7 +23,7 @@ namespace Mod3RESTTask
         // Navigates to the next activity
         public void NavigateToNextActivity()
         {
-            Toast.MakeText(context, toastMsg, ToastLength.Short).Show();
+            //Toast.MakeText(context, toastMsg, ToastLength.Short).Show();
 
             intent = new Intent(context, currClass);
             context.StartActivity(intent);

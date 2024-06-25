@@ -15,10 +15,10 @@
             android:text="return"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button1" />
+            android:id="@+id/returnBtn" />
       
         <TextView
-            android:text="What’s your Student ID?"
+            android:text="Privacy Notice"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,18 +27,20 @@
             android:layout_marginVertical="20dp"
             android:id="@+id/title" />
         <TextView
-            android:text="We protect our community by making sure everyone on StudyApp is a student."
+            android:text="I agree to the terms and conditions of that are provided to me and I choose to follow them, all procedures and no insult and back stab of any kind."
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView1" />
-        <EditText
+        <CheckBox
+            android:text="I have read and agree to the Terms and Conditions stated above."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/usernameTxt"
-            android:hint="Enter your Student ID"
-            android:layout_marginVertical="20dp" />
+            android:id="@+id/agreeCheckBox" 
+            android:layout_marginVertical="10dp"/>
 
+
+     
 
         
     </LinearLayout>

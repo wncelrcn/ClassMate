@@ -8,15 +8,17 @@ using Android.Widget;
 using AndroidX.AppCompat.App;
 using Android.Views;
 using Android.Content;
+using Mod3RESTTask;
+using Android.Graphics;
 
 namespace IT123P_FinalMP
 {
     [Activity(Label = "Study Companion App", Theme = "@style/AppTheme", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity
+    public class Login : AppCompatActivity
     {
         Button loginButton;
         EditText loginText, passwordText;
-        TextView registerText;
+        TextView registerText, titleText;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -30,6 +32,12 @@ namespace IT123P_FinalMP
             passwordText = FindViewById<EditText>(Resource.Id.passwordTxt);
             registerText = FindViewById<TextView>(Resource.Id.registerTxt);
 
+            // title
+            titleText = FindViewById<TextView>(Resource.Id.title);
+
+            FontHandler fontHandler = new FontHandler(this, "Raleway-Bold.ttf");
+            fontHandler.SetFont(titleText);
+
             //loginButton.Click += LoginButton_Click;
 
             string text = "Don't have an account? Sign up here!";
@@ -40,7 +48,13 @@ namespace IT123P_FinalMP
 
             registerText.TextFormatted = spannableString;
             registerText.MovementMethod = LinkMovementMethod.Instance;
+
+
+
         }
+
+        
+
 
         private class CustomClickableSpan : ClickableSpan
         {
@@ -53,7 +67,8 @@ namespace IT123P_FinalMP
 
             public override void OnClick(View widget)
             {
-                Toast.MakeText(_context, "Register", ToastLength.Short).Show();
+                NextActivityHandler activityHandler = new NextActivityHandler(_context, "register layout", typeof(Register));
+                activityHandler.NavigateToNextActivity();
             }
 
             public override void UpdateDrawState(TextPaint ds)

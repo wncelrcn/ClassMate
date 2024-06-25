@@ -6,7 +6,7 @@
     android:padding="25dp">
 
     <TextView
-        android:text="Login to ______"
+        android:text="Login to Dogie"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:minHeight="25px"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:id="@+id/textView1" />
+        android:id="@+id/title" />
 
     <TextView
         android:text="Username"

@@ -60,11 +60,18 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainActivity.cs" />
+    <Compile Include="FontHandler.cs" />
+    <Compile Include="Login.cs" />
+    <Compile Include="NextActivityHandler.cs" />
+    <Compile Include="Register.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-Medium.ttf" />
+    <AndroidAsset Include="Assets\Fonts\Raleway-Bold.ttf" />
+    <AndroidAsset Include="Assets\Fonts\Raleway-Semibold.ttf" />
+    <AndroidAsset Include="Assets\Fonts\Raleway-Regular.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
@@ -102,6 +109,16 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\login_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\register_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\landing_layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

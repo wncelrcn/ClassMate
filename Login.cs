@@ -8,7 +8,6 @@ using Android.Widget;
 using AndroidX.AppCompat.App;
 using Android.Views;
 using Android.Content;
-using Mod3RESTTask;
 using Android.Graphics;
 using Android.Media;
 
@@ -19,7 +18,7 @@ namespace IT123P_FinalMP
     {
         Button loginButton, returnBtn;
         EditText loginText, passwordText;
-        TextView registerText, titleText;
+        TextView registerText, titleText, descText;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -32,7 +31,7 @@ namespace IT123P_FinalMP
             loginText = FindViewById<EditText>(Resource.Id.usernameTxt);
             passwordText = FindViewById<EditText>(Resource.Id.passwordTxt);
             registerText = FindViewById<TextView>(Resource.Id.registerTxt);
-
+            descText = FindViewById<TextView>(Resource.Id.desc);
             returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
 
             
@@ -40,8 +39,17 @@ namespace IT123P_FinalMP
             // title
             titleText = FindViewById<TextView>(Resource.Id.title);
 
-            FontHandler fontHandler = new FontHandler(this, "Raleway-Bold.ttf");
-            fontHandler.SetFont(titleText);
+            FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
+            FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
+            FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
+            FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
+
+            boldFont.SetFont(titleText);
+            regularFont.SetFont(descText);
+            regularFont.SetFont(loginText);
+            semiBoldFont.SetFont(registerText);
+            regularFont.SetFont(passwordText);
+            semiBoldFont.SetFont(loginButton);
 
             loginButton.Click += LoginButton_Click;
             returnBtn.Click += ReturnBtn_Click;
@@ -55,7 +63,7 @@ namespace IT123P_FinalMP
             registerText.TextFormatted = spannableString;
             registerText.MovementMethod = LinkMovementMethod.Instance;
 
-
+            ButtonStyler.ApplyRoundedCorners(loginButton);
 
         }
 
@@ -71,7 +79,7 @@ namespace IT123P_FinalMP
             public override void OnClick(View widget)
             {
                 NextActivityHandler activityHandler = new NextActivityHandler(_context, "register layout", typeof(Register));
-                activityHandler.NavigateToNextActivity();
+                activityHandler.NavigateToNextActivity(_context);
             }
 
             public override void UpdateDrawState(TextPaint ds)
@@ -101,7 +109,7 @@ namespace IT123P_FinalMP
         public void ReturnBtn_Click(object sender, System.EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Returning...", typeof(Landing));
-            nextActivityHandler.NavigateToNextActivity();
+            nextActivityHandler.NavigateToNextActivity(this);
         }
 
 

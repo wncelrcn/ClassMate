@@ -8,17 +8,17 @@ using Android.Widget;
 using AndroidX.AppCompat.App;
 using Android.Views;
 using Android.Content;
-using Mod3RESTTask;
+
 
 namespace IT123P_FinalMP
 {
     [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
     public class Register_Course : AppCompatActivity
     {
-
+        TextView title;
         Button returnBtn, nextBtn;
         EditText course;
-
+        private string username, password, studID, studName, studSchool;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -27,28 +27,56 @@ namespace IT123P_FinalMP
             SetContentView(Resource.Layout.register_layout_4);
 
             returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
-
+            title = FindViewById<TextView>(Resource.Id.title);
             nextBtn = FindViewById<Button>(Resource.Id.nextBtn);
 
             course = FindViewById<EditText>(Resource.Id.courseTxt);
+
+            username = Intent.GetStringExtra("username");
+            password = Intent.GetStringExtra("password");
+            studID = Intent.GetStringExtra("studID");
+            studName = Intent.GetStringExtra("studName");
+            studSchool = Intent.GetStringExtra("studSchool");
+
 
             returnBtn.Click += ReturnBtn_Click;
             nextBtn.Click += NextBtn_Click;
 
 
+            ButtonStyler.ApplyRoundedCorners(nextBtn);
+
+            FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
+            FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
+            FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
+            FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
+
+            boldFont.SetFont(title);
+            regularFont.SetFont(course);
+            semiBoldFont.SetFont(nextBtn);
 
         }
 
         public void ReturnBtn_Click(object sender, System.EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Returning...", typeof(Register_School));
-            nextActivityHandler.NavigateToNextActivity();
+            nextActivityHandler.PassDataToNextActivity("username", username);
+            nextActivityHandler.PassDataToNextActivity("password", password);
+            nextActivityHandler.PassDataToNextActivity("studID", studID);
+            nextActivityHandler.PassDataToNextActivity("studName", studName);
+            nextActivityHandler.PassDataToNextActivity("studSchool", studSchool);
+            nextActivityHandler.NavigateToNextActivity(this);
         }
 
         public void NextBtn_Click(object sender, System.EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_Identity));
-            nextActivityHandler.NavigateToNextActivity();
+            nextActivityHandler.PassDataToNextActivity("username", username);
+            nextActivityHandler.PassDataToNextActivity("password", password);
+            nextActivityHandler.PassDataToNextActivity("studID", studID);
+            nextActivityHandler.PassDataToNextActivity("studName", studName);
+            nextActivityHandler.PassDataToNextActivity("studSchool", studSchool);
+            nextActivityHandler.PassDataToNextActivity("studCourse", course.Text);
+            nextActivityHandler.NavigateToNextActivity(this);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minWidth="25px"
+            
             android:minHeight="25px"
             android:layout_marginVertical="20dp"
             android:id="@+id/title" />
@@ -31,6 +32,7 @@
         <RadioGroup
             android:minWidth="25px"
             android:minHeight="25px"
+            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/identityGroup">
@@ -39,16 +41,19 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="Female"
+                android:textSize="18dp"
                 android:id="@+id/femaleRadGrp" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Male"
+                android:textSize="18dp"
                 android:id="@+id/maleRadGrp" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="I prefer not to say"
+                android:textSize="18dp"
                 android:id="@+id/noRadGrp" />
         </RadioGroup>
         

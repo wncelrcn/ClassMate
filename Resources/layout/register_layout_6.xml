@@ -25,13 +25,15 @@
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_marginVertical="20dp"
+            android:layout_marginBottom="50dp"
             android:id="@+id/title" />
         <TextView
             android:text="I agree to the terms and conditions of that are provided to me and I choose to follow them, all procedures and no insult and back stab of any kind."
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView1" />
+            android:layout_marginBottom="15dp"
+            android:id="@id/desc" />
         <CheckBox
             android:text="I have read and agree to the Terms and Conditions stated above."
             android:layout_width="match_parent"
@@ -46,7 +48,7 @@
     </LinearLayout>
 
     <Button
-        android:text="Next"
+        android:text="Continue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -69,16 +69,27 @@ namespace IT123P_FinalMP
 
         public void NextBtn_Click(object sender, System.EventArgs e)
         {
-            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_Identity));
-            nextActivityHandler.PassDataToNextActivity("username", username);
-            nextActivityHandler.PassDataToNextActivity("password", password);
-            nextActivityHandler.PassDataToNextActivity("studID", studID);
-            nextActivityHandler.PassDataToNextActivity("studName", studName);
-            nextActivityHandler.PassDataToNextActivity("studSchool", studSchool);
-            nextActivityHandler.PassDataToNextActivity("studCourse", course.Text);
-            nextActivityHandler.NavigateToNextActivity(this);
-        }
+            string cour = course.Text;
 
+            if (string.IsNullOrEmpty(cour))
+            {
+                Toast.MakeText(this, "Please enter your course.", ToastLength.Short).Show();
+                return;
+            }
+
+            else
+            {
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_Identity));
+                nextActivityHandler.PassDataToNextActivity("username", username);
+                nextActivityHandler.PassDataToNextActivity("password", password);
+                nextActivityHandler.PassDataToNextActivity("studID", studID);
+                nextActivityHandler.PassDataToNextActivity("studName", studName);
+                nextActivityHandler.PassDataToNextActivity("studSchool", studSchool);
+                nextActivityHandler.PassDataToNextActivity("studCourse", course.Text);
+                nextActivityHandler.NavigateToNextActivity(this);
+            }
+
+        }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

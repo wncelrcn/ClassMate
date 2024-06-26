@@ -63,11 +63,22 @@ namespace IT123P_FinalMP
 
         public void NextBtn_Click(object sender, System.EventArgs e)
         {
-            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_Name));
-            nextActivityHandler.PassDataToNextActivity("username", username);
-            nextActivityHandler.PassDataToNextActivity("password", password);
-            nextActivityHandler.PassDataToNextActivity("studID", studID.Text);
-            nextActivityHandler.NavigateToNextActivity(this);
+            string sID = studID.Text;
+
+            if (sID.Length == 0)
+            {
+                Toast.MakeText(this, "Please enter a Student ID.", ToastLength.Short).Show();
+                return;
+            }
+
+            else
+            {
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_Name));
+                nextActivityHandler.PassDataToNextActivity("username", username);
+                nextActivityHandler.PassDataToNextActivity("password", password);
+                nextActivityHandler.PassDataToNextActivity("studID", studID.Text);
+                nextActivityHandler.NavigateToNextActivity(this);
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

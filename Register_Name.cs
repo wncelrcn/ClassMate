@@ -66,6 +66,14 @@ namespace IT123P_FinalMP
 
         public void NextBtn_Click(object sender, System.EventArgs e)
         {
+            string sName = studName.Text;
+
+            if (string.IsNullOrEmpty(sName))
+            {
+                Toast.MakeText(this, "Please enter your name.", ToastLength.Short).Show();
+                return;
+            }
+
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_School));
             nextActivityHandler.PassDataToNextActivity("username", username);
             nextActivityHandler.PassDataToNextActivity("password", password);

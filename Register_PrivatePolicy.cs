@@ -72,20 +72,29 @@ namespace IT123P_FinalMP
 
         public void NextBtn_Click(object sender, System.EventArgs e)
         {
-            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Dashboard));
+            if (!checkBox.Checked)
+            {
 
-            nextActivityHandler.PassDataToNextActivity("username", username);
-            nextActivityHandler.PassDataToNextActivity("password", password);
-            nextActivityHandler.PassDataToNextActivity("studID", studID);
-            nextActivityHandler.PassDataToNextActivity("studName", studName);
-            nextActivityHandler.PassDataToNextActivity("studSchool", studSchool);
-            nextActivityHandler.PassDataToNextActivity("studCourse", studCourse);
-            nextActivityHandler.PassDataToNextActivity("studIdentity", studIdentity);
+                Toast.MakeText(this, "Please agree to the privacy policy before proceeding.", ToastLength.Short).Show();
+            }
+            else
+            {
 
-            UserConnection userConnection = new UserConnection(this);
-            userConnection.Register(username, password, studID, studName, studSchool, studCourse, studIdentity);
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Dashboard));
 
-            nextActivityHandler.NavigateToNextActivity(this);
+                nextActivityHandler.PassDataToNextActivity("username", username);
+                nextActivityHandler.PassDataToNextActivity("password", password);
+                nextActivityHandler.PassDataToNextActivity("studID", studID);
+                nextActivityHandler.PassDataToNextActivity("studName", studName);
+                nextActivityHandler.PassDataToNextActivity("studSchool", studSchool);
+                nextActivityHandler.PassDataToNextActivity("studCourse", studCourse);
+                nextActivityHandler.PassDataToNextActivity("studIdentity", studIdentity);
+
+                UserConnection userConnection = new UserConnection(this);
+                userConnection.Register(username, password, studID, studName, studSchool, studCourse, studIdentity);
+
+                nextActivityHandler.NavigateToNextActivity(this);
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

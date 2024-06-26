@@ -74,22 +74,30 @@ namespace IT123P_FinalMP
 
         public void NextBtn_Click(object sender, System.EventArgs e)
         {
-            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_PrivatePolicy));
-            nextActivityHandler.PassDataToNextActivity("username", username);
-            nextActivityHandler.PassDataToNextActivity("password", password);
-            nextActivityHandler.PassDataToNextActivity("studID", studID);
-            nextActivityHandler.PassDataToNextActivity("studName", studName);
-            nextActivityHandler.PassDataToNextActivity("studSchool", studSchool);
-            nextActivityHandler.PassDataToNextActivity("studCourse", studCourse);
-
             int selectedId = identityGroup.CheckedRadioButtonId;
-            RadioButton selectedRadioButton = FindViewById<RadioButton>(selectedId);
-            string selectedText = selectedRadioButton.Text;
 
+            if (selectedId == -1)
+            {
 
-            nextActivityHandler.PassDataToNextActivity("studIdentity", selectedText);
+                Toast.MakeText(this, "Please select your identity.", ToastLength.Short).Show();
+            }
+            else
+            {
 
-            nextActivityHandler.NavigateToNextActivity(this);
+                RadioButton selectedRadioButton = FindViewById<RadioButton>(selectedId);
+                string selectedText = selectedRadioButton.Text;
+
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_PrivatePolicy));
+                nextActivityHandler.PassDataToNextActivity("username", username);
+                nextActivityHandler.PassDataToNextActivity("password", password);
+                nextActivityHandler.PassDataToNextActivity("studID", studID);
+                nextActivityHandler.PassDataToNextActivity("studName", studName);
+                nextActivityHandler.PassDataToNextActivity("studSchool", studSchool);
+                nextActivityHandler.PassDataToNextActivity("studCourse", studCourse);
+                nextActivityHandler.PassDataToNextActivity("studIdentity", selectedText);
+
+                nextActivityHandler.NavigateToNextActivity(this);
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

@@ -70,14 +70,25 @@ namespace IT123P_FinalMP
                 Toast.MakeText(this, "Please enter a Student ID.", ToastLength.Short).Show();
                 return;
             }
-
             else
             {
-                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_Name));
-                nextActivityHandler.PassDataToNextActivity("username", username);
-                nextActivityHandler.PassDataToNextActivity("password", password);
-                nextActivityHandler.PassDataToNextActivity("studID", studID.Text);
-                nextActivityHandler.NavigateToNextActivity(this);
+
+                UserConnection userConnection = new UserConnection(this);
+
+                if (userConnection.CheckStudID(studID.Text))
+                {
+
+                    NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_Name));
+                    nextActivityHandler.PassDataToNextActivity("username", username);
+                    nextActivityHandler.PassDataToNextActivity("password", password);
+                    nextActivityHandler.PassDataToNextActivity("studID", studID.Text);
+                    nextActivityHandler.NavigateToNextActivity(this);
+                }
+                else
+                {
+                    Toast.MakeText(this, "Please enter a new Student ID.", ToastLength.Short).Show();
+                    return;
+                }
             }
         }
 

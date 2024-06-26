@@ -106,11 +106,24 @@ namespace IT123P_FinalMP
 
             else
             {
-                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_StudID));
 
-                nextActivityHandler.PassDataToNextActivity("username", username.Text);
-                nextActivityHandler.PassDataToNextActivity("password", passwordTxt.Text);
-                nextActivityHandler.NavigateToNextActivity(this);
+                UserConnection userConnection = new UserConnection(this);
+
+                if (userConnection.CheckStudUname(username.Text))
+                {
+
+                    NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_StudID));
+
+                    nextActivityHandler.PassDataToNextActivity("username", username.Text);
+                    nextActivityHandler.PassDataToNextActivity("password", passwordTxt.Text);
+                    nextActivityHandler.NavigateToNextActivity(this);
+                }
+                else
+                {
+                    Toast.MakeText(this, "Please enter a new username.", ToastLength.Short).Show();
+                    return;
+                }
+
             }
         }
 

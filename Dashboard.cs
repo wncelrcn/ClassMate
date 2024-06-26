@@ -47,6 +47,7 @@ namespace IT123P_FinalMP
 
             SetCurrentDate();
 
+            bottomNavigationView.SelectedItemId = Resource.Id.navigation_tasks;
             bottomNavigationView.NavigationItemSelected += BottomNavigationView_NavigationItemSelected;
         }
 
@@ -73,16 +74,20 @@ namespace IT123P_FinalMP
             switch (e.Item.ItemId)
             {
                 case Resource.Id.navigation_tasks:
-                    // Handle the tasks action
-                    Toast.MakeText(this, "Tasks selected", ToastLength.Short).Show();
+                    
                     break;
                 case Resource.Id.navigation_classes:
                     // Handle the classes action
-                    Toast.MakeText(this, "Classes selected", ToastLength.Short).Show();
+                    Toast.MakeText(this, "Classes Layout", ToastLength.Short).Show();
                     break;
                 case Resource.Id.navigation_account:
                     // Handle the account action
-                    Toast.MakeText(this, "Account selected", ToastLength.Short).Show();
+                    Toast.MakeText(this, "Account Layout", ToastLength.Short).Show();
+
+                    NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(ViewAccount));
+                    nextActivityHandler.NavigateToNextActivity(this);
+
+
                     break;
             }
         }

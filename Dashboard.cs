@@ -11,8 +11,8 @@ namespace IT123P_FinalMP
     [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
     public class Dashboard : AppCompatActivity
     {
-        TextView dateDisplay;
-        string username, password, studID, studName, studSchool, studCourse, studIdentity;
+        TextView dateDisplay, greetingDisplay, desc;
+        string username, studID, studName, studSchool, studCourse, studIdentity;
         Button prevDateBtn, nextDateBtn;
         DateTime currentDate;
         BottomNavigationView bottomNavigationView;
@@ -26,14 +26,16 @@ namespace IT123P_FinalMP
             SetContentView(Resource.Layout.dashboard_layout);
 
             bottomNavigationView = FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation_view);
-            
+            greetingDisplay = FindViewById<TextView>(Resource.Id.greetingTxt);
+
+            desc = FindViewById<TextView>(Resource.Id.desc);
+
             username = Intent.GetStringExtra("username");
-            password = Intent.GetStringExtra("password");
-            studID = Intent.GetStringExtra("studID");
-            studName = Intent.GetStringExtra("studName");
-            studSchool = Intent.GetStringExtra("studSchool");
-            studCourse = Intent.GetStringExtra("studCourse");
-            studIdentity = Intent.GetStringExtra("studIdentity");
+
+            UserGetInfo userGetInfo = new UserGetInfo(this);
+            studName = userGetInfo.GetUserName(username);
+            greetingDisplay.Text = $"Hello, {studName}";
+
 
             dateDisplay = FindViewById<TextView>(Resource.Id.dateDisplay);
             prevDateBtn = FindViewById<Button>(Resource.Id.previousDateBtn);
@@ -47,13 +49,43 @@ namespace IT123P_FinalMP
 
             SetCurrentDate();
 
+
+
+
             bottomNavigationView.SelectedItemId = Resource.Id.navigation_tasks;
             bottomNavigationView.NavigationItemSelected += BottomNavigationView_NavigationItemSelected;
+
+            FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
+            FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
+            FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
+            FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
+
+            semiBoldFont.SetFont(greetingDisplay);
+            boldFont.SetFont(dateDisplay);
+            regularFont.SetFont(desc);
+            semiBoldFont.SetFont(prevDateBtn);
+            semiBoldFont.SetFont(nextDateBtn);
+
         }
 
         private void SetCurrentDate()
         {
+            DateTime todayDate = DateTime.Now;
+
+            string today = todayDate.ToString("MMMM dd, yyyy");
+
             string formattedDate = currentDate.ToString("MMMM dd, yyyy");
+
+            if (formattedDate != today)
+            {
+                desc.Text = "";
+            }
+
+            else
+            {
+                desc.Text = "Here are your tasks for today.";
+            }
+
             dateDisplay.Text = formattedDate;
         }
 
@@ -79,12 +111,19 @@ namespace IT123P_FinalMP
                 case Resource.Id.navigation_classes:
                     // Handle the classes action
                     Toast.MakeText(this, "Classes Layout", ToastLength.Short).Show();
+                    NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(ClassesMainView));
+                    nextActivityHandler.PassDataToNextActivity("username", username);
+                    nextActivityHandler.NavigateToNextActivity(this);
+
                     break;
                 case Resource.Id.navigation_account:
                     // Handle the account action
                     Toast.MakeText(this, "Account Layout", ToastLength.Short).Show();
 
-                    NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(ViewAccount));
+                    nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(ViewAccount));
+
+                    nextActivityHandler.PassDataToNextActivity("username", username);
+
                     nextActivityHandler.NavigateToNextActivity(this);
 
 

@@ -102,8 +102,6 @@ namespace IT123P_FinalMP
             else
             {
                 //Toast.MakeText(this, "Add Login Validation and Proceed to Home Page", ToastLength.Short).Show();
-
-
                 UserConnection userConnection = new UserConnection(this);
                 userConnection.Login(username, password);
             }

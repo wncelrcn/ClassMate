@@ -1,48 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/bottom_navigation"
-        android:paddingBottom="100dp"
+        android:layout_above="@id/bottom_navigation_view"
         android:padding="25dp">
 
-        
+        <TextView
+            android:text="Your Account"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="35dp"
+            android:paddingBottom="20dp"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:id="@+id/title" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EDE7F6"
+            android:padding="20dp"
+            android:layout_marginBottom="30dp"
+            android:id="@+id/accountDetailsLayout"
+            android:orientation="vertical">
+
+            <ImageView
+                android:src="@android:drawable/ic_menu_gallery"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/profilePic" />
+
+            <TextView
+                android:text="Student Name"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:id="@+id/studNameTxt" />
+
+            <TextView
+                android:text="@username"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="30dp"
+                android:id="@+id/studUsernameTxt" />
+
+            <TextView
+                android:text="Student ID: "
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/studIDTxt" />
+
+            <TextView
+                android:text="Course: "
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/studCourseTxt" />
+
+            <TextView
+                android:text="School: "
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/studSchoolTxt" />
+        </LinearLayout>
+
+        <Button
+            android:text="Edit Student Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/editBtn" />
+
+        <Button
+            android:text="Log Out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/logOutBtn" />
     </LinearLayout>
 
-
-
-
-
-
-
-
-    <!-- Bottom navigation buttons -->
-    <LinearLayout
-        android:id="@+id/bottom_navigation"
-        android:orientation="horizontal"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:padding="0dp"
-        android:gravity="center">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:menu="@menu/bottom_navigation_menu" />
-    </LinearLayout>
+        app:menu="@menu/bottom_navigation_menu" />
 
 </RelativeLayout>

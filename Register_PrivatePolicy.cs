@@ -79,21 +79,8 @@ namespace IT123P_FinalMP
             }
             else
             {
-
-                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Dashboard));
-
-                nextActivityHandler.PassDataToNextActivity("username", username);
-                nextActivityHandler.PassDataToNextActivity("password", password);
-                nextActivityHandler.PassDataToNextActivity("studID", studID);
-                nextActivityHandler.PassDataToNextActivity("studName", studName);
-                nextActivityHandler.PassDataToNextActivity("studSchool", studSchool);
-                nextActivityHandler.PassDataToNextActivity("studCourse", studCourse);
-                nextActivityHandler.PassDataToNextActivity("studIdentity", studIdentity);
-
                 UserConnection userConnection = new UserConnection(this);
                 userConnection.Register(username, password, studID, studName, studSchool, studCourse, studIdentity);
-
-                nextActivityHandler.NavigateToNextActivity(this);
             }
         }
 

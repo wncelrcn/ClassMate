@@ -20,7 +20,7 @@ namespace IT123P_FinalMP
         HttpWebResponse response;
         HttpWebRequest request;
 
-        string url = "http://192.168.1.36/IT123P_FinalMP/REST";
+        string url = "http://172.18.24.225/IT123P_FinalMP/REST";
         string result;
 
         private Context context;
@@ -87,10 +87,12 @@ namespace IT123P_FinalMP
 
             if (result.Contains("OK!"))
             {
-                Toast.MakeText(context, "Registration Success", ToastLength.Short).Show();
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "Next...", typeof(Dashboard));
 
-                //NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "Registration Successful", typeof(DashboardActivity));
-                //nextActivityHandler.NavigateToNextActivity();
+                nextActivityHandler.PassDataToNextActivity("username", username);
+
+                nextActivityHandler.NavigateToNextActivity(context);
+
             }
             else
             {
@@ -113,6 +115,8 @@ namespace IT123P_FinalMP
                 //Toast.MakeText(context, "Login Success", ToastLength.Short).Show();
 
                 NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "Login Successful", typeof(Dashboard));
+                nextActivityHandler.PassDataToNextActivity("username", username);
+                nextActivityHandler.PassDataToNextActivity("password", password);
                 nextActivityHandler.NavigateToNextActivity(context);
             }
             else

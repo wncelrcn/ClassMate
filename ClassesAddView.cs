@@ -48,6 +48,10 @@ namespace IT123P_FinalMP
             UserClass userClass = new UserClass(this);
             userClass.UserAddClass(username, classCodeTxt.Text, classNameTxt.Text);
 
+            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(ClassesMainView));
+            nextActivityHandler.PassDataToNextActivity("username", username);
+            nextActivityHandler.NavigateToNextActivity(this);
+
         }
 
 

@@ -64,6 +64,7 @@
     <Compile Include="ClassesAddView.cs" />
     <Compile Include="ClassesMainView.cs" />
     <Compile Include="Dashboard.cs" />
+    <Compile Include="editStudentInfo.cs" />
     <Compile Include="FontHandler.cs" />
     <Compile Include="Landing.cs" />
     <Compile Include="Login.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserClass.cs" />
     <Compile Include="UserConnection.cs" />
-    <Compile Include="UserGetInfo.cs" />
+    <Compile Include="UserInfoLogic.cs" />
     <Compile Include="ViewAccount.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +193,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\classes_new_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\editstudentinfo_layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

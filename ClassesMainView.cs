@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Content;
 using Google.Android.Material.BottomNavigation;
 using System;
+using System.Threading.Tasks;
 
 namespace IT123P_FinalMP
 {
@@ -16,7 +17,9 @@ namespace IT123P_FinalMP
 
         BottomNavigationView bottomNavigationView;
         Button btnAddClass;
+        LinearLayout classesLayoutContainer;
         string username;
+
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -29,7 +32,7 @@ namespace IT123P_FinalMP
 
             username = Intent.GetStringExtra("username");
 
-
+            classesLayoutContainer = FindViewById<LinearLayout>(Resource.Id.classContainer);
 
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
@@ -43,7 +46,16 @@ namespace IT123P_FinalMP
             bottomNavigationView.SelectedItemId = Resource.Id.navigation_classes;
 
             bottomNavigationView.NavigationItemSelected += BottomNavigationView_NavigationItemSelected;
+
+            LoadClass();
         }
+
+        public async void LoadClass()
+        {
+            UserClass userClass = new UserClass(this, classesLayoutContainer);
+            await userClass.GetCurrStudClasses(username);
+        }
+      
 
 
         public void AddClass(object sender, EventArgs e)

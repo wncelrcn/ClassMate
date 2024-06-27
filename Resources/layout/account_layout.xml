@@ -94,7 +94,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:id="@+id/editBtn" />
+            android:id="@+id/editStudInfoBtn" />
+        <Button
+            android:text="Edit Account Details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/editAccBtn" />
+
+
 
         <Button
             android:text="Log Out"

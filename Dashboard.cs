@@ -5,6 +5,7 @@ using Android.Widget;
 using AndroidX.AppCompat.App;
 using Google.Android.Material.BottomNavigation;
 using System;
+using System.Collections.Generic;
 
 namespace IT123P_FinalMP
 {
@@ -12,11 +13,11 @@ namespace IT123P_FinalMP
     public class Dashboard : AppCompatActivity
     {
         TextView dateDisplay, greetingDisplay, desc;
-        string username, studID, studName, studSchool, studCourse, studIdentity;
+        string username, studID, studSchool, studCourse, studIdentity;
         Button prevDateBtn, nextDateBtn;
         DateTime currentDate;
         BottomNavigationView bottomNavigationView;
-
+        Dictionary<string, string> studInfo;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -32,9 +33,12 @@ namespace IT123P_FinalMP
 
             username = Intent.GetStringExtra("username");
 
-            UserGetInfo userGetInfo = new UserGetInfo(this);
-            studName = userGetInfo.GetUserName(username);
-            greetingDisplay.Text = $"Hello, {studName}";
+            UserInfoLogic userGetInfo = new UserInfoLogic(this);
+
+
+            studInfo = userGetInfo.GetUserDetails(username);
+
+            greetingDisplay.Text = $"Hello, {studInfo["studName"]}";
 
 
             dateDisplay = FindViewById<TextView>(Resource.Id.dateDisplay);
@@ -106,7 +110,7 @@ namespace IT123P_FinalMP
             switch (e.Item.ItemId)
             {
                 case Resource.Id.navigation_tasks:
-                    
+
                     break;
                 case Resource.Id.navigation_classes:
                     // Handle the classes action

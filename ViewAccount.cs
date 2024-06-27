@@ -10,6 +10,7 @@ using Android.Views;
 using Android.Content;
 using Google.Android.Material.BottomNavigation;
 using System;
+using System.Collections.Generic;
 
 namespace IT123P_FinalMP
 {
@@ -19,9 +20,9 @@ namespace IT123P_FinalMP
 
         BottomNavigationView bottomNavigationView;
         TextView title, studName, studUsername, studID, studCourse, studSchool;
-        Button editBtn, logOutBtn;
+        Button editStudInfoBtn, logOutBtn, editAccBtn;
         string username, sID, sName, sSchool, sCourse, sIdentity;
-
+        Dictionary<string, string> studInfo;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,7 +37,8 @@ namespace IT123P_FinalMP
             studID = FindViewById<TextView>(Resource.Id.studIDTxt);
             studCourse = FindViewById<TextView>(Resource.Id.studCourseTxt);
             studSchool = FindViewById<TextView>(Resource.Id.studSchoolTxt);
-            editBtn = FindViewById<Button>(Resource.Id.editBtn);
+            editStudInfoBtn = FindViewById<Button>(Resource.Id.editStudInfoBtn);
+            editAccBtn = FindViewById<Button>(Resource.Id.editAccBtn);
             logOutBtn = FindViewById<Button>(Resource.Id.logOutBtn);
             title = FindViewById<TextView>(Resource.Id.title);
 
@@ -51,15 +53,16 @@ namespace IT123P_FinalMP
             regularFont.SetFont(studID);
             regularFont.SetFont(studCourse);
             regularFont.SetFont(studSchool);
-            semiBoldFont.SetFont(editBtn);
+            semiBoldFont.SetFont(editStudInfoBtn);
             semiBoldFont.SetFont(logOutBtn);
+            semiBoldFont.SetFont(editAccBtn);
 
             username = Intent.GetStringExtra("username");
-            sID = Intent.GetStringExtra("studID");
-            sName = Intent.GetStringExtra("studName");
-            sSchool = Intent.GetStringExtra("studSchool");
-            sCourse = Intent.GetStringExtra("studCourse");
-            sIdentity = Intent.GetStringExtra("studIdentity");
+            //sID = Intent.GetStringExtra("studID");
+            //sName = Intent.GetStringExtra("studName");
+            //sSchool = Intent.GetStringExtra("studSchool");
+            //sCourse = Intent.GetStringExtra("studCourse");
+            //sIdentity = Intent.GetStringExtra("studIdentity");
 
 
             // Set the selected item to "Account"
@@ -68,16 +71,30 @@ namespace IT123P_FinalMP
             bottomNavigationView.NavigationItemSelected += BottomNavigationView_NavigationItemSelected;
 
             // Set the user's information
+
+            UserInfoLogic userGetInfo = new UserInfoLogic(this);
+
+
+            studInfo = userGetInfo.GetUserDetails(username);
+
             SetStudentInfo();
 
 
-            ButtonStyler.ApplyRoundedCorners(editBtn);
+            ButtonStyler.ApplyRoundedCorners(editStudInfoBtn);
             ButtonStyler.ApplyRoundedCorners(logOutBtn);
+            ButtonStyler.ApplyRoundedCorners(editAccBtn);
 
+            editStudInfoBtn.Click += EditBtn_Click;
             logOutBtn.Click += logOutBtn_Click;
         }
 
-        
+        private void EditBtn_Click(object sender, EventArgs e)
+        {
+            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(editStudentInfo));
+            nextActivityHandler.PassDataToNextActivity("username", username);
+            nextActivityHandler.NavigateToNextActivity(this);
+        }
+
         public void logOutBtn_Click(object sender, EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Landing));
@@ -112,11 +129,11 @@ namespace IT123P_FinalMP
 
         public void SetStudentInfo()
         {
-            studName.Text = sName;
-            studUsername.Text = "@" + username;
-            studID.Text = "Student ID: " + sID;
-            studCourse.Text = "Course: "+ sCourse;
-            studSchool.Text = "School: "+ sSchool;
+            studName.Text = studInfo["studName"];
+            studUsername.Text = "@" + studInfo["uname"];
+            studID.Text = "Student ID: " + studInfo["studID"];
+            studCourse.Text = "Course: " + studInfo["studCourse"];
+            studSchool.Text = "School: " + studInfo["studSchool"];
         }
 
 

@@ -64,7 +64,8 @@
     <Compile Include="ClassesAddView.cs" />
     <Compile Include="ClassesMainView.cs" />
     <Compile Include="Dashboard.cs" />
-    <Compile Include="editStudentInfo.cs" />
+    <Compile Include="EditAccCredentials.cs" />
+    <Compile Include="EditStudentInfo.cs" />
     <Compile Include="FontHandler.cs" />
     <Compile Include="Landing.cs" />
     <Compile Include="Login.cs" />
@@ -198,6 +199,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\editstudentinfo_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\editaccdetails_layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

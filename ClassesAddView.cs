@@ -11,6 +11,8 @@ namespace IT123P_FinalMP
     [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
     public class ClassesAddView : AppCompatActivity
     {
+
+        TextView title, codeLbl, nameLbl;
         Button returnBtn, addClassBtn;
         EditText classCodeTxt, classNameTxt;
         string username;
@@ -24,6 +26,9 @@ namespace IT123P_FinalMP
 
             returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
             addClassBtn = FindViewById<Button>(Resource.Id.addClassBtn);
+            title = FindViewById<TextView>(Resource.Id.title);
+            codeLbl = FindViewById<TextView>(Resource.Id.classCodeLbl);
+            nameLbl = FindViewById<TextView>(Resource.Id.classNameLbl);
 
             addClassBtn.Click += AddClassBtn_Click;
 
@@ -33,6 +38,20 @@ namespace IT123P_FinalMP
             returnBtn.Click += ReturnBtn_Click;
 
             username = Intent.GetStringExtra("username");
+
+            FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
+            FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
+            FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
+            FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
+
+            semiBoldFont.SetFont(title);
+            regularFont.SetFont(codeLbl);
+            regularFont.SetFont(nameLbl);
+            regularFont.SetFont(classCodeTxt);
+            regularFont.SetFont(classNameTxt);
+            semiBoldFont.SetFont(addClassBtn);
+
+            ButtonStyler.ApplyRoundedCorners(addClassBtn);
 
         }
 

@@ -18,46 +18,61 @@
             android:id="@+id/returnBtn" />
 
         <TextView
-            android:text="Add a New Class"
+            android:text="Edit Account Details"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:gravity="center"
             android:layout_marginVertical="15dp"
             android:id="@+id/title" />
 
         <TextView
-            android:text="Enter Class Code:"
+            android:text="Edit your username:"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
-            android:id="@+id/classCodeLbl" />
+            android:id="@+id/usernameLbl" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/classCodeTxt" />
+            android:layout_marginBottom="30dp"
+            android:hint="Enter new username"
+            android:id="@+id/newUnameTxt" />
 
         <TextView
-            android:text="Enter Class Name:"
+            android:text="Change your password:"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
-            android:id="@+id/classNameLbl" />
+            android:id="@+id/passLbl" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/classNameTxt" />
+            android:hint="Current password"
+            android:layout_marginBottom="15dp"
+            android:id="@+id/currentPassTxt" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="New password"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/newPassTxt" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm new password"
+            android:id="@+id/confirmPassTxt" />
     </LinearLayout>
 
     <Button
-        android:text="Add Class"
+        android:text="Update Account Credentials"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/addClassBtn"
+        android:id="@+id/updateBtn"
         android:layout_alignParentBottom="true" />
 </RelativeLayout>

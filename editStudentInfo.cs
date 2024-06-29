@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace IT123P_FinalMP
 {
     [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
-    public class editStudentInfo : AppCompatActivity
+    public class EditStudentInfo : AppCompatActivity
     {
         TextView title, nameLbl, studIDLbl, courseLbl, schoolLbl;
         Button returnBtn, updateBtn;
@@ -62,7 +62,7 @@ namespace IT123P_FinalMP
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
             FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
 
-            boldFont.SetFont(title);
+            semiBoldFont.SetFont(title);
             regularFont.SetFont(nameLbl);
             regularFont.SetFont(studIDLbl);
             regularFont.SetFont(courseLbl);

@@ -17,7 +17,7 @@ namespace IT123P_FinalMP
 
         HttpWebResponse response;
         HttpWebRequest request;
-        string url = "http://172.18.11.241:8080/IT123P_FinalMP/REST";
+        string url = "http://192.168.1.99/IT123P_FinalMP/REST";
         string result;
         List<Dictionary<string, string>> userClasses = new List<Dictionary<string, string>>();
         LinearLayout currLayout;
@@ -110,6 +110,12 @@ namespace IT123P_FinalMP
         {
             currLayout.RemoveAllViews();
 
+            // Initialize your FontHandler instances
+            FontHandler boldFont = new FontHandler(context, "Raleway-Bold.ttf");
+            FontHandler mediumFont = new FontHandler(context, "Raleway-Medium.ttf");
+            FontHandler regularFont = new FontHandler(context, "Raleway-Regular.ttf");
+            FontHandler semiBoldFont = new FontHandler(context, "Raleway-Semibold.ttf");
+
             foreach (var classes in userClasses)
             {
                 // Create a new LinearLayout
@@ -125,7 +131,7 @@ namespace IT123P_FinalMP
                     LinearLayout.LayoutParams.MatchParent,
                     LinearLayout.LayoutParams.WrapContent
                 );
-                layoutParams.SetMargins(0, 0, 0, 20); // Set bottom margin to 20 pixels
+                layoutParams.SetMargins(0, 0, 0, 50); 
 
                 // Apply the layout parameters to the LinearLayout
                 linearLayout.LayoutParameters = layoutParams;
@@ -134,11 +140,13 @@ namespace IT123P_FinalMP
                 // Create a TextView for the class code
                 TextView textViewCode = new TextView(context)
                 {
-                    Text = classes["classCode"].ToString() // Ensure it's converted to string
+                    Text = classes["classCode"].ToString(), // Ensure it's converted to string
+                    
                 };
-                textViewCode.SetPadding(0, 0, 0, 35); // Adding padding below the text
+                textViewCode.SetPadding(10, 30, 0, 50); // Adding padding below the text
+                textViewCode.SetTextColor(Android.Graphics.Color.Black);
                 textViewCode.SetTextSize(Android.Util.ComplexUnitType.Sp, 24); // Set text size to 24sp
-                textViewCode.SetTypeface(null, Android.Graphics.TypefaceStyle.Bold); // Set text style to bold
+                boldFont.SetFont(textViewCode); // Set the bold font
 
                 // Add the class code TextView to the LinearLayout
                 linearLayout.AddView(textViewCode);
@@ -146,10 +154,13 @@ namespace IT123P_FinalMP
                 // Create a TextView for the class name
                 TextView textViewName = new TextView(context)
                 {
-                    Text = classes["className"].ToString() // Ensure it's converted to string
+                    Text = classes["className"].ToString(), // Ensure it's converted to string
+                    
                 };
-                textViewName.SetPadding(0, 0, 0, 30); // No extra padding needed
+                textViewName.SetPadding(10, 0, 0, 30); // Set padding
+                textViewName.SetTextColor(Android.Graphics.Color.Black);
                 textViewName.SetTextSize(Android.Util.ComplexUnitType.Sp, 18); // Set text size to 18sp
+                regularFont.SetFont(textViewName); // Set the regular font
 
                 // Add the class name TextView to the LinearLayout
                 linearLayout.AddView(textViewName);
@@ -165,6 +176,7 @@ namespace IT123P_FinalMP
                 };
             }
         }
+
 
 
 

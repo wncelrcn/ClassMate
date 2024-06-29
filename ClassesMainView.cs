@@ -14,7 +14,7 @@ namespace IT123P_FinalMP
     [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
     public class ClassesMainView : AppCompatActivity
     {
-
+        TextView title, desc;
         BottomNavigationView bottomNavigationView;
         Button btnAddClass;
         LinearLayout classesLayoutContainer;
@@ -28,6 +28,8 @@ namespace IT123P_FinalMP
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.classes_main_layout);
 
+            title = FindViewById<TextView>(Resource.Id.title);
+            desc = FindViewById<TextView>(Resource.Id.desc);
             bottomNavigationView = FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation_view);
 
             username = Intent.GetStringExtra("username");
@@ -39,9 +41,13 @@ namespace IT123P_FinalMP
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
             FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
 
+            semiBoldFont.SetFont(title);
+            regularFont.SetFont(desc);
+            
 
             btnAddClass = FindViewById<Button>(Resource.Id.addAClassBtn);
             btnAddClass.Click += AddClass;
+            semiBoldFont.SetFont(btnAddClass);
 
             bottomNavigationView.SelectedItemId = Resource.Id.navigation_classes;
 

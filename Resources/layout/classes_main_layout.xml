@@ -20,8 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,13 +32,15 @@
                     android:layout_height="wrap_content"
                     android:minWidth="25px"
                     android:minHeight="25px"
-                    android:id="@+id/textView1" />
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/title" />
                 <TextView
                     android:text="Here are your classes for the semester."
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView2" />
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/desc" />
 
 
                 <LinearLayout

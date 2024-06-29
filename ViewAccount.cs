@@ -47,7 +47,7 @@ namespace IT123P_FinalMP
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
             FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
 
-            boldFont.SetFont(title);
+            semiBoldFont.SetFont(title);
             semiBoldFont.SetFont(studName);
             regularFont.SetFont(studUsername);
             regularFont.SetFont(studID);
@@ -58,11 +58,7 @@ namespace IT123P_FinalMP
             semiBoldFont.SetFont(editAccBtn);
 
             username = Intent.GetStringExtra("username");
-            //sID = Intent.GetStringExtra("studID");
-            //sName = Intent.GetStringExtra("studName");
-            //sSchool = Intent.GetStringExtra("studSchool");
-            //sCourse = Intent.GetStringExtra("studCourse");
-            //sIdentity = Intent.GetStringExtra("studIdentity");
+            
 
 
             // Set the selected item to "Account"
@@ -86,11 +82,20 @@ namespace IT123P_FinalMP
 
             editStudInfoBtn.Click += EditBtn_Click;
             logOutBtn.Click += logOutBtn_Click;
+            editAccBtn.Click += editAccBtn_Click;
+        }
+
+
+        private void editAccBtn_Click(object sender, EventArgs e)
+        {
+            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(EditAccCredentials));
+            nextActivityHandler.PassDataToNextActivity("username", username);
+            nextActivityHandler.NavigateToNextActivity(this);
         }
 
         private void EditBtn_Click(object sender, EventArgs e)
         {
-            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(editStudentInfo));
+            NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(EditStudentInfo));
             nextActivityHandler.PassDataToNextActivity("username", username);
             nextActivityHandler.NavigateToNextActivity(this);
         }

@@ -10,6 +10,7 @@ using Android.Views;
 using Android.Content;
 using Android.Graphics;
 using Android.Media;
+using Google.Android.Material.FloatingActionButton;
 
 namespace IT123P_FinalMP
 {
@@ -44,6 +45,18 @@ namespace IT123P_FinalMP
 
             returnBtn.Click += ReturnBtn_Click;
 
+
+            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
+            fab.Click += (sender, args) =>
+            {
+                // Handle the click event, e.g., open a new task creation screen
+                NextActivityHandler nextActivity = new NextActivityHandler(this, "", typeof(AddNewTask));
+                nextActivity.PassDataToNextActivity("username", username);
+
+                nextActivity.PassDataToNextActivity("layout", "classSpecific");
+                //nextActivity.PassDataToNextActivity("classCode", classCode);
+                nextActivity.NavigateToNextActivity(this);
+            };
 
         }
 

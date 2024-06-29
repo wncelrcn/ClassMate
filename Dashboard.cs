@@ -4,6 +4,7 @@ using Android.Runtime;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using Google.Android.Material.BottomNavigation;
+using Google.Android.Material.FloatingActionButton;
 using System;
 using System.Collections.Generic;
 
@@ -69,6 +70,18 @@ namespace IT123P_FinalMP
             regularFont.SetFont(desc);
             semiBoldFont.SetFont(prevDateBtn);
             semiBoldFont.SetFont(nextDateBtn);
+
+
+            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
+            fab.Click += (sender, args) =>
+            {
+                // Handle the click event, e.g., open a new task creation screen
+                NextActivityHandler nextActivity = new NextActivityHandler(this, "", typeof(AddNewTask));
+                nextActivity.PassDataToNextActivity("username", username);
+                //nextActivity.PassDataToNextActivity("classCode", classCode);
+                nextActivity.PassDataToNextActivity("layout", "dashboard");
+                nextActivity.NavigateToNextActivity(this);
+            };
 
         }
 

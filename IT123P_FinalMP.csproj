@@ -60,6 +60,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddNewTask.cs" />
     <Compile Include="ButtonStyler.cs" />
     <Compile Include="ClassesAddView.cs" />
     <Compile Include="ClassesMainView.cs" />
@@ -210,6 +211,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\classes_specific_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\newtask_layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

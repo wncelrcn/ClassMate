@@ -63,6 +63,7 @@
     <Compile Include="ButtonStyler.cs" />
     <Compile Include="ClassesAddView.cs" />
     <Compile Include="ClassesMainView.cs" />
+    <Compile Include="ClassesSpecific.cs" />
     <Compile Include="Dashboard.cs" />
     <Compile Include="EditAccCredentials.cs" />
     <Compile Include="EditStudentInfo.cs" />
@@ -204,6 +205,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\editaccdetails_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\classes_specific_layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -11,12 +11,22 @@ namespace IT123P_FinalMP
         private string toastMsg;
         private Type currClass;
         private Dictionary<string, string> dataDictionary;
+        private string studNum;
 
         public NextActivityHandler(Context context, string toastMsg, Type currClass)
         {
             this.context = context;
             this.toastMsg = toastMsg;
             this.currClass = currClass;
+            this.dataDictionary = new Dictionary<string, string>();
+        }
+
+        public NextActivityHandler(Context context, string studNum, Type currClass, string toastMsg)
+        {
+            this.context = context;
+            this.toastMsg = toastMsg;
+            this.currClass = currClass;
+            this.studNum = studNum;
             this.dataDictionary = new Dictionary<string, string>();
         }
 

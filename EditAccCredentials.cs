@@ -39,6 +39,8 @@ namespace IT123P_FinalMP
 
             title = FindViewById<TextView>(Resource.Id.title);
 
+            usernameTxt.Text = username;
+
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
@@ -55,7 +57,45 @@ namespace IT123P_FinalMP
 
             ButtonStyler.ApplyRoundedCorners(updateBtn);
             returnBtn.Click += ReturnBtn_Click;
+            updateBtn.Click += UpdateBtn_Click;
         }
+
+        private void UpdateBtn_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(oldpasswordTxt.Text) ||
+                string.IsNullOrEmpty(newpasswordTxt.Text) ||
+                string.IsNullOrEmpty(confirmpasswordTxt.Text))
+            {
+                Toast.MakeText(this, "Please fill up all fields.", ToastLength.Short).Show();
+            }
+            else if (newpasswordTxt.Text != confirmpasswordTxt.Text)
+            {
+                Toast.MakeText(this, "Passwords do not match.", ToastLength.Short).Show();
+            }
+            else
+            {
+                UserConnection userConnection = new UserConnection(this);
+                bool isUpdated = userConnection.UpdatePassword(username, oldpasswordTxt.Text, newpasswordTxt.Text);
+
+                if (isUpdated)
+                {
+                    Toast.MakeText(this, "Password updated", ToastLength.Short).Show();
+                    oldpasswordTxt.Text = "";
+                    newpasswordTxt.Text = "";
+                    confirmpasswordTxt.Text = "";
+
+                    NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(ViewAccount));
+                    nextActivityHandler.PassDataToNextActivity("username", username);
+                    nextActivityHandler.NavigateToNextActivity(this);
+                }
+                else
+                {
+                    Toast.MakeText(this, "Incorrect old password", ToastLength.Short).Show();
+                }
+            }
+        }
+
+
 
         private void ReturnBtn_Click(object sender, EventArgs e)
         {

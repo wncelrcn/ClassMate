@@ -17,7 +17,7 @@ namespace IT123P_FinalMP
 
         HttpWebResponse response;
         HttpWebRequest request;
-        string url = "http://192.168.1.99/IT123P_FinalMP/REST";
+        string url = "http://192.168.1.94:8080/IT123P_FinalMP/REST";
         string result;
         List<Dictionary<string, string>> userClasses = new List<Dictionary<string, string>>();
         LinearLayout currLayout;
@@ -87,12 +87,12 @@ namespace IT123P_FinalMP
                                 var user = new Dictionary<string, string>
                                 {
                                     { "classCode", classCode.GetString() },
-                                    {  "className", className.GetString() }
+                                    { "className", className.GetString() }
                                 };
                                 userClasses.Add(user);
                             }
                         }
-                        ((Activity)context).RunOnUiThread(() => CreateClassLayout());
+                        ((Activity)context).RunOnUiThread(() => CreateClassLayout(username));
                     }
                     else
                     {
@@ -106,7 +106,7 @@ namespace IT123P_FinalMP
             }
         }
 
-        public void CreateClassLayout()
+        public void CreateClassLayout(string username)
         {
             currLayout.RemoveAllViews();
 
@@ -171,6 +171,14 @@ namespace IT123P_FinalMP
                 // Attach click event to the LinearLayout if you want to handle clicks
                 linearLayout.Click += (sender, e) =>
                 {
+
+
+                    NextActivityHandler nextActivity = new NextActivityHandler(context, username, typeof(ClassesSpecific), "");
+                    nextActivity.PassDataToNextActivity("classCode", classes["classCode"]);
+                    nextActivity.PassDataToNextActivity("className", classes["className"]);
+                    nextActivity.PassDataToNextActivity("username", username);
+                    nextActivity.NavigateToNextActivity(context);
+
                     // Handle the click event, for example, navigate to another activity
                     Toast.MakeText(context, "Class Code: " + classes["classCode"], ToastLength.Short).Show();
                 };

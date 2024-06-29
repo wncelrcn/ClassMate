@@ -28,7 +28,7 @@
             android:id="@+id/title" />
 
         <TextView
-            android:text="Edit your username:"
+            android:text="Your username:"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:hint="Enter new username"
+            android:hint="Your username"
+            android:editable="false"
             android:id="@+id/newUnameTxt" />
 
         <TextView

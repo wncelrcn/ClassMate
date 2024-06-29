@@ -20,7 +20,7 @@ namespace IT123P_FinalMP
         HttpWebResponse response;
         HttpWebRequest request;
 
-        string url = "http://192.168.1.99/IT123P_FinalMP/REST";
+        string url = "http://192.168.1.94:8080/IT123P_FinalMP/REST";
         string result;
 
         private Context context;
@@ -126,6 +126,30 @@ namespace IT123P_FinalMP
 
 
         }
+
+        public bool UpdatePassword(string username, string oldPass, string newPass)
+        {
+            url = $"{url}/update_password.php?uname={username}&newPass={newPass}&oldPass={oldPass}";
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    string result = reader.ReadToEnd();
+                    return result.Contains("OK!");
+                }
+            }
+            catch (Exception)
+            {
+                Toast.MakeText(context, "Error updating password", ToastLength.Short).Show();
+                return false;
+            }
+        }
+
+
 
 
     }

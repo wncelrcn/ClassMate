@@ -4,14 +4,16 @@ using Android.OS;
 using Android.Runtime;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace IT123P_FinalMP
 {
     [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
     public class AddNewTask : AppCompatActivity
     {
-        private EditText toDoDateTxt, dueDateTxt;
+        private EditText toDoDateTxt, dueDateTxt, taskNameTxt, taskDescTxt;
         private Button returnBtn, addTaskBtn;
         private string layoutReceiver, username, classCode, className;
         NextActivityHandler nextActivityHandler;
@@ -33,24 +35,40 @@ namespace IT123P_FinalMP
 
             returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
             addTaskBtn = FindViewById<Button>(Resource.Id.addTaskBtn);
+
+            taskNameTxt = FindViewById<EditText>(Resource.Id.taskNameTxt);
+            taskDescTxt = FindViewById<EditText>(Resource.Id.taskDescTxt);
             toDoDateTxt = FindViewById<EditText>(Resource.Id.toDoDateTxt);
             dueDateTxt = FindViewById<EditText>(Resource.Id.dueDateTxt);
+
+
 
             classSpinner = FindViewById<Spinner>(Resource.Id.classSpinner);
 
             toDoDateTxt.Click += (sender, e) => ShowDatePickerDialog(toDoDateTxt);
             dueDateTxt.Click += (sender, e) => ShowDatePickerDialog(dueDateTxt);
 
-           
+
             // Find views by ID
             classSpinner = FindViewById<Spinner>(Resource.Id.classSpinner);
             userClass = new UserClass(this);
-            
+
 
             // Load the user's classes into the Spinner
             LoadUserClasses(username);
 
             returnBtn.Click += ReturnBtn_Click;
+            addTaskBtn.Click += AddTaskBtn_Click;
+
+        }
+
+        private void AddTaskBtn_Click(object sender, System.EventArgs e)
+        {
+       
+           
+                UserTask userTask = new UserTask(this);
+                userTask.InsertTask(username, taskNameTxt.Text, taskDescTxt.Text, false, toDoDateTxt.Text, dueDateTxt.Text, classSpinner.SelectedItem.ToString());
+          
 
         }
 
@@ -84,8 +102,9 @@ namespace IT123P_FinalMP
             int month = calendar.Get(Java.Util.CalendarField.Month);
             int day = calendar.Get(Java.Util.CalendarField.DayOfMonth);
 
-            var datePickerDialog = new DatePickerDialog(this, (sender, e) => {
-                string date = $"{e.Date.Day}/{e.Date.Month + 1}/{e.Date.Year}";
+            var datePickerDialog = new DatePickerDialog(this, (sender, e) =>
+            {
+                string date = $"{e.Date.Day}/{e.Date.Month}/{e.Date.Year}";
                 dateField.Text = date;
             }, year, month, day);
 

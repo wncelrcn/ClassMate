@@ -11,7 +11,7 @@ namespace IT123P_FinalMP
     {
         private EditText toDoDateTxt, dueDateTxt;
         private Button returnBtn, addTaskBtn;
-        private string layoutReceiver, username;
+        private string layoutReceiver, username, classCode, className;
         NextActivityHandler nextActivityHandler;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -23,7 +23,8 @@ namespace IT123P_FinalMP
 
             layoutReceiver = Intent.GetStringExtra("layout");
             username = Intent.GetStringExtra("username");
-
+            classCode = Intent.GetStringExtra("classCode");
+            className = Intent.GetStringExtra("className");
 
             returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
             addTaskBtn = FindViewById<Button>(Resource.Id.addTaskBtn);
@@ -48,6 +49,8 @@ namespace IT123P_FinalMP
             else if (layoutReceiver == "classSpecific")
             {
                 nextActivityHandler = new NextActivityHandler(this, "", typeof(ClassesSpecific));
+                nextActivityHandler.PassDataToNextActivity("classCode", classCode);
+                nextActivityHandler.PassDataToNextActivity("className", className);
             }
             nextActivityHandler.PassDataToNextActivity("username", username);
             nextActivityHandler.NavigateToNextActivity(this);

@@ -54,7 +54,8 @@ namespace IT123P_FinalMP
                 nextActivity.PassDataToNextActivity("username", username);
 
                 nextActivity.PassDataToNextActivity("layout", "classSpecific");
-                //nextActivity.PassDataToNextActivity("classCode", classCode);
+                nextActivity.PassDataToNextActivity("classCode", classCode);
+                nextActivity.PassDataToNextActivity("className", className);
                 nextActivity.NavigateToNextActivity(this);
             };
 

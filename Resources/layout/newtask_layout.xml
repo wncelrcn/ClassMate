@@ -89,8 +89,21 @@
             android:clickable="true"
             android:inputType="none"
             android:drawableEnd="@android:drawable/ic_menu_today" />
+        
+        
+        <!-- Add Spinner here -->
+        <TextView
+            android:text="Class:"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:id="@+id/classLbl" />
 
-      
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/classSpinner" />
 
 
     </LinearLayout>

@@ -106,6 +106,68 @@ namespace IT123P_FinalMP
             }
         }
 
+        public async Task FetchAndPopulateClasses(string username, Spinner classSpinner)
+        {
+            url = $"{url}/get_StudClasses.php?username={username}";
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "GET";
+
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    // Read the response to the end
+                    var result = await reader.ReadToEndAsync();
+                    using JsonDocument doc = JsonDocument.Parse(result);
+                    JsonElement root = doc.RootElement;
+
+                    // Assuming the JSON is an array
+                    if (root.ValueKind == JsonValueKind.Array)
+                    {
+                        userClasses.Clear();
+                        foreach (JsonElement item in root.EnumerateArray())
+                        {
+                            if (item.TryGetProperty("className", out JsonElement className) && item.TryGetProperty("classCode", out JsonElement classCode))
+                            {
+                                var user = new Dictionary<string, string>
+                                {
+                                    { "classCode", classCode.GetString() },
+                                    { "className", className.GetString() }
+                                };
+                                userClasses.Add(user);
+                            }
+                        }
+
+                        var classCodes = new List<string>();
+                        foreach (var userClass in userClasses)
+                        {
+                            if (userClass.TryGetValue("classCode", out var classCode))
+                            {
+                                classCodes.Add(classCode);
+                            }
+                        }
+
+                        ((Activity)context).RunOnUiThread(() =>
+                        {
+                            var adapter = new ArrayAdapter<string>(context, Android.Resource.Layout.SimpleSpinnerItem, classCodes);
+                            adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                            classSpinner.Adapter = adapter;
+                        });
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("The JSON is not an array.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error fetching JSON: " + ex.Message);
+            }
+        }
+
         public void CreateClassLayout(string username)
         {
             currLayout.RemoveAllViews();

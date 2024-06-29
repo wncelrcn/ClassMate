@@ -1,8 +1,10 @@
 ﻿using Android.App;
+using Android.Hardware.Usb;
 using Android.OS;
 using Android.Runtime;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using System.Collections.Generic;
 
 namespace IT123P_FinalMP
 {
@@ -13,6 +15,9 @@ namespace IT123P_FinalMP
         private Button returnBtn, addTaskBtn;
         private string layoutReceiver, username, classCode, className;
         NextActivityHandler nextActivityHandler;
+        UserClass userClass;
+
+        Spinner classSpinner;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -31,12 +36,27 @@ namespace IT123P_FinalMP
             toDoDateTxt = FindViewById<EditText>(Resource.Id.toDoDateTxt);
             dueDateTxt = FindViewById<EditText>(Resource.Id.dueDateTxt);
 
+            classSpinner = FindViewById<Spinner>(Resource.Id.classSpinner);
+
             toDoDateTxt.Click += (sender, e) => ShowDatePickerDialog(toDoDateTxt);
             dueDateTxt.Click += (sender, e) => ShowDatePickerDialog(dueDateTxt);
 
+           
+            // Find views by ID
+            classSpinner = FindViewById<Spinner>(Resource.Id.classSpinner);
+            userClass = new UserClass(this);
+            
+
+            // Load the user's classes into the Spinner
+            LoadUserClasses(username);
 
             returnBtn.Click += ReturnBtn_Click;
 
+        }
+
+        private async void LoadUserClasses(string username)
+        {
+            await userClass.FetchAndPopulateClasses(username, classSpinner);
         }
 
         public void ReturnBtn_Click(object sender, System.EventArgs e)

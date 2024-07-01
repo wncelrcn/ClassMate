@@ -21,7 +21,7 @@ namespace IT123P_FinalMP
         HttpWebRequest request;
         string result;
 
-        string url = "http://192.168.1.13:8080/IT123P_FinalMP/REST";
+        string url = "http://192.168.1.90:8080/IT123P_FinalMP/REST";
 
 
         private Context context;
@@ -33,30 +33,89 @@ namespace IT123P_FinalMP
 
         public void InsertTask(string username, string taskName, string taskDesc, bool isDone, string toDoDate, string dueDate, string taskClass)
         {
-            DateTime originalDateTDD = DateTime.ParseExact(toDoDate, "dd/M/yyyy", null);
-            string convertedDateStrTDD = originalDateTDD.ToString("yyyy-MM-dd");
+            HttpWebRequest request;
+            HttpWebResponse response;
+            string result;
 
-            DateTime originalDateDD = DateTime.ParseExact(dueDate, "dd/M/yyyy", null);
-            string convertedDateStrDD = originalDateDD.ToString("yyyy-MM-dd");
-
-            url = $"{url}/add_task.php?username={username}&taskName={taskName}&taskDesc={taskDesc}&isDone={isDone}&toDoDate={convertedDateStrTDD}&dueDate={convertedDateStrDD}&taskClass={taskClass}";
-
-
-            request = (HttpWebRequest)WebRequest.Create(url);
-            response = (HttpWebResponse)request.GetResponse();
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-
-            result = reader.ReadToEnd();
-
-            if (result.Contains("OK!"))
+            if (IsValidDate(toDoDate, out DateTime validToDoDate) && IsValidDate(dueDate, out DateTime validDueDate))
             {
-                Toast.MakeText(context, "Classes Added", ToastLength.Short).Show();
+                string convertedDateStrTDD = validToDoDate.ToString("yyyy-MM-dd");
+                string convertedDateStrDD = validDueDate.ToString("yyyy-MM-dd");
+
+                url = $"{url}/add_task.php?username={username}&taskName={taskName}&taskDesc={taskDesc}&isDone={isDone}&toDoDate={convertedDateStrTDD}&dueDate={convertedDateStrDD}&taskClass={taskClass}";
+
+                request = (HttpWebRequest)WebRequest.Create(url);
+                response = (HttpWebResponse)request.GetResponse();
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    result = reader.ReadToEnd();
+                }
+
+                if (result.Contains("OK!"))
+                {
+                    Toast.MakeText(context, "Task Added", ToastLength.Short).Show();
+                }
+                else
+                {
+                    Toast.MakeText(context, "Task not Added", ToastLength.Short).Show();
+                }
             }
             else
             {
-                Toast.MakeText(context, "Class is not Added", ToastLength.Short).Show();
-            }
+                // Attempt to reformat the dates if invalid
+                toDoDate = ReformatDate(toDoDate);
+                dueDate = ReformatDate(dueDate);
 
+                if (IsValidDate(toDoDate, out validToDoDate) && IsValidDate(dueDate, out validDueDate))
+                {
+                    string convertedDateStrTDD = validToDoDate.ToString("yyyy-MM-dd");
+                    string convertedDateStrDD = validDueDate.ToString("yyyy-MM-dd");
+
+                    url = $"{url}/add_task.php?username={username}&taskName={taskName}&taskDesc={taskDesc}&isDone={isDone}&toDoDate={convertedDateStrTDD}&dueDate={convertedDateStrDD}&taskClass={taskClass}";
+
+                    request = (HttpWebRequest)WebRequest.Create(url);
+                    response = (HttpWebResponse)request.GetResponse();
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        result = reader.ReadToEnd();
+                    }
+
+                    if (result.Contains("OK!"))
+                    {
+                        Toast.MakeText(context, "Task Added", ToastLength.Short).Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(context, "Task not Added", ToastLength.Short).Show();
+                    }
+                }
+                else
+                {
+                    Toast.MakeText(context, "Invalid Date Format", ToastLength.Short).Show();
+                }
+            }
         }
+
+        static bool IsValidDate(string date, out DateTime validDate)
+        {
+            string[] formats = { "d/M/yyyy", "dd/M/yyyy", "d/MM/yyyy", "dd/MM/yyyy" };
+            bool isValid = DateTime.TryParseExact(date, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out validDate);
+            return isValid;
+        }
+
+        static string ReformatDate(string date)
+        {
+            try
+            {
+                DateTime parsedDate = DateTime.ParseExact(date, "d/M/yyyy", CultureInfo.InvariantCulture);
+                return parsedDate.ToString("dd/MM/yyyy");
+            }
+            catch
+            {
+                // If parsing fails, return the original date string
+                return date;
+            }
+        }
+
     }
 }

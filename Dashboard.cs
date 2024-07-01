@@ -19,6 +19,7 @@ namespace IT123P_FinalMP
         DateTime currentDate;
         BottomNavigationView bottomNavigationView;
         Dictionary<string, string> studInfo;
+        LinearLayout taskContainer;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,6 +37,7 @@ namespace IT123P_FinalMP
 
             UserInfoLogic userGetInfo = new UserInfoLogic(this);
 
+            taskContainer = FindViewById<LinearLayout>(Resource.Id.taskContainer);
 
             studInfo = userGetInfo.GetUserDetails(username);
 
@@ -71,6 +73,7 @@ namespace IT123P_FinalMP
             semiBoldFont.SetFont(prevDateBtn);
             semiBoldFont.SetFont(nextDateBtn);
 
+           
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += (sender, args) =>
@@ -83,15 +86,25 @@ namespace IT123P_FinalMP
                 nextActivity.NavigateToNextActivity(this);
             };
 
+            LoadTasks(currentDate);
+           
+
         }
 
+        private async void LoadTasks(DateTime date)
+        {
+            
+            var taskHandler = new UserTask(this, taskContainer);
+            await taskHandler.GetTasksPerDate(username, date.ToString("dd/MM/yyyy"));
+            
+        }
         private void SetCurrentDate()
         {
             DateTime todayDate = DateTime.Now;
 
-            string today = todayDate.ToString("MMMM dd, yyyy");
+            string today = todayDate.ToString("dd/MM/yyyy");
 
-            string formattedDate = currentDate.ToString("MMMM dd, yyyy");
+            string formattedDate = currentDate.ToString("dd/MM/yyyy");
 
             if (formattedDate != today)
             {
@@ -110,12 +123,14 @@ namespace IT123P_FinalMP
         {
             currentDate = currentDate.AddDays(-1); // Go to the previous day
             SetCurrentDate();
+            LoadTasks(currentDate);
         }
 
         private void NextDateBtn_Click(object sender, EventArgs e)
         {
             currentDate = currentDate.AddDays(1); // Go to the next day
             SetCurrentDate();
+            LoadTasks(currentDate);
         }
 
         private void BottomNavigationView_NavigationItemSelected(object sender, BottomNavigationView.NavigationItemSelectedEventArgs e)

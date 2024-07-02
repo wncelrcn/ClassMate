@@ -11,6 +11,7 @@ using Android.Content;
 using Android.Graphics;
 using Android.Media;
 using Google.Android.Material.FloatingActionButton;
+using System;
 
 namespace IT123P_FinalMP
 {
@@ -19,9 +20,9 @@ namespace IT123P_FinalMP
     {
 
         Button returnBtn;
-        TextView studIDTxt, classCodeTxt, classNameTxt;
+        TextView classCodeTxt, classNameTxt;
         string classCode, className, username;
-
+        LinearLayout TaskViewContainer;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -34,12 +35,13 @@ namespace IT123P_FinalMP
             username = Intent.GetStringExtra("username");
 
             returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
-            studIDTxt = FindViewById<TextView>(Resource.Id.studIDTxt);
+            
             classCodeTxt = FindViewById<TextView>(Resource.Id.classCodeTxt);
             classNameTxt = FindViewById<TextView>(Resource.Id.classNameTxt);
 
+            TaskViewContainer = FindViewById<LinearLayout>(Resource.Id.taskViewContainer);
 
-            studIDTxt.Text = username;
+            
             classCodeTxt.Text = classCode;
             classNameTxt.Text = className;
 
@@ -58,6 +60,15 @@ namespace IT123P_FinalMP
                 nextActivity.PassDataToNextActivity("className", className);
                 nextActivity.NavigateToNextActivity(this);
             };
+
+            LoadTasks(username, classCode);
+        }
+
+        private async void LoadTasks(string username, string classCode)
+        {
+
+            var taskHandler = new UserTask(this, TaskViewContainer);
+            await taskHandler.GetTaskPerClass(username, classCode);
 
         }
 

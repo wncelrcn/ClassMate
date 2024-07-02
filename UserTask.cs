@@ -17,7 +17,7 @@ namespace IT123P_FinalMP
         HttpWebResponse response;
         HttpWebRequest request;
         string result;
-        string url = "http://192.168.1.89/IT123P_FinalMP/REST";
+        string url = "http://192.168.100.11/IT123P_FinalMP/REST";
         LinearLayout currLayout;
         private Context context;
 
@@ -31,6 +31,67 @@ namespace IT123P_FinalMP
             this.context = context;
             this.currLayout = currLayout;
         }
+
+        public async Task GetTaskPerClass(string username, string classCode)
+        {
+            try
+            {
+                await FetchTasks(username, classCode);
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(context, "Error fetching tasks. Please try again.", ToastLength.Short).Show();
+            }
+        }
+
+        private async Task FetchTasks(string username, string taskClass)
+        {
+            string requestUrl = $"{url}/get_TaskPerClass.php?username={username}&taskClass={taskClass}";
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
+                request.Method = "GET";
+
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    var result = await reader.ReadToEndAsync();
+                    Console.WriteLine($"API Response: {result}"); // Debug API response
+
+                    using JsonDocument doc = JsonDocument.Parse(result);
+                    JsonElement root = doc.RootElement;
+
+                    if (root.ValueKind == JsonValueKind.Array)
+                    {
+                        var userTasks = new List<Dictionary<string, string>>();
+                        foreach (JsonElement item in root.EnumerateArray())
+                        {
+                            var task = new Dictionary<string, string>
+                            {
+                                { "taskName", item.GetProperty("taskName").GetString() },
+                                { "taskDesc", item.GetProperty("taskDesc").GetString() },
+                                { "isDone", item.GetProperty("isDone").GetString() },
+                                { "toDoDate", item.GetProperty("toDoDate").GetString() },
+                                { "dueDate", item.GetProperty("dueDate").GetString() },
+                                { "taskClass", item.GetProperty("taskClass").GetString() }
+                            };
+                            userTasks.Add(task);
+                        }
+                        ((Activity)context).RunOnUiThread(() => CreateTaskLayout(userTasks));
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("The JSON is not an array.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(context, "Error fetching tasks. Please try again.", ToastLength.Short).Show();
+            }
+        }
+
 
         public async Task GetTasksPerDate(string username, string date)
         {
@@ -57,7 +118,7 @@ namespace IT123P_FinalMP
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetTasksPerDate: {ex.Message}");
+                
                 Toast.MakeText(context, "Error fetching tasks. Please try again.", ToastLength.Short).Show();
             }
         }
@@ -107,7 +168,7 @@ namespace IT123P_FinalMP
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error fetching JSON: " + ex.Message);
+                
                 Toast.MakeText(context, "Error fetching tasks. Please try again.", ToastLength.Short).Show();
             }
         }
@@ -190,7 +251,7 @@ namespace IT123P_FinalMP
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in CreateTaskLayout: {ex.Message}");
+                
                 Toast.MakeText(context, "Error creating task layout. Please try again.", ToastLength.Short).Show();
             }
         }
@@ -208,18 +269,18 @@ namespace IT123P_FinalMP
 
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
                         string result = reader.ReadToEnd();
-                    }
-
-                    if (result.Contains("OK!"))
-                    {
-                        Toast.MakeText(context, "Task Added", ToastLength.Short).Show();
-                    }
-                    else
-                    {
-                        Toast.MakeText(context, "Task not Added", ToastLength.Short).Show();
+                        if (result.Contains("OK!"))
+                        {
+                            Toast.MakeText(context, "Task Added", ToastLength.Short).Show();
+                        }
+                        else
+                        {
+                            Toast.MakeText(context, "Task not Added", ToastLength.Short).Show();
+                        }
                     }
                 }
                 else
@@ -237,18 +298,18 @@ namespace IT123P_FinalMP
 
                         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
                         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
                         using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                         {
                             string result = reader.ReadToEnd();
-                        }
-
-                        if (result.Contains("OK!"))
-                        {
-                            Toast.MakeText(context, "Task Added", ToastLength.Short).Show();
-                        }
-                        else
-                        {
-                            Toast.MakeText(context, "Task not Added", ToastLength.Short).Show();
+                            if (result.Contains("OK!"))
+                            {
+                                Toast.MakeText(context, "Task Added", ToastLength.Short).Show();
+                            }
+                            else
+                            {
+                                Toast.MakeText(context, "Task not Added", ToastLength.Short).Show();
+                            }
                         }
                     }
                     else
@@ -259,8 +320,7 @@ namespace IT123P_FinalMP
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in InsertTask: {ex.Message}");
-                Toast.MakeText(context, "Error adding task. Please try again.", ToastLength.Short).Show();
+                Toast.MakeText(context, $"Error adding task. Please try again. {ex.Message}", ToastLength.Short).Show();
             }
         }
 
@@ -280,9 +340,9 @@ namespace IT123P_FinalMP
             }
             catch
             {
-                // If parsing fails, return the original date string
                 return date;
             }
         }
+
     }
 }

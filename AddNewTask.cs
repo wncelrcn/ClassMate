@@ -66,9 +66,22 @@ namespace IT123P_FinalMP
         {
        
            
-                UserTask userTask = new UserTask(this);
-                userTask.InsertTask(username, taskNameTxt.Text, taskDescTxt.Text, false, toDoDateTxt.Text, dueDateTxt.Text, classSpinner.SelectedItem.ToString());
-          
+            UserTask userTask = new UserTask(this);
+            userTask.InsertTask(username, taskNameTxt.Text, taskDescTxt.Text, false, toDoDateTxt.Text, dueDateTxt.Text, classSpinner.SelectedItem.ToString());
+
+            if (layoutReceiver == "dashboard")
+            {
+
+                nextActivityHandler = new NextActivityHandler(this, "", typeof(Dashboard));
+            }
+            else if (layoutReceiver == "classSpecific")
+            {
+                nextActivityHandler = new NextActivityHandler(this, "", typeof(ClassesSpecific));
+                nextActivityHandler.PassDataToNextActivity("classCode", classCode);
+                nextActivityHandler.PassDataToNextActivity("className", className);
+            }
+            nextActivityHandler.PassDataToNextActivity("username", username);
+            nextActivityHandler.NavigateToNextActivity(this);
 
         }
 

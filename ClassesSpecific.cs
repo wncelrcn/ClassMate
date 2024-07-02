@@ -61,14 +61,14 @@ namespace IT123P_FinalMP
                 nextActivity.NavigateToNextActivity(this);
             };
 
-            LoadTasks(username, classCode);
+            LoadTasks(username, classCode, className);
         }
 
-        private async void LoadTasks(string username, string classCode)
+        private async void LoadTasks(string username, string classCode, string className)
         {
 
             var taskHandler = new UserTask(this, TaskViewContainer);
-            await taskHandler.GetTaskPerClass(username, classCode);
+            await taskHandler.GetTaskPerClass(username, classCode, className);
 
         }
 

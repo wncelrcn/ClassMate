@@ -17,9 +17,10 @@ namespace IT123P_FinalMP
         HttpWebResponse response;
         HttpWebRequest request;
         string result;
-        string url = "http://192.168.100.11/IT123P_FinalMP/REST";
+        string url = "http://172.18.11.241:8080/IT123P_FinalMP/REST";
         LinearLayout currLayout;
         private Context context;
+
 
         public UserTask(Context context)
         {
@@ -32,11 +33,11 @@ namespace IT123P_FinalMP
             this.currLayout = currLayout;
         }
 
-        public async Task GetTaskPerClass(string username, string classCode)
+        public async Task GetTaskPerClass(string username, string classCode, string className)
         {
             try
             {
-                await FetchTasks(username, classCode);
+                await FetchTasks(username, classCode, className);
             }
             catch (Exception ex)
             {
@@ -44,7 +45,7 @@ namespace IT123P_FinalMP
             }
         }
 
-        private async Task FetchTasks(string username, string taskClass)
+        private async Task FetchTasks(string username, string taskClass, string className)
         {
             string requestUrl = $"{url}/get_TaskPerClass.php?username={username}&taskClass={taskClass}";
 
@@ -74,11 +75,16 @@ namespace IT123P_FinalMP
                                 { "isDone", item.GetProperty("isDone").GetString() },
                                 { "toDoDate", item.GetProperty("toDoDate").GetString() },
                                 { "dueDate", item.GetProperty("dueDate").GetString() },
-                                { "taskClass", item.GetProperty("taskClass").GetString() }
+                                { "taskClass", item.GetProperty("taskClass").GetString() },
+                                {"username", item.GetProperty("uname").GetString() },
+                                {"classCode", taskClass },
+                                {"className", className }
+
+
                             };
                             userTasks.Add(task);
                         }
-                        ((Activity)context).RunOnUiThread(() => CreateTaskLayout(userTasks));
+                        ((Activity)context).RunOnUiThread(() => CreateTaskLayout(userTasks, "class"));
                     }
                     else
                     {
@@ -154,11 +160,12 @@ namespace IT123P_FinalMP
                                 { "isDone", item.GetProperty("isDone").GetString() },
                                 { "toDoDate", item.GetProperty("toDoDate").GetString() },
                                 { "dueDate", item.GetProperty("dueDate").GetString() },
-                                { "taskClass", item.GetProperty("taskClass").GetString() }
+                                { "taskClass", item.GetProperty("taskClass").GetString() },
+                                {"username", item.GetProperty("uname").GetString() },
                             };
                             userTasks.Add(task);
                         }
-                        ((Activity)context).RunOnUiThread(() => CreateTaskLayout(userTasks));
+                        ((Activity)context).RunOnUiThread(() => CreateTaskLayout(userTasks, "dashboard"));
                     }
                     else
                     {
@@ -173,7 +180,7 @@ namespace IT123P_FinalMP
             }
         }
 
-        public void CreateTaskLayout(List<Dictionary<string, string>> tasks)
+        public void CreateTaskLayout(List<Dictionary<string, string>> tasks, string layout)
         {
             try
             {
@@ -187,13 +194,35 @@ namespace IT123P_FinalMP
 
                 foreach (var task in tasks)
                 {
+
+                    // Parse the due date
+                    DateTime dueDate = DateTime.Parse(task["dueDate"]);
+                    DateTime currentDate = DateTime.Now;
+                    int daysUntilDue = (dueDate - currentDate).Days;
+
+                    // Determine the background color based on the due date
+                    string backgroundColor;
+                    if (daysUntilDue <= 1)
+                    {
+                        backgroundColor = "#fce1e4"; // Red
+                    }
+                    else if (daysUntilDue <= 3)
+                    {
+                        backgroundColor = "#fcf4dd"; // Yellow
+                    }
+                    else
+                    {
+                        backgroundColor = "#daeaf6"; // Blue
+                    }
                     // Create a new LinearLayout
                     LinearLayout linearLayout = new LinearLayout(context)
                     {
                         Orientation = Orientation.Vertical
                     };
+                    
+                    linearLayout.SetBackgroundColor(Android.Graphics.Color.ParseColor(backgroundColor)); // Set background color
 
-                    linearLayout.SetBackgroundColor(Android.Graphics.Color.ParseColor("#EDE7F6")); // Light purple background
+
 
                     // Create layout parameters with margins
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -214,7 +243,7 @@ namespace IT123P_FinalMP
                     textViewName.SetPadding(10, 10, 0, 10); // Adding padding below the text
                     textViewName.SetTextColor(Android.Graphics.Color.Black);
                     textViewName.SetTextSize(Android.Util.ComplexUnitType.Sp, 24); // Set text size to 24sp
-                    boldFont.SetFont(textViewName); // Set the bold font
+                    semiBoldFont.SetFont(textViewName); // Set the semibold font
 
                     // Add the task name TextView to the LinearLayout
                     linearLayout.AddView(textViewName);
@@ -247,6 +276,34 @@ namespace IT123P_FinalMP
 
                     // Add the LinearLayout to the parent container
                     currLayout.AddView(linearLayout);
+
+
+                    // Attach click event to the LinearLayout if you want to handle clicks
+                    linearLayout.Click += (sender, e) =>
+                    {
+                        NextActivityHandler nextActivity = new NextActivityHandler(context, typeof(TaskView));
+
+                        nextActivity.PassDataToNextActivity("taskName", task["taskName"]);
+                        nextActivity.PassDataToNextActivity("taskClass", task["taskClass"]);
+                        nextActivity.PassDataToNextActivity("taskDesc", task["taskDesc"]);
+                        nextActivity.PassDataToNextActivity("toDoDate", task["toDoDate"]);
+                        nextActivity.PassDataToNextActivity("dueDate", task["dueDate"]);
+                        nextActivity.PassDataToNextActivity("username", task["username"]);
+
+                        if (layout == "class")
+                        {
+                            nextActivity.PassDataToNextActivity("classCode", task["classCode"]);
+                            nextActivity.PassDataToNextActivity("className", task["className"]);
+
+                        }
+
+                        nextActivity.PassDataToNextActivity("layout", layout);
+
+
+                        nextActivity.NavigateToNextActivity(context);
+
+
+                    };
                 }
             }
             catch (Exception ex)

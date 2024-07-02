@@ -30,6 +30,14 @@ namespace IT123P_FinalMP
             this.dataDictionary = new Dictionary<string, string>();
         }
 
+
+        public NextActivityHandler(Context context, Type currClass)
+        {
+            this.context = context;
+            this.currClass = currClass;
+            this.dataDictionary = new Dictionary<string, string>();
+        }
+
         // Navigates to the next activity
         public void NavigateToNextActivity(Context context)
         {

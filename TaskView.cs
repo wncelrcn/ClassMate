@@ -12,6 +12,7 @@ using Android.Graphics;
 using Android.Media;
 using System;
 
+
 namespace IT123P_FinalMP
 {
     [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
@@ -20,7 +21,10 @@ namespace IT123P_FinalMP
         TextView taskNameTxt, taskDescTxt, toDoDateTxt, dueDateTxt, classTxt;
         ImageButton returnBtn, deleteBtn;
         string layoutReceiver, username, classCode, className, tN, cC;
-        Button markAsDoneBtn;
+        Button markAsDoneBtn, startStopButton, resetBtn;
+        EditText timerMinuteText, timerSecondText;
+        private bool isRunning = false;
+        private PomodoroLogic pomodoroLogic;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,6 +40,8 @@ namespace IT123P_FinalMP
             classTxt = FindViewById<TextView>(Resource.Id.taskClass);
 
             markAsDoneBtn = FindViewById<Button>(Resource.Id.markDoneBtn);
+            startStopButton = FindViewById<Button>(Resource.Id.startStopButton);
+            resetBtn = FindViewById<Button>(Resource.Id.resetButton);
             deleteBtn = FindViewById<ImageButton>(Resource.Id.deleteTaskBtn);
 
             layoutReceiver = Intent.GetStringExtra("layout");
@@ -74,9 +80,93 @@ namespace IT123P_FinalMP
             semiBoldFont.SetFont(markAsDoneBtn);
 
             ButtonStyler.ApplyRoundedCorners(markAsDoneBtn);
+
+            timerMinuteText = FindViewById<EditText>(Resource.Id.timerMinuteText);
+            timerSecondText = FindViewById<EditText>(Resource.Id.timerSecondText);
+
+            timerMinuteText.SetFilters(new IInputFilter[] { new InputFilterLengthFilter(2) });
+            timerSecondText.SetFilters(new IInputFilter[] { new InputFilterLengthFilter(2) });
+
+            timerMinuteText.TextChanged += (sender, e) =>
+            {
+                ValidateInput(sender as EditText, e);
+            };
+
+            timerSecondText.TextChanged += (sender, e) =>
+            {
+                ValidateInput(sender as EditText, e);
+            };
+
+            startStopButton.Click += PomodoroBtn_Click;
+            resetBtn.Click += ResetTimer_Click;
+
         }
 
-        public void ReturnBtn_Click(object sender, EventArgs e)
+        public void ResetTimer_Click(object sender, EventArgs e)
+        {
+            timerMinuteText.Text = "00";
+            timerSecondText.Text = "00";
+            isRunning = false;
+            startStopButton.Text = "Start";
+            pomodoroLogic?.StopPomodoro();
+        }
+
+        public void PomodoroBtn_Click(object sender, EventArgs e)
+        {
+            if (timerMinuteText.Text == "00" && timerSecondText.Text == "00")
+            {
+                Toast.MakeText(this, "Please input a valid time.", ToastLength.Short).Show();
+                startStopButton.Text = "Start";
+                isRunning = false;
+
+                return;
+            }
+
+            if (isRunning)
+            {
+                pomodoroLogic?.StopPomodoro();
+                startStopButton.Text = "Start";
+                isRunning = false;
+            }
+            else
+            {
+                string minute = timerMinuteText.Text;
+                string secs = timerSecondText.Text;
+                pomodoroLogic = new PomodoroLogic(this, minute, secs, timerMinuteText, timerSecondText, startStopButton);
+                pomodoroLogic.StartPomodoro();
+                startStopButton.Text = "Stop";
+                isRunning = true;
+            }
+        }
+    
+
+
+
+
+    private void ValidateInput(EditText editText, TextChangedEventArgs e)
+        {
+            string input = editText.Text;
+            if (input.Length > 2)
+            {
+                editText.Text = input.Substring(0, 2);
+                editText.SetSelection(editText.Text.Length); // Move cursor to the end
+            }
+            else
+            {
+                foreach (char c in input)
+                {
+                    if (!char.IsDigit(c))
+                    {
+                        editText.Text = input.Remove(input.IndexOf(c), 1);
+                        editText.SetSelection(editText.Text.Length); // Move cursor to the end
+                        break;
+                    }
+                }
+            }
+        }
+    
+
+    public void ReturnBtn_Click(object sender, EventArgs e)
         {
             if (layoutReceiver == "class")
             {

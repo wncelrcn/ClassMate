@@ -28,8 +28,7 @@
                 android:minHeight="0dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true" />
-            
-                
+
             <ImageButton
                 android:src="@drawable/delete"
                 android:backgroundTint="?android:attr/colorBackground"
@@ -39,10 +38,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginVertical="10dp" />
-
-
         </RelativeLayout>
-
 
         <TextView
             android:text="Large Text"
@@ -62,7 +58,6 @@
             android:paddingVertical="10dp"
             android:id="@+id/taskDesc"
             android:textSize="18dp"/>
-
 
         <LinearLayout
             android:orientation="vertical"
@@ -101,8 +96,86 @@
                 android:id="@+id/dueDate" />
         </LinearLayout>
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginVertical="20dp">
 
+            <TextView
+                android:id="@+id/timerLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Timer"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textColor="@android:color/white" />
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp">
+
+                <EditText
+                    android:id="@+id/timerMinuteText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:gravity="center"
+                    android:textSize="48sp"
+                    android:textColor="@android:color/white"
+                    android:inputType="number"
+                    android:maxLength="2"/>
+                
+                <TextView
+                    android:text=":"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/textView1" />
+                
+                <EditText
+                    android:id="@+id/timerSecondText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:gravity="center"
+                    android:textSize="48sp"
+                    android:textColor="@android:color/white"
+                    android:inputType="number"
+                    android:maxLength="2"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/resetButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reset" />
+
+                <Button
+                    android:id="@+id/startStopButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start"
+                    android:layout_marginStart="20dp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <Button

@@ -72,6 +72,7 @@
     <Compile Include="Landing.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="NextActivityHandler.cs" />
+    <Compile Include="PomodoroLogic.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="Register_Course.cs" />
     <Compile Include="Register_Identity.cs" />
@@ -126,6 +127,9 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Services.Client">
+      <Version>19.225.1</Version>
+    </PackageReference>
     <PackageReference Include="System.Text.Json">
       <Version>8.0.3</Version>
     </PackageReference>

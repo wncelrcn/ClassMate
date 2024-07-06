@@ -18,8 +18,8 @@ namespace IT123P_FinalMP
     public class TaskView : AppCompatActivity
     {
         TextView taskNameTxt, taskDescTxt, toDoDateTxt, dueDateTxt, classTxt;
-        ImageButton returnBtn;
-        string layoutReceiver, username, classCode, className;
+        ImageButton returnBtn, deleteBtn;
+        string layoutReceiver, username, classCode, className, tN, cC;
         Button markAsDoneBtn;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -36,6 +36,7 @@ namespace IT123P_FinalMP
             classTxt = FindViewById<TextView>(Resource.Id.taskClass);
 
             markAsDoneBtn = FindViewById<Button>(Resource.Id.markDoneBtn);
+            deleteBtn = FindViewById<ImageButton>(Resource.Id.deleteTaskBtn);
 
             layoutReceiver = Intent.GetStringExtra("layout");
 
@@ -52,8 +53,13 @@ namespace IT123P_FinalMP
            
             classTxt.Text = $"Class: {Intent.GetStringExtra("taskClass")}";
 
+            tN = Intent.GetStringExtra("taskName");
+            cC = Intent.GetStringExtra("taskClass");
+
             returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             returnBtn.Click += ReturnBtn_Click;
+            markAsDoneBtn.Click += MarkAsDoneBtn_Click;
+            deleteBtn.Click += DeleteBtn_Click;
 
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
@@ -93,7 +99,41 @@ namespace IT123P_FinalMP
 
         }
 
+        public void DeleteBtn_Click(object sender, EventArgs e)
+        {
 
+            UserTask userTask = new UserTask(this);
+
+
+
+
+            userTask.DeleteTask(username, tN, cC);
+        }
+
+        public void MarkAsDoneBtn_Click(object sender, EventArgs e)
+        {
+            UserTask userTask = new UserTask(this);
+            userTask.TaskDone(username, tN, cC);
+
+            if (layoutReceiver == "class")
+            {
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(ClassesSpecific));
+                nextActivityHandler.PassDataToNextActivity("classCode", Intent.GetStringExtra("classCode"));
+                nextActivityHandler.PassDataToNextActivity("className", Intent.GetStringExtra("className"));
+                nextActivityHandler.PassDataToNextActivity("username", Intent.GetStringExtra("username"));
+                nextActivityHandler.NavigateToNextActivity(this);
+            }
+            else if (layoutReceiver == "dashboard")
+            {
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(Dashboard));
+                nextActivityHandler.PassDataToNextActivity("username", Intent.GetStringExtra("username"));
+
+                nextActivityHandler.NavigateToNextActivity(this);
+
+            }
+
+
+        }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

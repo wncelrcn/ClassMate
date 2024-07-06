@@ -12,17 +12,37 @@
         android:layout_alignParentTop="true">
 
 
-        <ImageButton
-            android:id="@+id/returnBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="?android:attr/colorBackground"
-            android:elevation="0dp"
-            android:src="@drawable/back"
-            android:padding="0dp"
-            android:minWidth="0dp"
-            android:layout_marginVertical="10dp"
-            android:minHeight="0dp" />
+        <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+
+     <ImageButton
+         android:id="@+id/returnBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:backgroundTint="?android:attr/colorBackground"
+         android:elevation="0dp"
+         android:src="@drawable/back"
+         android:padding="0dp"
+         android:minWidth="0dp"
+         android:layout_marginVertical="10dp"
+         android:minHeight="0dp"
+         android:layout_alignParentStart="true"
+         android:layout_centerVertical="true" />
+     
+         
+     <ImageButton
+         android:src="@drawable/delete"
+         android:backgroundTint="?android:attr/colorBackground"
+         android:id="@+id/deleteClassBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentEnd="true"
+         android:layout_centerVertical="true"
+         android:layout_marginVertical="10dp" />
+
+
+ </RelativeLayout>
 
 
         <ScrollView
@@ -115,5 +135,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
+        android:src="@drawable/ic_add"
         android:contentDescription="Add Task"/>
 </RelativeLayout>

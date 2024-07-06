@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Hardware.Usb;
+using Android.Media;
 using Android.OS;
 using Android.Runtime;
 using Android.Widget;
@@ -13,6 +14,7 @@ namespace IT123P_FinalMP
     [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
     public class AddNewTask : AppCompatActivity
     {
+        TextView title, taskNameLbl, taskDescLbl, toDoDateLbl, dueDateLbl, classLbl;
         private EditText toDoDateTxt, dueDateTxt, taskNameTxt, taskDescTxt;
         private Button addTaskBtn;
         private ImageButton returnBtn;
@@ -33,7 +35,12 @@ namespace IT123P_FinalMP
             username = Intent.GetStringExtra("username");
             classCode = Intent.GetStringExtra("classCode");
             className = Intent.GetStringExtra("className");
-
+            title = FindViewById<TextView>(Resource.Id.title);
+            taskNameLbl = FindViewById<TextView>(Resource.Id.taskNameLbl);
+            taskDescLbl = FindViewById<TextView>(Resource.Id.taskDescLbl);
+            toDoDateLbl = FindViewById<TextView>(Resource.Id.toDoDateLbl);
+            dueDateLbl = FindViewById<TextView>(Resource.Id.dueDateLbl);
+            classLbl = FindViewById<TextView>(Resource.Id.classLbl);
             returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             addTaskBtn = FindViewById<Button>(Resource.Id.addTaskBtn);
 
@@ -49,6 +56,17 @@ namespace IT123P_FinalMP
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
             FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
 
+            mediumFont.SetFont(title);
+            regularFont.SetFont(taskNameLbl);
+            regularFont.SetFont(taskDescLbl);
+            regularFont.SetFont(toDoDateLbl);
+            regularFont.SetFont(dueDateLbl);
+            regularFont.SetFont(classLbl);
+            regularFont.SetFont(taskNameTxt);
+            regularFont.SetFont(taskDescTxt);
+            regularFont.SetFont(toDoDateTxt);
+            regularFont.SetFont(dueDateTxt);
+            semiBoldFont.SetFont(addTaskBtn);
 
             classSpinner = FindViewById<Spinner>(Resource.Id.classSpinner);
 
@@ -67,18 +85,31 @@ namespace IT123P_FinalMP
             returnBtn.Click += ReturnBtn_Click;
             addTaskBtn.Click += AddTaskBtn_Click;
 
+            ButtonStyler.ApplyRoundedCorners(addTaskBtn);
+
         }
 
         private void AddTaskBtn_Click(object sender, System.EventArgs e)
         {
-       
-           
+            if (string.IsNullOrEmpty(taskNameTxt.Text) || string.IsNullOrEmpty(taskDescTxt.Text) || string.IsNullOrEmpty(toDoDateTxt.Text) || string.IsNullOrEmpty(dueDateTxt.Text))
+            {
+                Toast.MakeText(this, "Please fill out all fields.", ToastLength.Short).Show();
+                return;
+            }
+
+            // Check if the spinner has a value
+            if (classSpinner.SelectedItem == null || string.IsNullOrEmpty(classSpinner.SelectedItem.ToString()))
+            {
+                Toast.MakeText(this, "Please add a class first.", ToastLength.Short).Show();
+                return;
+            }
+
+            // If all fields are valid, insert the task
             UserTask userTask = new UserTask(this);
             userTask.InsertTask(username, taskNameTxt.Text, taskDescTxt.Text, false, toDoDateTxt.Text, dueDateTxt.Text, classSpinner.SelectedItem.ToString());
 
             if (layoutReceiver == "dashboard")
             {
-
                 nextActivityHandler = new NextActivityHandler(this, "", typeof(Dashboard));
             }
             else if (layoutReceiver == "classSpecific")
@@ -89,8 +120,8 @@ namespace IT123P_FinalMP
             }
             nextActivityHandler.PassDataToNextActivity("username", username);
             nextActivityHandler.NavigateToNextActivity(this);
-
         }
+
 
         private async void LoadUserClasses(string username)
         {

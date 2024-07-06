@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item
         android:id="@+id/navigation_tasks"
-
+        android:icon="@drawable/ic_task"
         android:title="Tasks" />
 	<item
         android:id="@+id/navigation_classes"
-
+        android:icon="@drawable/ic_class"
         android:title="Classes" />
 	<item
         android:id="@+id/navigation_account"
-
+        android:icon="@drawable/ic_user"
         android:title="Account" />
 </menu>

@@ -17,7 +17,7 @@ namespace IT123P_FinalMP
 
         HttpWebResponse response;
         HttpWebRequest request;
-        string url = "http://172.18.11.241:8080/IT123P_FinalMP/REST";
+        string url = "http://192.168.1.74/IT123P_FinalMP/REST";
         string result;
         List<Dictionary<string, string>> userClasses = new List<Dictionary<string, string>>();
         LinearLayout currLayout;
@@ -61,7 +61,28 @@ namespace IT123P_FinalMP
         }
 
 
+        public void UserDeleteClass(string username, string classCode)
+        {
+            url = $"{url}/delete_class.php?username={username}&classCode={classCode}";
 
+            request = (HttpWebRequest)WebRequest.Create(url);
+            response = (HttpWebResponse)request.GetResponse();
+            StreamReader reader = new StreamReader(response.GetResponseStream());
+
+            result = reader.ReadToEnd();
+
+            if (result.Contains("OK!"))
+            {
+                Toast.MakeText(context, "Classes Deleted", ToastLength.Short).Show();
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "Next...", typeof(ClassesMainView));
+                nextActivityHandler.PassDataToNextActivity("username", username);
+                nextActivityHandler.NavigateToNextActivity(context);
+            }
+            else
+            {
+                Toast.MakeText(context, "Class is not Deleted", ToastLength.Short).Show();
+            }
+        }
         public async Task GetCurrStudClasses(string username)
         {
             url = $"{url}/get_StudClasses.php?username={username}";

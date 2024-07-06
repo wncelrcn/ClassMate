@@ -9,6 +9,7 @@ using Android.App;
 using AndroidX.AppCompat.App;
 using System.Threading.Tasks;
 using System.Globalization;
+using Android.Views;
 
 namespace IT123P_FinalMP
 {
@@ -17,7 +18,7 @@ namespace IT123P_FinalMP
         HttpWebResponse response;
         HttpWebRequest request;
         string result;
-        string url = "http://172.18.11.241:8080/IT123P_FinalMP/REST";
+        string url = "http://192.168.1.74/IT123P_FinalMP/REST";
         LinearLayout currLayout;
         private Context context;
 
@@ -192,9 +193,39 @@ namespace IT123P_FinalMP
                 FontHandler regularFont = new FontHandler(context, "Raleway-Regular.ttf");
                 FontHandler semiBoldFont = new FontHandler(context, "Raleway-Semibold.ttf");
 
+                // Check if there are no tasks
+                if (tasks.Count == 0)
+                {
+                    // Create a TextView to display the "no tasks" message
+                    TextView noTasksTextView = new TextView(context)
+                    {
+                        Text = "You currently have no tasks."
+                    };
+                    noTasksTextView.SetTextColor(Android.Graphics.Color.Black);
+                    noTasksTextView.SetTextSize(Android.Util.ComplexUnitType.Sp, 20); // Set text size to 18sp
+                    mediumFont.SetFont(noTasksTextView); // Set the medium font
+
+                    // Create layout parameters with top margin
+                    LinearLayout.LayoutParams noTasksLayoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WrapContent,
+                        LinearLayout.LayoutParams.WrapContent
+                    );
+                    noTasksLayoutParams.SetMargins(0, 70, 0, 0); // Add top margin of 50px
+                    noTasksLayoutParams.Gravity = GravityFlags.Center;
+
+                    // Apply the layout parameters to the TextView
+                    noTasksTextView.LayoutParameters = noTasksLayoutParams;
+
+                    // Add the TextView to the parent container
+                    currLayout.AddView(noTasksTextView);
+
+                    // Exit the method early since there are no tasks to display
+                    return;
+                }
+
+
                 foreach (var task in tasks)
                 {
-
                     // Parse the due date
                     DateTime dueDate = DateTime.Parse(task["dueDate"]);
                     DateTime currentDate = DateTime.Now;
@@ -219,10 +250,8 @@ namespace IT123P_FinalMP
                     {
                         Orientation = Orientation.Vertical
                     };
-                    
+
                     linearLayout.SetBackgroundColor(Android.Graphics.Color.ParseColor(backgroundColor)); // Set background color
-
-
 
                     // Create layout parameters with margins
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -277,7 +306,6 @@ namespace IT123P_FinalMP
                     // Add the LinearLayout to the parent container
                     currLayout.AddView(linearLayout);
 
-
                     // Attach click event to the LinearLayout if you want to handle clicks
                     linearLayout.Click += (sender, e) =>
                     {
@@ -294,24 +322,19 @@ namespace IT123P_FinalMP
                         {
                             nextActivity.PassDataToNextActivity("classCode", task["classCode"]);
                             nextActivity.PassDataToNextActivity("className", task["className"]);
-
                         }
 
                         nextActivity.PassDataToNextActivity("layout", layout);
-
-
                         nextActivity.NavigateToNextActivity(context);
-
-
                     };
                 }
             }
             catch (Exception ex)
             {
-                
                 Toast.MakeText(context, "Error creating task layout. Please try again.", ToastLength.Short).Show();
             }
         }
+
 
         public void InsertTask(string username, string taskName, string taskDesc, bool isDone, string toDoDate, string dueDate, string taskClass)
         {
@@ -379,6 +402,62 @@ namespace IT123P_FinalMP
             {
                 Toast.MakeText(context, $"Error adding task. Please try again. {ex.Message}", ToastLength.Short).Show();
             }
+        }
+
+
+        public void TaskDone(string username, string taskName, string taskClass)
+        {
+            try
+            {
+                string requestUrl = $"{url}/task_IsDone.php?username={username}&taskName={taskName}&taskClass={taskClass}";
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    string result = reader.ReadToEnd();
+                    if (result.Contains("OK!"))
+                    {
+                        Toast.MakeText(context, "Task Marked as Done", ToastLength.Short).Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(context, "Task not Marked as Done", ToastLength.Short).Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(context, "Error marking task as done. Please try again.", ToastLength.Short).Show();
+            }
+        }
+
+
+        public void DeleteTask(string username, string taskName, string taskClass)
+        {
+            string requestUrl = $"{url}/delete_task.php?username={username}&taskName={taskName}&taskClass={taskClass}";
+
+            request = (HttpWebRequest)WebRequest.Create(requestUrl);
+            response = (HttpWebResponse)request.GetResponse();
+            StreamReader reader = new StreamReader(response.GetResponseStream());
+
+            var result = reader.ReadToEnd();
+
+            if (result.Contains("OK!"))
+            {
+                Toast.MakeText(context, "Task Deleted", ToastLength.Short).Show();
+
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "", typeof(Dashboard));
+                nextActivityHandler.PassDataToNextActivity("username", username);
+                nextActivityHandler.NavigateToNextActivity(context);
+            }
+            else
+            {
+                Toast.MakeText(context, "Task Not Deleted", ToastLength.Short).Show();
+            }
+
+
         }
 
         static bool IsValidDate(string date, out DateTime validDate)

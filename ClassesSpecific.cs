@@ -19,7 +19,7 @@ namespace IT123P_FinalMP
     public class ClassesSpecific : AppCompatActivity
     {
 
-        ImageButton returnBtn;
+        ImageButton returnBtn, deleteBtn;
         TextView classCodeTxt, classNameTxt, title;
         string classCode, className, username;
         LinearLayout TaskViewContainer;
@@ -35,7 +35,7 @@ namespace IT123P_FinalMP
             username = Intent.GetStringExtra("username");
 
             returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
-            
+            deleteBtn = FindViewById<ImageButton>(Resource.Id.deleteClassBtn);
             classCodeTxt = FindViewById<TextView>(Resource.Id.classCodeTxt);
             classNameTxt = FindViewById<TextView>(Resource.Id.classNameTxt);
             title = FindViewById<TextView>(Resource.Id.title);
@@ -54,7 +54,7 @@ namespace IT123P_FinalMP
             
             classCodeTxt.Text = classCode;
             classNameTxt.Text = className;
-
+            deleteBtn.Click += DeleteBtn_Click;
             returnBtn.Click += ReturnBtn_Click;
 
 
@@ -90,7 +90,13 @@ namespace IT123P_FinalMP
             nextActivity.NavigateToNextActivity(this);
         }
 
+        public void DeleteBtn_Click(object sender, System.EventArgs e)
+        {
+            UserClass userClass = new UserClass(this);
+            userClass.UserDeleteClass(username, classCode);
 
+
+        }
 
 
 

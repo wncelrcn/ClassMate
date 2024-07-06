@@ -104,10 +104,24 @@ namespace IT123P_FinalMP
 
             UserTask userTask = new UserTask(this);
 
-
-
-
             userTask.DeleteTask(username, tN, cC);
+            if (layoutReceiver == "class")
+            {
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(ClassesSpecific));
+                nextActivityHandler.PassDataToNextActivity("classCode", Intent.GetStringExtra("classCode"));
+                nextActivityHandler.PassDataToNextActivity("className", Intent.GetStringExtra("className"));
+                nextActivityHandler.PassDataToNextActivity("username", Intent.GetStringExtra("username"));
+                nextActivityHandler.NavigateToNextActivity(this);
+            }
+            else if (layoutReceiver == "dashboard")
+            {
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(Dashboard));
+                nextActivityHandler.PassDataToNextActivity("username", Intent.GetStringExtra("username"));
+
+                nextActivityHandler.NavigateToNextActivity(this);
+
+            }
+            
         }
 
         public void MarkAsDoneBtn_Click(object sender, EventArgs e)

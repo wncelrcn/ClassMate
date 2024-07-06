@@ -18,7 +18,7 @@ namespace IT123P_FinalMP
         HttpWebResponse response;
         HttpWebRequest request;
         string result;
-        string url = "http://192.168.1.74/IT123P_FinalMP/REST";
+        string url = "http://192.168.1.66:8080/IT123P_FinalMP/REST";
         LinearLayout currLayout;
         private Context context;
 

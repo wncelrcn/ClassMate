@@ -13,7 +13,8 @@ namespace IT123P_FinalMP
     {
 
         TextView title, codeLbl, nameLbl;
-        Button returnBtn, addClassBtn;
+        Button addClassBtn;
+        ImageButton returnBtn;
         EditText classCodeTxt, classNameTxt;
         string username;
 
@@ -24,7 +25,7 @@ namespace IT123P_FinalMP
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.classes_new_layout);
 
-            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
+            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             addClassBtn = FindViewById<Button>(Resource.Id.addClassBtn);
             title = FindViewById<TextView>(Resource.Id.title);
             codeLbl = FindViewById<TextView>(Resource.Id.classCodeLbl);

@@ -15,7 +15,8 @@ namespace IT123P_FinalMP
     public class Register_PrivatePolicy : AppCompatActivity
     {
         TextView title, desc;
-        Button returnBtn, nextBtn;
+        Button nextBtn;
+        ImageButton returnBtn;
         CheckBox checkBox;
         private string username, password, studID, studName, studSchool, studCourse, studIdentity;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -25,7 +26,7 @@ namespace IT123P_FinalMP
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.register_layout_6);
 
-            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
+            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             title = FindViewById<TextView>(Resource.Id.title);
             nextBtn = FindViewById<Button>(Resource.Id.nextBtn);
             desc = FindViewById<TextView>(Resource.Id.desc);

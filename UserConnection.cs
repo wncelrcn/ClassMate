@@ -42,7 +42,6 @@ namespace IT123P_FinalMP
 
             if (result.Contains("OK!"))
             {
-                //Toast.MakeText(context, "Student ID is available", ToastLength.Short).Show();
                 return true;
             }
             else
@@ -52,6 +51,8 @@ namespace IT123P_FinalMP
             }
 
         }
+
+        // Function to Check the Student ID
         public bool CheckStudID(string studID)
         {
             url = $"{url}/check_studID.php?studID={studID}";
@@ -64,7 +65,6 @@ namespace IT123P_FinalMP
 
             if (result.Contains("OK!"))
             {
-                //Toast.MakeText(context, "Student ID is available", ToastLength.Short).Show();
                 return true;
             }
             else
@@ -74,10 +74,11 @@ namespace IT123P_FinalMP
             }
 
         }
+
+        // Function to Register the Student
         public void Register(string username, string password, string studID, string studName, string studSchool, string studCourse, string studIdentity)
         {
             url = $"{url}/register.php?uname={username}&pword={password}&studID={studID}&studName={studName}&studSchool={studSchool}&studCourse={studCourse}&studIdentity={studIdentity}";
-
 
             request = (HttpWebRequest)WebRequest.Create(url);
             response = (HttpWebResponse)request.GetResponse();
@@ -87,19 +88,20 @@ namespace IT123P_FinalMP
 
             if (result.Contains("OK!"))
             {
-                NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "Next...", typeof(Dashboard));
-
+                // Successful Registration
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "", typeof(Dashboard));
                 nextActivityHandler.PassDataToNextActivity("username", username);
-
                 nextActivityHandler.NavigateToNextActivity(context);
 
             }
             else
             {
+                // Failed Registration
                 Toast.MakeText(context, "Registration Failed", ToastLength.Short).Show();
             }
         }
 
+        // Function to Login the Student
         public void Login(string username, string password)
         {
             url = $"{url}/login.php?uname={username}&pword={password}";
@@ -112,8 +114,7 @@ namespace IT123P_FinalMP
 
             if (data.Contains("OK!"))
             {
-                //Toast.MakeText(context, "Login Success", ToastLength.Short).Show();
-
+                // Successful Login
                 NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "Login Successful", typeof(Dashboard));
                 nextActivityHandler.PassDataToNextActivity("username", username);
                 nextActivityHandler.PassDataToNextActivity("password", password);
@@ -121,12 +122,12 @@ namespace IT123P_FinalMP
             }
             else
             {
+                // Failed Login
                 Toast.MakeText(context, "Login Failed", ToastLength.Short).Show();
             }
-
-
         }
 
+        // Function to Update the Student's Password
         public bool UpdatePassword(string username, string oldPass, string newPass)
         {
             url = $"{url}/update_password.php?uname={username}&newPass={newPass}&oldPass={oldPass}";
@@ -148,9 +149,5 @@ namespace IT123P_FinalMP
                 return false;
             }
         }
-
-
-
-
     }
 }

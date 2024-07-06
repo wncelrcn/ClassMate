@@ -18,8 +18,9 @@ namespace IT123P_FinalMP
     public class TaskView : AppCompatActivity
     {
         TextView taskNameTxt, taskDescTxt, toDoDateTxt, dueDateTxt, classTxt;
-        Button returnBtn;
+        ImageButton returnBtn;
         string layoutReceiver, username, classCode, className;
+        Button markAsDoneBtn;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -34,6 +35,8 @@ namespace IT123P_FinalMP
             dueDateTxt = FindViewById<TextView>(Resource.Id.dueDate);
             classTxt = FindViewById<TextView>(Resource.Id.taskClass);
 
+            markAsDoneBtn = FindViewById<Button>(Resource.Id.markDoneBtn);
+
             layoutReceiver = Intent.GetStringExtra("layout");
 
             username = Intent.GetStringExtra("username");
@@ -43,13 +46,28 @@ namespace IT123P_FinalMP
 
             taskNameTxt.Text = Intent.GetStringExtra("taskName");
             taskDescTxt.Text = Intent.GetStringExtra("taskDesc");
-            toDoDateTxt.Text = $"Due Date: {Intent.GetStringExtra("toDoDate")}";
-            dueDateTxt.Text = Intent.GetStringExtra("dueDate");
+
+            toDoDateTxt.Text = $"To do Date: {Intent.GetStringExtra("toDoDate")}";
+            dueDateTxt.Text = $"Due Date: {Intent.GetStringExtra("dueDate")}";
+           
             classTxt.Text = $"Class: {Intent.GetStringExtra("taskClass")}";
 
-            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
+            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             returnBtn.Click += ReturnBtn_Click;
 
+            FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
+            FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
+            FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
+            FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
+
+            semiBoldFont.SetFont(taskNameTxt);
+            mediumFont.SetFont(taskDescTxt);
+            regularFont.SetFont(toDoDateTxt);
+            regularFont.SetFont(dueDateTxt);
+            regularFont.SetFont(classTxt);
+            semiBoldFont.SetFont(markAsDoneBtn);
+
+            ButtonStyler.ApplyRoundedCorners(markAsDoneBtn);
         }
 
         public void ReturnBtn_Click(object sender, EventArgs e)

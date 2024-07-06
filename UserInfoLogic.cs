@@ -16,7 +16,6 @@ namespace IT123P_FinalMP
         HttpWebRequest request;
         string url = "http://172.18.11.241:8080/IT123P_FinalMP/REST";
 
-
         private Context context;
 
         public UserInfoLogic(Context context)
@@ -24,7 +23,7 @@ namespace IT123P_FinalMP
             this.context = context;
         }
 
-
+        // Function to Update Student Information
         public void UpdateStudentInfo(string newName, string newStudID, string newCourse, string newSchool, string username)
         {
             url = $"{url}/update_StudInfo.php?uname={username}&studName={newName}&studID={newStudID}&studCourse={newCourse}&studSchool={newSchool}";
@@ -39,7 +38,7 @@ namespace IT123P_FinalMP
             {
                 Toast.MakeText(context, "Student Info Updated", ToastLength.Short).Show();
 
-                NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "Next...", typeof(ViewAccount));
+                NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "", typeof(ViewAccount));
                 nextActivityHandler.PassDataToNextActivity("username", username);
                 nextActivityHandler.NavigateToNextActivity(context);
             }
@@ -49,8 +48,7 @@ namespace IT123P_FinalMP
             }
         }
 
-
-
+        // Function to Get User Details
         public Dictionary<string, string> GetUserDetails(string username)
         {
             url = $"{url}/get_StudInfo.php?username={username}";
@@ -73,8 +71,5 @@ namespace IT123P_FinalMP
 
             return userDetails;
         }
-
-
-
     }
 }

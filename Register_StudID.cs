@@ -15,7 +15,8 @@ namespace IT123P_FinalMP
     public class Register_StudID : AppCompatActivity
     {
         TextView title, desc;
-        Button returnBtn, nextBtn;
+        Button nextBtn;
+        ImageButton returnBtn;
         EditText studID;
         private string username, password;
 
@@ -26,7 +27,7 @@ namespace IT123P_FinalMP
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.register_layout_1);
 
-            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
+            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
            
             nextBtn = FindViewById<Button>(Resource.Id.nextBtn);
             desc = FindViewById<TextView>(Resource.Id.desc);

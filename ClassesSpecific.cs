@@ -19,8 +19,8 @@ namespace IT123P_FinalMP
     public class ClassesSpecific : AppCompatActivity
     {
 
-        Button returnBtn;
-        TextView classCodeTxt, classNameTxt;
+        ImageButton returnBtn;
+        TextView classCodeTxt, classNameTxt, title;
         string classCode, className, username;
         LinearLayout TaskViewContainer;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -34,10 +34,20 @@ namespace IT123P_FinalMP
             className = Intent.GetStringExtra("className");
             username = Intent.GetStringExtra("username");
 
-            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
+            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             
             classCodeTxt = FindViewById<TextView>(Resource.Id.classCodeTxt);
             classNameTxt = FindViewById<TextView>(Resource.Id.classNameTxt);
+            title = FindViewById<TextView>(Resource.Id.title);
+
+            FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
+            FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
+            FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
+            FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
+
+            boldFont.SetFont(classCodeTxt);
+            regularFont.SetFont(classNameTxt);
+            semiBoldFont.SetFont(title);
 
             TaskViewContainer = FindViewById<LinearLayout>(Resource.Id.taskViewContainer);
 

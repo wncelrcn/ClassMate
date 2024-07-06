@@ -16,7 +16,8 @@ namespace IT123P_FinalMP
     public class Register_Course : AppCompatActivity
     {
         TextView title;
-        Button returnBtn, nextBtn;
+        Button nextBtn;
+        ImageButton returnBtn;
         EditText course;
         private string username, password, studID, studName, studSchool;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -26,7 +27,7 @@ namespace IT123P_FinalMP
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.register_layout_4);
 
-            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
+            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             title = FindViewById<TextView>(Resource.Id.title);
             nextBtn = FindViewById<Button>(Resource.Id.nextBtn);
 

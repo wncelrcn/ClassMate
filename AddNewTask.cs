@@ -14,7 +14,8 @@ namespace IT123P_FinalMP
     public class AddNewTask : AppCompatActivity
     {
         private EditText toDoDateTxt, dueDateTxt, taskNameTxt, taskDescTxt;
-        private Button returnBtn, addTaskBtn;
+        private Button addTaskBtn;
+        private ImageButton returnBtn;
         private string layoutReceiver, username, classCode, className;
         NextActivityHandler nextActivityHandler;
         UserClass userClass;
@@ -33,7 +34,7 @@ namespace IT123P_FinalMP
             classCode = Intent.GetStringExtra("classCode");
             className = Intent.GetStringExtra("className");
 
-            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
+            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             addTaskBtn = FindViewById<Button>(Resource.Id.addTaskBtn);
 
             taskNameTxt = FindViewById<EditText>(Resource.Id.taskNameTxt);
@@ -41,6 +42,12 @@ namespace IT123P_FinalMP
             toDoDateTxt = FindViewById<EditText>(Resource.Id.toDoDateTxt);
             dueDateTxt = FindViewById<EditText>(Resource.Id.dueDateTxt);
 
+
+
+            FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
+            FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
+            FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
+            FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
 
 
             classSpinner = FindViewById<Spinner>(Resource.Id.classSpinner);

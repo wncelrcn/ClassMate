@@ -13,7 +13,8 @@ namespace IT123P_FinalMP
     public class EditStudentInfo : AppCompatActivity
     {
         TextView title, nameLbl, studIDLbl, courseLbl, schoolLbl;
-        Button returnBtn, updateBtn;
+        Button updateBtn;
+        ImageButton returnBtn;
         EditText nameTxt, studIdTxt, courseTxt, schoolTxt;
         string username;
         Dictionary<string, string> studInfo;
@@ -25,7 +26,7 @@ namespace IT123P_FinalMP
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.editstudentinfo_layout);
 
-            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
+            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             updateBtn = FindViewById<Button>(Resource.Id.updateBtn);
 
             title = FindViewById<TextView>(Resource.Id.title);

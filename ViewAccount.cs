@@ -21,6 +21,7 @@ namespace IT123P_FinalMP
         BottomNavigationView bottomNavigationView;
         TextView title, studName, studUsername, studID, studCourse, studSchool;
         Button editStudInfoBtn, logOutBtn, editAccBtn;
+        
         string username, sID, sName, sSchool, sCourse, sIdentity;
         Dictionary<string, string> studInfo;
 
@@ -31,17 +32,22 @@ namespace IT123P_FinalMP
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.account_layout);
 
+            // Widgets Initialization
             bottomNavigationView = FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation_view);
+            
             studName = FindViewById<TextView>(Resource.Id.studNameTxt);
             studUsername = FindViewById<TextView>(Resource.Id.studUsernameTxt);
             studID = FindViewById<TextView>(Resource.Id.studIDTxt);
             studCourse = FindViewById<TextView>(Resource.Id.studCourseTxt);
             studSchool = FindViewById<TextView>(Resource.Id.studSchoolTxt);
             editStudInfoBtn = FindViewById<Button>(Resource.Id.editStudInfoBtn);
+            title = FindViewById<TextView>(Resource.Id.title);
+            
             editAccBtn = FindViewById<Button>(Resource.Id.editAccBtn);
             logOutBtn = FindViewById<Button>(Resource.Id.logOutBtn);
-            title = FindViewById<TextView>(Resource.Id.title);
 
+
+            // Set Fonts
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
@@ -57,29 +63,25 @@ namespace IT123P_FinalMP
             semiBoldFont.SetFont(logOutBtn);
             semiBoldFont.SetFont(editAccBtn);
 
+            // Get Intent Data
             username = Intent.GetStringExtra("username");
-            
 
-
-            // Set the selected item to "Account"
+            // Set the Bottom Navigation View
             bottomNavigationView.SelectedItemId = Resource.Id.navigation_account;
-
             bottomNavigationView.NavigationItemSelected += BottomNavigationView_NavigationItemSelected;
 
+
             // Set the user's information
-
             UserInfoLogic userGetInfo = new UserInfoLogic(this);
-
-
             studInfo = userGetInfo.GetUserDetails(username);
-
             SetStudentInfo();
 
-
+            // Button Styling
             ButtonStyler.ApplyRoundedCorners(editStudInfoBtn);
             ButtonStyler.ApplyRoundedCorners(logOutBtn);
             ButtonStyler.ApplyRoundedCorners(editAccBtn);
 
+            // Button Click Events
             editStudInfoBtn.Click += EditBtn_Click;
             logOutBtn.Click += logOutBtn_Click;
             editAccBtn.Click += editAccBtn_Click;

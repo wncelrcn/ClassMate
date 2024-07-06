@@ -30,7 +30,6 @@ namespace IT123P_FinalMP
             this.dataDictionary = new Dictionary<string, string>();
         }
 
-
         public NextActivityHandler(Context context, Type currClass)
         {
             this.context = context;
@@ -53,8 +52,6 @@ namespace IT123P_FinalMP
             context.StartActivity(intent);
 
         }
-
-
 
         // Adds a key-value pair to the data dictionary
         public void PassDataToNextActivity(string key, string value)

@@ -12,7 +12,8 @@ namespace IT123P_FinalMP
     [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
     public class EditAccCredentials : AppCompatActivity
     {
-        Button returnBtn, updateBtn;
+        Button updateBtn;
+        ImageButton returnBtn;
         EditText usernameTxt, oldpasswordTxt, newpasswordTxt, confirmpasswordTxt;
         TextView title, usernameLbl, passwordLbl;
         string username;
@@ -26,7 +27,7 @@ namespace IT123P_FinalMP
 
             username = Intent.GetStringExtra("username");
 
-            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
+            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             updateBtn = FindViewById<Button>(Resource.Id.updateBtn);
 
             usernameLbl = FindViewById<TextView>(Resource.Id.usernameLbl);

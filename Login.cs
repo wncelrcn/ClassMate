@@ -16,7 +16,8 @@ namespace IT123P_FinalMP
     [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
     public class Login : AppCompatActivity
     {
-        Button loginButton, returnBtn;
+        Button loginButton;
+        ImageButton returnBtn;
         EditText loginText, passwordText;
         TextView registerText, titleText, descText;
 
@@ -27,18 +28,18 @@ namespace IT123P_FinalMP
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.login_layout);
 
+            // Initialize Widgets Components
             loginButton = FindViewById<Button>(Resource.Id.loginBtn);
+            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             loginText = FindViewById<EditText>(Resource.Id.usernameTxt);
             passwordText = FindViewById<EditText>(Resource.Id.passwordTxt);
             registerText = FindViewById<TextView>(Resource.Id.registerTxt);
             descText = FindViewById<TextView>(Resource.Id.desc);
-            returnBtn = FindViewById<Button>(Resource.Id.returnBtn);
 
-            
-
-            // title
+            // Set Title
             titleText = FindViewById<TextView>(Resource.Id.title);
 
+            // Font Styling
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
@@ -51,20 +52,20 @@ namespace IT123P_FinalMP
             regularFont.SetFont(passwordText);
             semiBoldFont.SetFont(loginButton);
 
+            // Button Click Events
             loginButton.Click += LoginButton_Click;
             returnBtn.Click += ReturnBtn_Click;
 
+            // Register Text Link Clickable
             string text = "Don't have an account? Sign up here!";
             SpannableString spannableString = new SpannableString(text);
-
             ClickableSpan clickableSpan = new CustomClickableSpan(this);
             spannableString.SetSpan(clickableSpan, 23, text.Length, SpanTypes.ExclusiveExclusive);
-
             registerText.TextFormatted = spannableString;
             registerText.MovementMethod = LinkMovementMethod.Instance;
 
+            // Button Styling
             ButtonStyler.ApplyRoundedCorners(loginButton);
-
         }
 
         private class CustomClickableSpan : ClickableSpan
@@ -85,31 +86,30 @@ namespace IT123P_FinalMP
             public override void UpdateDrawState(TextPaint ds)
             {
                 base.UpdateDrawState(ds);
-                ds.Color = Android.Graphics.Color.Blue; // Change text color
-                ds.UnderlineText = false; // Remove underline
+                ds.Color = Android.Graphics.Color.Blue;  
+                ds.UnderlineText = false; 
             }
         }
 
+        // Login Button Click Event
         private void LoginButton_Click(object sender, System.EventArgs e)
         {
             string username = loginText.Text;
             string password = passwordText.Text;
 
+            // Validation
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 Toast.MakeText(this, "Please fill up all fields", ToastLength.Short).Show();
             }
             else
             {
-                //Toast.MakeText(this, "Add Login Validation and Proceed to Home Page", ToastLength.Short).Show();
                 UserConnection userConnection = new UserConnection(this);
                 userConnection.Login(username, password);
             }
-
-
-
         }
 
+        // Return Button Click Event
         public void ReturnBtn_Click(object sender, System.EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Returning...", typeof(Landing));

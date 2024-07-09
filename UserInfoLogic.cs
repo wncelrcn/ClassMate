@@ -11,7 +11,7 @@ namespace IT123P_FinalMP
 {
     internal class UserInfoLogic
     {
-
+        // HttpWebResponse and HttpWebRequest for REST API
         HttpWebResponse response;
         HttpWebRequest request;
         string url = "http://192.168.100.11/IT123P_FinalMP/REST";
@@ -33,7 +33,7 @@ namespace IT123P_FinalMP
             StreamReader reader = new StreamReader(response.GetResponseStream());
 
             var result = reader.ReadToEnd();
-
+            // If the result contains "OK!", show a toast message that the student info is updated
             if (result.Contains("OK!"))
             {
                 Toast.MakeText(context, "Student Info Updated", ToastLength.Short).Show();
@@ -42,6 +42,7 @@ namespace IT123P_FinalMP
                 nextActivityHandler.PassDataToNextActivity("username", username);
                 nextActivityHandler.NavigateToNextActivity(context);
             }
+            // If the result contains "NO!", show a toast message that the student info is not updated
             else
             {
                 Toast.MakeText(context, "Student Info not Updated", ToastLength.Short).Show();
@@ -59,11 +60,14 @@ namespace IT123P_FinalMP
 
             var result = reader.ReadToEnd();
 
+            // Parse the JSON result
             using JsonDocument doc = JsonDocument.Parse(result);
             JsonElement root = doc.RootElement;
 
+            // Create a dictionary to store the user details
             var userDetails = new Dictionary<string, string>();
 
+            // Store the user details in the dictionary
             foreach (JsonProperty property in root[0].EnumerateObject())
             {
                 userDetails[property.Name] = property.Value.GetString();

@@ -17,7 +17,7 @@ namespace IT123P_FinalMP
     [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class ViewAccount : AppCompatActivity
     {
-
+        // widget declarations
         BottomNavigationView bottomNavigationView;
         TextView title, studName, studUsername, studID, studCourse, studSchool;
         Button editStudInfoBtn, logOutBtn, editAccBtn;
@@ -31,7 +31,7 @@ namespace IT123P_FinalMP
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            // Set our view from the "main" layout resource
+           
             SetContentView(Resource.Layout.account_layout);
 
             // Widgets Initialization
@@ -44,10 +44,8 @@ namespace IT123P_FinalMP
             studSchool = FindViewById<TextView>(Resource.Id.studSchoolTxt);
             editStudInfoBtn = FindViewById<Button>(Resource.Id.editStudInfoBtn);
             title = FindViewById<TextView>(Resource.Id.title);
-            
             editAccBtn = FindViewById<Button>(Resource.Id.editAccBtn);
             logOutBtn = FindViewById<Button>(Resource.Id.logOutBtn);
-
             profilePic = FindViewById<ImageView>(Resource.Id.profilePic);
 
             // Set Fonts
@@ -91,6 +89,7 @@ namespace IT123P_FinalMP
             editAccBtn.Click += editAccBtn_Click;
         }
 
+        // Button Click Event for Edit Account Credentials
         private void editAccBtn_Click(object sender, EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(EditAccCredentials));
@@ -98,6 +97,7 @@ namespace IT123P_FinalMP
             nextActivityHandler.NavigateToNextActivity(this);
         }
 
+        // Button Click Event for Edit Student Information
         private void EditBtn_Click(object sender, EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(EditStudentInfo));
@@ -105,12 +105,14 @@ namespace IT123P_FinalMP
             nextActivityHandler.NavigateToNextActivity(this);
         }
 
+        // Button Click Event for Log Out
         public void logOutBtn_Click(object sender, EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Landing));
             nextActivityHandler.NavigateToNextActivity(this);
         }
 
+        // Set the student's information to the text fields
         public void SetStudentInfo()
         {
             studName.Text = studInfo["studName"];

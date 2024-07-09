@@ -15,6 +15,7 @@ namespace IT123P_FinalMP
 {
     internal class UserTask
     {
+        // HttpWebResponse and HttpWebRequest for REST API
         HttpWebResponse response;
         HttpWebRequest request;
         string result;
@@ -22,22 +23,25 @@ namespace IT123P_FinalMP
         LinearLayout currLayout;
         private Context context;
 
-
+        // Constructor
         public UserTask(Context context)
         {
             this.context = context;
         }
 
+        // Constructor with LinearLayout parameter
         public UserTask(Context context, LinearLayout currLayout)
         {
             this.context = context;
             this.currLayout = currLayout;
         }
 
+        // Function to Get Tasks Per Class
         public async Task GetTaskPerClass(string username, string classCode, string className)
         {
             try
             {
+                // Fetch the tasks
                 await FetchTasks(username, classCode, className);
             }
             catch (Exception ex)
@@ -46,12 +50,16 @@ namespace IT123P_FinalMP
             }
         }
 
+        // Function to Fetch Tasks
         private async Task FetchTasks(string username, string taskClass, string className)
         {
+
+            // URL to get the tasks per class
             string requestUrl = $"{url}/get_TaskPerClass.php?username={username}&taskClass={taskClass}";
 
             try
             {
+                // Create a new HttpWebRequest
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
                 request.Method = "GET";
 
@@ -60,15 +68,19 @@ namespace IT123P_FinalMP
                 {
                     var result = await reader.ReadToEndAsync();
                     
-
+                    // Debug API response
                     using JsonDocument doc = JsonDocument.Parse(result);
                     JsonElement root = doc.RootElement;
 
+                    // Check if the JSON is an array
                     if (root.ValueKind == JsonValueKind.Array)
                     {
+
+                        // Create a list of tasks
                         var userTasks = new List<Dictionary<string, string>>();
                         foreach (JsonElement item in root.EnumerateArray())
                         {
+                            // Add the task to the list
                             var task = new Dictionary<string, string>
                             {
                                 { "taskName", item.GetProperty("taskName").GetString() },
@@ -85,6 +97,7 @@ namespace IT123P_FinalMP
                             };
                             userTasks.Add(task);
                         }
+                        // Create the task layout
                         ((Activity)context).RunOnUiThread(() => CreateTaskLayout(userTasks, "class"));
                     }
                     else
@@ -99,11 +112,12 @@ namespace IT123P_FinalMP
             }
         }
 
-
+        // Function to Get Tasks Per Date
         public async Task GetTasksPerDate(string username, string date)
         {
             try
             {
+                // Check if the date is valid
                 if (IsValidDate(date, out DateTime validDate))
                 {
                     await FetchTasks(username, validDate);
@@ -113,6 +127,7 @@ namespace IT123P_FinalMP
                     // Attempt to reformat the date if invalid
                     date = ReformatDate(date);
 
+                    // Check if the date is valid
                     if (IsValidDate(date, out validDate))
                     {
                         await FetchTasks(username, validDate);
@@ -130,8 +145,10 @@ namespace IT123P_FinalMP
             }
         }
 
+        // Function to Fetch Tasks
         private async Task FetchTasks(string username, DateTime date)
         {
+            // Convert the date to string
             string convertedDateStr = date.ToString("yyyy-MM-dd");
             string requestUrl = $"{url}/get_TaskPerDate.php?username={username}&date={convertedDateStr}";
 
@@ -144,16 +161,19 @@ namespace IT123P_FinalMP
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                 {
                     var result = await reader.ReadToEndAsync();
-                    Console.WriteLine($"API Response: {result}"); // Debug API response
-
+                    
+                    // Debug API response
                     using JsonDocument doc = JsonDocument.Parse(result);
                     JsonElement root = doc.RootElement;
 
+
                     if (root.ValueKind == JsonValueKind.Array)
                     {
+                        // Create a list of tasks
                         var userTasks = new List<Dictionary<string, string>>();
                         foreach (JsonElement item in root.EnumerateArray())
                         {
+                            // Add the task to the list
                             var task = new Dictionary<string, string>
                             {
                                 { "taskName", item.GetProperty("taskName").GetString() },
@@ -166,6 +186,8 @@ namespace IT123P_FinalMP
                             };
                             userTasks.Add(task);
                         }
+
+                        // Create the task layout
                         ((Activity)context).RunOnUiThread(() => CreateTaskLayout(userTasks, "dashboard"));
                     }
                     else
@@ -181,10 +203,12 @@ namespace IT123P_FinalMP
             }
         }
 
+        // Function to Create Task Layout
         public void CreateTaskLayout(List<Dictionary<string, string>> tasks, string layout)
         {
             try
             {
+                // Clear the current layout
                 currLayout.RemoveAllViews();
 
                 // Initialize your FontHandler instances
@@ -202,24 +226,24 @@ namespace IT123P_FinalMP
                         Text = "You currently have no tasks."
                     };
                     noTasksTextView.SetTextColor(Android.Graphics.Color.Black);
-                    noTasksTextView.SetTextSize(Android.Util.ComplexUnitType.Sp, 20); // Set text size to 18sp
-                    mediumFont.SetFont(noTasksTextView); // Set the medium font
+                    noTasksTextView.SetTextSize(Android.Util.ComplexUnitType.Sp, 20); 
+                    mediumFont.SetFont(noTasksTextView);
 
                     // Create layout parameters with top margin
                     LinearLayout.LayoutParams noTasksLayoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WrapContent,
                         LinearLayout.LayoutParams.WrapContent
                     );
-                    noTasksLayoutParams.SetMargins(0, 70, 0, 0); // Add top margin of 50px
+                    noTasksLayoutParams.SetMargins(0, 70, 0, 0);
                     noTasksLayoutParams.Gravity = GravityFlags.Center;
 
-                    // Apply the layout parameters to the TextView
+                    
                     noTasksTextView.LayoutParameters = noTasksLayoutParams;
 
-                    // Add the TextView to the parent container
+                    
                     currLayout.AddView(noTasksTextView);
 
-                    // Exit the method early since there are no tasks to display
+                    
                     return;
                 }
 
@@ -251,28 +275,28 @@ namespace IT123P_FinalMP
                         Orientation = Orientation.Vertical
                     };
 
-                    linearLayout.SetBackgroundColor(Android.Graphics.Color.ParseColor(backgroundColor)); // Set background color
+                    linearLayout.SetBackgroundColor(Android.Graphics.Color.ParseColor(backgroundColor));
 
-                    // Create layout parameters with margins
+                    // Create layout parameters
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MatchParent,
                         LinearLayout.LayoutParams.WrapContent
                     );
                     layoutParams.SetMargins(0, 0, 0, 50);
 
-                    // Apply the layout parameters to the LinearLayout
+                    
                     linearLayout.LayoutParameters = layoutParams;
-                    linearLayout.SetPadding(20, 20, 20, 20); // Adding padding
+                    linearLayout.SetPadding(20, 20, 20, 20);
 
                     // Create a TextView for the task name
                     TextView textViewName = new TextView(context)
                     {
-                        Text = task["taskName"] // Ensure it's converted to string
+                        Text = task["taskName"] 
                     };
-                    textViewName.SetPadding(10, 10, 0, 10); // Adding padding below the text
+                    textViewName.SetPadding(10, 10, 0, 10);
                     textViewName.SetTextColor(Android.Graphics.Color.Black);
-                    textViewName.SetTextSize(Android.Util.ComplexUnitType.Sp, 24); // Set text size to 24sp
-                    semiBoldFont.SetFont(textViewName); // Set the semibold font
+                    textViewName.SetTextSize(Android.Util.ComplexUnitType.Sp, 24);
+                    semiBoldFont.SetFont(textViewName);
 
                     // Add the task name TextView to the LinearLayout
                     linearLayout.AddView(textViewName);
@@ -280,33 +304,33 @@ namespace IT123P_FinalMP
                     // Create a TextView for the task course code
                     TextView textViewCourse = new TextView(context)
                     {
-                        Text = task["taskClass"] // Ensure it's converted to string
+                        Text = task["taskClass"]
                     };
-                    textViewCourse.SetPadding(10, 0, 0, 10); // Adding padding below the text
+                    textViewCourse.SetPadding(10, 0, 0, 10);
                     textViewCourse.SetTextColor(Android.Graphics.Color.Gray);
-                    textViewCourse.SetTextSize(Android.Util.ComplexUnitType.Sp, 18); // Set text size to 18sp
-                    mediumFont.SetFont(textViewCourse); // Set the medium font
+                    textViewCourse.SetTextSize(Android.Util.ComplexUnitType.Sp, 18);
+                    mediumFont.SetFont(textViewCourse);
 
                     // Add the task course code TextView to the LinearLayout
                     linearLayout.AddView(textViewCourse);
 
-                    // Create a TextView for the due date
+                    
                     TextView textViewDueDate = new TextView(context)
                     {
-                        Text = "Due Date: " + task["dueDate"] // Ensure it's converted to string
+                        Text = "Due Date: " + task["dueDate"]
                     };
-                    textViewDueDate.SetPadding(10, 0, 0, 10); // Adding padding below the text
+                    textViewDueDate.SetPadding(10, 0, 0, 10);
                     textViewDueDate.SetTextColor(Android.Graphics.Color.Gray);
-                    textViewDueDate.SetTextSize(Android.Util.ComplexUnitType.Sp, 18); // Set text size to 18sp
-                    regularFont.SetFont(textViewDueDate); // Set the regular font
+                    textViewDueDate.SetTextSize(Android.Util.ComplexUnitType.Sp, 18);
+                    regularFont.SetFont(textViewDueDate); 
 
-                    // Add the due date TextView to the LinearLayout
+                    
                     linearLayout.AddView(textViewDueDate);
 
-                    // Add the LinearLayout to the parent container
+                    
                     currLayout.AddView(linearLayout);
 
-                    // Attach click event to the LinearLayout if you want to handle clicks
+                    
                     linearLayout.Click += (sender, e) =>
                     {
                         NextActivityHandler nextActivity = new NextActivityHandler(context, typeof(TaskView));
@@ -335,16 +359,19 @@ namespace IT123P_FinalMP
             }
         }
 
-
+        // Function to Insert Task
         public void InsertTask(string username, string taskName, string taskDesc, bool isDone, string toDoDate, string dueDate, string taskClass)
         {
             try
             {
+                // Check if the date is valid
                 if (IsValidDate(toDoDate, out DateTime validToDoDate) && IsValidDate(dueDate, out DateTime validDueDate))
                 {
+                    // Convert the dates to string
                     string convertedDateStrTDD = validToDoDate.ToString("yyyy-MM-dd");
                     string convertedDateStrDD = validDueDate.ToString("yyyy-MM-dd");
 
+                    // URL to add a task
                     string requestUrl = $"{url}/add_task.php?username={username}&taskName={taskName}&taskDesc={taskDesc}&isDone={isDone}&toDoDate={convertedDateStrTDD}&dueDate={convertedDateStrDD}&taskClass={taskClass}";
 
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
@@ -353,6 +380,8 @@ namespace IT123P_FinalMP
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
                         string result = reader.ReadToEnd();
+
+                        // If the result contains "OK!", show a toast message that the task is added
                         if (result.Contains("OK!"))
                         {
                             Toast.MakeText(context, "Task Added.", ToastLength.Short).Show();
@@ -369,8 +398,10 @@ namespace IT123P_FinalMP
                     toDoDate = ReformatDate(toDoDate);
                     dueDate = ReformatDate(dueDate);
 
+                    // Check if the date is valid
                     if (IsValidDate(toDoDate, out validToDoDate) && IsValidDate(dueDate, out validDueDate))
                     {
+                        // Convert the dates to string
                         string convertedDateStrTDD = validToDoDate.ToString("yyyy-MM-dd");
                         string convertedDateStrDD = validDueDate.ToString("yyyy-MM-dd");
 
@@ -381,6 +412,7 @@ namespace IT123P_FinalMP
 
                         using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                         {
+                            // If the result contains "OK!", show a toast message that the task is added
                             string result = reader.ReadToEnd();
                             if (result.Contains("OK!"))
                             {
@@ -404,7 +436,7 @@ namespace IT123P_FinalMP
             }
         }
 
-
+        // Function to Update Task if it is Done already
         public void TaskDone(string username, string taskName, string taskClass)
         {
             try
@@ -416,6 +448,7 @@ namespace IT123P_FinalMP
 
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                 {
+                    // If the result contains "OK!", show a toast message that the task is marked as done
                     string result = reader.ReadToEnd();
                     if (result.Contains("OK!"))
                     {
@@ -433,7 +466,7 @@ namespace IT123P_FinalMP
             }
         }
 
-
+        // Function to Delete Task
         public void DeleteTask(string username, string taskName, string taskClass)
         {
             string requestUrl = $"{url}/delete_task.php?username={username}&taskName={taskName}&taskClass={taskClass}";
@@ -443,7 +476,8 @@ namespace IT123P_FinalMP
             StreamReader reader = new StreamReader(response.GetResponseStream());
 
             var result = reader.ReadToEnd();
-
+            
+            // If the result contains "OK!", show a toast message that the task is deleted
             if (result.Contains("OK!"))
             {
                 Toast.MakeText(context, "Task Deleted.", ToastLength.Short).Show();
@@ -460,17 +494,22 @@ namespace IT123P_FinalMP
 
         }
 
+        // Function to Check if the Date is Valid
         static bool IsValidDate(string date, out DateTime validDate)
         {
+            // Array of date formats
             string[] formats = { "d/M/yyyy", "dd/M/yyyy", "d/MM/yyyy", "dd/MM/yyyy" };
+
+            // Check if the date is valid
             bool isValid = DateTime.TryParseExact(date, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out validDate);
             return isValid;
         }
-
+        // Function to Reformat the Date
         static string ReformatDate(string date)
         {
             try
             {
+                // Attempt to parse the date
                 DateTime parsedDate = DateTime.ParseExact(date, "d/M/yyyy", CultureInfo.InvariantCulture);
                 return parsedDate.ToString("dd/MM/yyyy");
             }

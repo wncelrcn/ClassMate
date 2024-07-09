@@ -39,6 +39,7 @@ namespace IT123P_FinalMP
             maleRadBtn = FindViewById<RadioButton>(Resource.Id.maleRadGrp);
             noRadBtn = FindViewById<RadioButton>(Resource.Id.noRadGrp);
 
+            // fetch data from previous activity
             username = Intent.GetStringExtra("username");
             password = Intent.GetStringExtra("password");
             studID = Intent.GetStringExtra("studID");
@@ -46,11 +47,14 @@ namespace IT123P_FinalMP
             studSchool = Intent.GetStringExtra("studSchool");
             studCourse = Intent.GetStringExtra("studCourse");
 
+            // event handlers for buttons
             returnBtn.Click += ReturnBtn_Click;
             nextBtn.Click += NextBtn_Click;
 
+            // Apply rounded corners to buttons
             Styler.ApplyRoundedCorners(nextBtn);
 
+            // font styles
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
@@ -63,6 +67,7 @@ namespace IT123P_FinalMP
             mediumFont.SetFont(noRadBtn);
         }
 
+        // event handlers for return button
         public void ReturnBtn_Click(object sender, System.EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Returning...", typeof(Register_Course));
@@ -75,21 +80,25 @@ namespace IT123P_FinalMP
             nextActivityHandler.NavigateToNextActivity(this);
         }
 
+        // event handlers for next button
         public void NextBtn_Click(object sender, System.EventArgs e)
         {
             int selectedId = identityGroup.CheckedRadioButtonId;
-
+            // if no radio button is selected
             if (selectedId == -1)
             {
 
                 Toast.MakeText(this, "Please select your identity.", ToastLength.Short).Show();
             }
+            // if a radio button is selected
             else
             {
+                // get the selected radio button
 
                 RadioButton selectedRadioButton = FindViewById<RadioButton>(selectedId);
                 string selectedText = selectedRadioButton.Text;
 
+                // pass data to next activity
                 NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_PrivatePolicy));
                 nextActivityHandler.PassDataToNextActivity("username", username);
                 nextActivityHandler.PassDataToNextActivity("password", password);

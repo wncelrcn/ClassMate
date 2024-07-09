@@ -19,6 +19,8 @@ namespace IT123P_FinalMP
     [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class TaskView : AppCompatActivity
     {
+
+        // widget declarations
         TextView taskNameTxt, taskDescTxt, toDoDateTxt, dueDateTxt, classTxt, separator;
         ImageButton returnBtn, deleteBtn;
         Button markAsDoneBtn, startStopButton, resetBtn;
@@ -34,9 +36,9 @@ namespace IT123P_FinalMP
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            // Set our view from the "main" layout resource
+            
             SetContentView(Resource.Layout.taskview_layout);
-
+            // widget initialization
             taskDescTxt = FindViewById<TextView>(Resource.Id.taskDesc);
             taskNameTxt = FindViewById<TextView>(Resource.Id.taskTitle);
             toDoDateTxt = FindViewById<TextView>(Resource.Id.toDoDate);
@@ -50,32 +52,33 @@ namespace IT123P_FinalMP
             timerMinuteText = FindViewById<EditText>(Resource.Id.timerMinuteText);
             timerSecondText = FindViewById<EditText>(Resource.Id.timerSecondText);
             layoutPomodoro = FindViewById<LinearLayout>(Resource.Id.layoutPomodoro);
+            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             Styler.ApplyRoundedCorners(layoutPomodoro, Color.ParseColor("#DDEDEA"));
 
-
+            // fetch data from previous activity
             layoutReceiver = Intent.GetStringExtra("layout");
-
             username = Intent.GetStringExtra("username");
             classCode = Intent.GetStringExtra("classCode");
             className = Intent.GetStringExtra("className");
 
-
-            taskNameTxt.Text = Intent.GetStringExtra("taskName");
-            taskDescTxt.Text = Intent.GetStringExtra("taskDesc");
-
-            toDoDateTxt.Text = $"To do Date: {Intent.GetStringExtra("toDoDate")}";
-            dueDateTxt.Text = $"Due Date: {Intent.GetStringExtra("dueDate")}";
-           
-            classTxt.Text = $"Class: {Intent.GetStringExtra("taskClass")}";
-
             tN = Intent.GetStringExtra("taskName");
             cC = Intent.GetStringExtra("taskClass");
 
-            returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
+            // set data to widgets
+            taskNameTxt.Text = Intent.GetStringExtra("taskName");
+            taskDescTxt.Text = Intent.GetStringExtra("taskDesc");
+            toDoDateTxt.Text = $"To do Date: {Intent.GetStringExtra("toDoDate")}";
+            dueDateTxt.Text = $"Due Date: {Intent.GetStringExtra("dueDate")}";
+            classTxt.Text = $"Class: {Intent.GetStringExtra("taskClass")}";
+
+           
+            
+            // event handlers for buttons
             returnBtn.Click += ReturnBtn_Click;
             markAsDoneBtn.Click += MarkAsDoneBtn_Click;
             deleteBtn.Click += DeleteBtn_Click;
 
+            // font styles
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
@@ -95,29 +98,37 @@ namespace IT123P_FinalMP
             mediumFont.SetFont(timerSecondText);
             Styler.ApplyRoundedCorners(markAsDoneBtn);
 
+            // Pomodoro Timer
             timerMinuteText = FindViewById<EditText>(Resource.Id.timerMinuteText);
             timerSecondText = FindViewById<EditText>(Resource.Id.timerSecondText);
 
+            // Set filters for input to limit to 2 digits only (00:00)
             timerMinuteText.SetFilters(new IInputFilter[] { new InputFilterLengthFilter(2) });
             timerSecondText.SetFilters(new IInputFilter[] { new InputFilterLengthFilter(2) });
 
+            // Event handlers for input validation
             timerMinuteText.TextChanged += (sender, e) =>
             {
+                // Validate input
                 ValidateInput(sender as EditText, e);
             };
+
 
             timerSecondText.TextChanged += (sender, e) =>
             {
                 ValidateInput(sender as EditText, e);
             };
 
+            // Event handler for start/stop button
             startStopButton.Click += PomodoroBtn_Click;
             resetBtn.Click += ResetTimer_Click;
 
         }
 
+        // Event handler for reset button
         public void ResetTimer_Click(object sender, EventArgs e)
         {
+            // Reset timer to 00:00
             timerMinuteText.Text = "00";
             timerSecondText.Text = "00";
             isRunning = false;
@@ -125,8 +136,10 @@ namespace IT123P_FinalMP
             pomodoroLogic?.StopPomodoro();
         }
 
+        // Event handler for start/stop button
         public void PomodoroBtn_Click(object sender, EventArgs e)
         {
+            // Check if timer is set to 00:00
             if (timerMinuteText.Text == "00" && timerSecondText.Text == "00")
             {
                 Toast.MakeText(this, "Please input a valid time.", ToastLength.Short).Show();
@@ -136,6 +149,7 @@ namespace IT123P_FinalMP
                 return;
             }
 
+            // Start/Stop timer
             if (isRunning)
             {
                 pomodoroLogic?.StopPomodoro();
@@ -156,21 +170,26 @@ namespace IT123P_FinalMP
 
 
 
-
+    // Validate input for timer
     private void ValidateInput(EditText editText, TextChangedEventArgs e)
         {
+            // Get input from EditText
             string input = editText.Text;
             if (input.Length > 2)
             {
+                // Limit input to 2 characters
                 editText.Text = input.Substring(0, 2);
                 editText.SetSelection(editText.Text.Length); // Move cursor to the end
             }
             else
             {
+                // Check if input is not a digit
                 foreach (char c in input)
                 {
+                    // Remove non-digit characters
                     if (!char.IsDigit(c))
                     {
+                        // Remove non-digit character
                         editText.Text = input.Remove(input.IndexOf(c), 1);
                         editText.SetSelection(editText.Text.Length); // Move cursor to the end
                         break;
@@ -179,9 +198,10 @@ namespace IT123P_FinalMP
             }
         }
     
-
+    // Event handler for return button
     public void ReturnBtn_Click(object sender, EventArgs e)
         {
+            // Return to ClassesSpecific view if user came from there
             if (layoutReceiver == "class")
             {
                 NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(ClassesSpecific));
@@ -190,6 +210,7 @@ namespace IT123P_FinalMP
                 nextActivityHandler.PassDataToNextActivity("username", Intent.GetStringExtra("username"));
                 nextActivityHandler.NavigateToNextActivity(this);
             }
+            // Return to Dashboard if user came from there
             else if (layoutReceiver == "dashboard")
             {
                 NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(Dashboard));
@@ -203,10 +224,13 @@ namespace IT123P_FinalMP
 
         }
 
+        // Event handler for delete button
         public void DeleteBtn_Click(object sender, EventArgs e)
         {
+            // Show dialog to confirm deletion
             DialogButtonClickHandler onOkayClick = () =>
             {
+                // Delete task
                 UserTask userTask = new UserTask(this);
 
                 userTask.DeleteTask(username, tN, cC);
@@ -229,18 +253,21 @@ namespace IT123P_FinalMP
 
                 return true;
             };
-
+            // Cancel deletion
             DialogButtonClickHandler onCancelClick = () =>
             {
                 return false;
             };
 
+            // Show dialog
             custom_dialog dialog = new custom_dialog(this, "Are you sure you want to delete this task?", onOkayClick, onCancelClick);
             dialog.Show();
         }
 
+        // Event handler for mark as done button
         public void MarkAsDoneBtn_Click(object sender, EventArgs e)
         {
+            // Mark task as done
             UserTask userTask = new UserTask(this);
             userTask.TaskDone(username, tN, cC);
 

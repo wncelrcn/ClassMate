@@ -14,6 +14,7 @@ namespace IT123P_FinalMP
     [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class Register_PrivatePolicy : AppCompatActivity
     {
+        // widget declarations
         TextView title, desc;
         Button nextBtn;
         ImageButton returnBtn;
@@ -23,15 +24,17 @@ namespace IT123P_FinalMP
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            // Set our view from the "main" layout resource
+            
             SetContentView(Resource.Layout.register_layout_6);
 
+            // widget initialization
             returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             title = FindViewById<TextView>(Resource.Id.title);
             nextBtn = FindViewById<Button>(Resource.Id.nextBtn);
             desc = FindViewById<TextView>(Resource.Id.desc);
             checkBox = FindViewById<CheckBox>(Resource.Id.agreeCheckBox);
 
+            // fetch data from previous activity
             username = Intent.GetStringExtra("username");
             password = Intent.GetStringExtra("password");
             studID = Intent.GetStringExtra("studID");
@@ -40,12 +43,14 @@ namespace IT123P_FinalMP
             studCourse = Intent.GetStringExtra("studCourse");
             studIdentity = Intent.GetStringExtra("studIdentity");
 
+            // event handlers for buttons
             returnBtn.Click += ReturnBtn_Click;
             nextBtn.Click += NextBtn_Click;
 
+            // Apply rounded corners to buttons
             Styler.ApplyRoundedCorners(nextBtn);
 
-
+            // font styles
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
@@ -57,6 +62,7 @@ namespace IT123P_FinalMP
             regularFont.SetFont(checkBox);
         }
 
+        // return button click event
         public void ReturnBtn_Click(object sender, System.EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Returning...", typeof(Register_Identity));
@@ -71,8 +77,10 @@ namespace IT123P_FinalMP
             nextActivityHandler.NavigateToNextActivity(this);
         }
 
+        // next button click event
         public void NextBtn_Click(object sender, System.EventArgs e)
         {
+            // check if user agreed to the privacy policy
             if (!checkBox.Checked)
             {
 
@@ -80,6 +88,7 @@ namespace IT123P_FinalMP
             }
             else
             {
+                // register user
                 UserConnection userConnection = new UserConnection(this);
                 userConnection.Register(username, password, studID, studName, studSchool, studCourse, studIdentity);
             }

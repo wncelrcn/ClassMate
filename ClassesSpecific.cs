@@ -99,6 +99,7 @@ namespace IT123P_FinalMP
         // event handler for the delete button
         public void DeleteBtn_Click(object sender, System.EventArgs e)
         {
+            // dialog button click handlers
             DialogButtonClickHandler onOkayClick = () =>
             {
                 UserClass userClass = new UserClass(this);
@@ -107,19 +108,16 @@ namespace IT123P_FinalMP
                 return true;
             };
 
+            // dialog button click handlers
             DialogButtonClickHandler onCancelClick = () =>
             {
                 return false;
             };
-
+            // instantiate the custom dialog
             custom_dialog dialog = new custom_dialog(this, "Are you sure you want to delete this class?", onOkayClick, onCancelClick);
             dialog.Show();
         }
  
-
-
-
-
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

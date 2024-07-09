@@ -14,7 +14,7 @@ namespace IT123P_FinalMP
 {
     internal class UserClass
     {
-
+        // Initialize the variables
         HttpWebResponse response;
         HttpWebRequest request;
         string url = "http://192.168.100.11/IT123P_FinalMP/REST";
@@ -25,44 +25,52 @@ namespace IT123P_FinalMP
 
         private Context context;
 
+        // Constructor
         public UserClass(Context context)
         {
             this.context = context;
         }
 
+        // Constructor with LinearLayout parameter
         public UserClass(Context context, LinearLayout currLayout)
         {
             this.context = context;
             this.currLayout = currLayout;
         }
 
-
+        // Function to Add Class
         public void UserAddClass(string username, string classCode, string className)
         {
+            // Concatenate the URL
             url = $"{url}/add_class.php?username={username}&className={className}&classCode={classCode}";
 
+            // Create a new HttpWebRequest
             request = (HttpWebRequest)WebRequest.Create(url);
             response = (HttpWebResponse)request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream());
 
             result = reader.ReadToEnd();
 
+            // Check if the result contains "OK!"
             if (result.Contains("OK!"))
             {
+                
                 Toast.MakeText(context, "Class Added.", ToastLength.Short).Show();
                 NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "Next...", typeof(ClassesMainView));
                 nextActivityHandler.PassDataToNextActivity("username", username);
                 nextActivityHandler.NavigateToNextActivity(context);
             }
+            // If the result does not contain "OK!"
             else
             {
                 Toast.MakeText(context, "Class is not Added.", ToastLength.Short).Show();
             }
         }
 
-
+        // Function to Delete Class
         public void UserDeleteClass(string username, string classCode)
         {
+            // Concatenate the URL
             url = $"{url}/delete_class.php?username={username}&classCode={classCode}";
 
             request = (HttpWebRequest)WebRequest.Create(url);
@@ -71,6 +79,7 @@ namespace IT123P_FinalMP
 
             result = reader.ReadToEnd();
 
+            // Check if the result contains "OK!"
             if (result.Contains("OK!"))
             {
                 Toast.MakeText(context, "Class is Deleted.", ToastLength.Short).Show();
@@ -78,13 +87,18 @@ namespace IT123P_FinalMP
                 nextActivityHandler.PassDataToNextActivity("username", username);
                 nextActivityHandler.NavigateToNextActivity(context);
             }
+
+            // If the result does not contain "OK!"
             else
             {
                 Toast.MakeText(context, "Class is not Deleted.", ToastLength.Short).Show();
             }
         }
+
+        // Function to Get Current Student Classes
         public async Task GetCurrStudClasses(string username)
         {
+            // Concatenate the URL
             url = $"{url}/get_StudClasses.php?username={username}";
 
             try
@@ -116,6 +130,7 @@ namespace IT123P_FinalMP
                                 userClasses.Add(user);
                             }
                         }
+                        // Create the class layout
                         ((Activity)context).RunOnUiThread(() => CreateClassLayout(username));
                     }
                     else
@@ -130,8 +145,10 @@ namespace IT123P_FinalMP
             }
         }
 
+        // Function to Fetch and Populate Classes
         public async Task FetchAndPopulateClasses(string username, Spinner classSpinner)
         {
+            // Concatenate the URL
             url = $"{url}/get_StudClasses.php?username={username}";
 
             try
@@ -150,33 +167,44 @@ namespace IT123P_FinalMP
                     // Assuming the JSON is an array
                     if (root.ValueKind == JsonValueKind.Array)
                     {
+                        // Clear the userClasses list
                         userClasses.Clear();
                         foreach (JsonElement item in root.EnumerateArray())
                         {
+                            // Check if the JSON contains the className and classCode properties
                             if (item.TryGetProperty("className", out JsonElement className) && item.TryGetProperty("classCode", out JsonElement classCode))
                             {
+                                // Create a new dictionary
+
                                 var user = new Dictionary<string, string>
                                 {
                                     { "classCode", classCode.GetString() },
                                     { "className", className.GetString() }
                                 };
+                                // Add the dictionary to the userClasses list
                                 userClasses.Add(user);
                             }
                         }
-
+                        // Create a list of class codes
                         var classCodes = new List<string>();
+                        // Loop through the userClasses list
                         foreach (var userClass in userClasses)
                         {
+                            // Check if the classCode property exists
                             if (userClass.TryGetValue("classCode", out var classCode))
                             {
+                                // Add the classCode to the classCodes list
                                 classCodes.Add(classCode);
                             }
                         }
-
+                        // Create an adapter for the spinner
                         ((Activity)context).RunOnUiThread(() =>
                         {
+                            // Create an adapter for the spinner
                             var adapter = new ArrayAdapter<string>(context, Android.Resource.Layout.SimpleSpinnerItem, classCodes);
+                            // Set the dropdown view resource
                             adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                            // Set the adapter to the spinner
                             classSpinner.Adapter = adapter;
                         });
                     }
@@ -192,8 +220,10 @@ namespace IT123P_FinalMP
             }
         }
 
+        // Function to Create Class Layout
         public void CreateClassLayout(string username)
         {
+            // Clear the current layout
             currLayout.RemoveAllViews();
 
             // Initialize your FontHandler instances
@@ -212,27 +242,27 @@ namespace IT123P_FinalMP
 
                 linearLayout.SetBackgroundColor(Android.Graphics.Color.ParseColor("#DDEDEA")); // Light green background
 
-                // Create layout parameters with margins
+                // Create layout parameters 
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MatchParent,
                     LinearLayout.LayoutParams.WrapContent
                 );
                 layoutParams.SetMargins(0, 0, 0, 50); 
 
-                // Apply the layout parameters to the LinearLayout
+                
                 linearLayout.LayoutParameters = layoutParams;
-                linearLayout.SetPadding(20, 20, 20, 20); // Adding padding
+                linearLayout.SetPadding(20, 20, 20, 20); 
 
                 // Create a TextView for the class code
                 TextView textViewCode = new TextView(context)
                 {
-                    Text = classes["classCode"].ToString(), // Ensure it's converted to string
+                    Text = classes["classCode"].ToString(), 
                     
                 };
-                textViewCode.SetPadding(10, 30, 0, 50); // Adding padding below the text
+                textViewCode.SetPadding(10, 30, 0, 50); 
                 textViewCode.SetTextColor(Android.Graphics.Color.Black);
-                textViewCode.SetTextSize(Android.Util.ComplexUnitType.Sp, 24); // Set text size to 24sp
-                boldFont.SetFont(textViewCode); // Set the bold font
+                textViewCode.SetTextSize(Android.Util.ComplexUnitType.Sp, 24); 
+                boldFont.SetFont(textViewCode);
 
                 // Add the class code TextView to the LinearLayout
                 linearLayout.AddView(textViewCode);
@@ -240,21 +270,21 @@ namespace IT123P_FinalMP
                 // Create a TextView for the class name
                 TextView textViewName = new TextView(context)
                 {
-                    Text = classes["className"].ToString(), // Ensure it's converted to string
+                    Text = classes["className"].ToString(),
                     
                 };
-                textViewName.SetPadding(10, 0, 0, 30); // Set padding
+                textViewName.SetPadding(10, 0, 0, 30);
                 textViewName.SetTextColor(Android.Graphics.Color.Black);
-                textViewName.SetTextSize(Android.Util.ComplexUnitType.Sp, 18); // Set text size to 18sp
-                regularFont.SetFont(textViewName); // Set the regular font
+                textViewName.SetTextSize(Android.Util.ComplexUnitType.Sp, 18);
+                regularFont.SetFont(textViewName);
 
-                // Add the class name TextView to the LinearLayout
+                
                 linearLayout.AddView(textViewName);
 
-                // Add the LinearLayout to the parent container
+                
                 currLayout.AddView(linearLayout);
 
-                // Attach click event to the LinearLayout if you want to handle clicks
+                
                 linearLayout.Click += (sender, e) =>
                 {
 

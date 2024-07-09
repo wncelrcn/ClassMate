@@ -16,7 +16,7 @@ namespace IT123P_FinalMP
 {
     internal class UserConnection
     {
-
+        // HttpWebResponse and HttpWebRequest for REST API
         HttpWebResponse response;
         HttpWebRequest request;
 
@@ -25,13 +25,16 @@ namespace IT123P_FinalMP
 
         private Context context;
 
+        // Constructor
         public UserConnection(Context context)
         {
             this.context = context;
         }
 
+        // Function to Check the Student Username
         public bool CheckStudUname(string studUname)
         {
+            // URL to check the student username
             url = $"{url}/check_studUsername.php?uname={studUname}";
 
             request = (HttpWebRequest)WebRequest.Create(url);
@@ -40,10 +43,13 @@ namespace IT123P_FinalMP
 
             result = reader.ReadToEnd();
 
+            // If the result contains "OK!", return true
             if (result.Contains("OK!"))
             {
                 return true;
             }
+
+            // If the result contains "NO!", return false
             else
             {
                 Toast.MakeText(context, "Username is already taken.", ToastLength.Short).Show();
@@ -55,6 +61,7 @@ namespace IT123P_FinalMP
         // Function to Check the Student ID
         public bool CheckStudID(string studID)
         {
+            // URL to check the student ID
             url = $"{url}/check_studID.php?studID={studID}";
 
             request = (HttpWebRequest)WebRequest.Create(url);

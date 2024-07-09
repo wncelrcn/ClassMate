@@ -17,7 +17,7 @@ namespace IT123P_FinalMP
         // Initialize the variables
         HttpWebResponse response;
         HttpWebRequest request;
-        string url = "http://192.168.100.11/IT123P_FinalMP/REST";
+        string url = "http://192.168.1.9:8080/IT123P_FinalMP/REST";
         string result;
         List<Dictionary<string, string>> userClasses = new List<Dictionary<string, string>>();
         LinearLayout currLayout;

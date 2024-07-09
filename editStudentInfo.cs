@@ -43,12 +43,15 @@ namespace IT123P_FinalMP
             courseTxt = FindViewById<EditText>(Resource.Id.newCourseTxt);
             schoolTxt = FindViewById<EditText>(Resource.Id.newSchoolTxt);
 
+
+            // fetch username from previous activity
+            username = Intent.GetStringExtra("username");
+
             // fetch student info from database
             UserInfoLogic userGetInfo = new UserInfoLogic(this);
             studInfo = userGetInfo.GetUserDetails(username);
 
-            // fetch username from previous activity
-            username = Intent.GetStringExtra("username");
+            
 
             
 

@@ -30,6 +30,7 @@ namespace IT123P_FinalMP
             
             SetContentView(Resource.Layout.register_layout_5);
 
+            // widget initialization
             returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             title = FindViewById<TextView>(Resource.Id.title);
             nextBtn = FindViewById<Button>(Resource.Id.nextBtn);

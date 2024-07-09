@@ -24,23 +24,24 @@
             android:minHeight="0dp" />
       
         <TextView
-            android:text="Login"
+            android:text="Login to ClassMate"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minWidth="25px"
             android:minHeight="25px"
+            android:textColor="@color/colorAccent"
             android:layout_marginVertical="20dp"
             android:id="@+id/title" />
 
         <TextView
-            android:text="Enter your username and password."
+            android:text="Pleae enter your login details below."
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:id="@+id/desc" />
-
+        
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

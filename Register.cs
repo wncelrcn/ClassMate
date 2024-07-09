@@ -12,10 +12,10 @@ using Android.Content;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
+    [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class Register : AppCompatActivity
     {
-
+        // widget declarations
         Button nextBtn;
         ImageButton returnBtn;
         TextView registerText, title, desc;
@@ -25,17 +25,15 @@ namespace IT123P_FinalMP
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            // Set our view from the "main" layout resource
+            
             SetContentView(Resource.Layout.register_layout);
 
-            // Initialize Widgets Components
+            // widget initialization
             returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             nextBtn = FindViewById<Button>(Resource.Id.nextBtn);
-
             registerText = FindViewById<TextView>(Resource.Id.registerTxt);
             title = FindViewById<TextView>(Resource.Id.title);
             desc = FindViewById<TextView>(Resource.Id.desc);
-            
             username = FindViewById<EditText>(Resource.Id.usernameTxt);
             passwordTxt = FindViewById<EditText>(Resource.Id.passwordTxt);
 
@@ -68,26 +66,28 @@ namespace IT123P_FinalMP
             semiBoldFont.SetFont(registerText);
         }
 
-
+        // Custom Clickable Span Class
         private class CustomClickableSpan : ClickableSpan
         {
             private readonly Context _context;
-
+            // Constructor
             public CustomClickableSpan(Context context)
             {
                 _context = context;
             }
 
+            // Click Event
             public override void OnClick(View widget)
             {
                 NextActivityHandler activityHandler = new NextActivityHandler(_context, "", typeof(Login));
                 activityHandler.NavigateToNextActivity(_context);
             }
-
+            // Update Draw State
             public override void UpdateDrawState(TextPaint ds)
             {
+                // Call Base Method
                 base.UpdateDrawState(ds);
-                ds.Color = Android.Graphics.Color.Blue; 
+                ds.Color = Android.Graphics.Color.DarkGreen; 
                 ds.UnderlineText = false;
             }
         }
@@ -124,9 +124,11 @@ namespace IT123P_FinalMP
                     nextActivityHandler.PassDataToNextActivity("password", passwordTxt.Text);
                     nextActivityHandler.NavigateToNextActivity(this);
                 }
+
+                // Username not available
                 else
                 {
-                    Toast.MakeText(this, "Please enter a new username.", ToastLength.Short).Show();
+                    Toast.MakeText(this, "Username not available. Please enter a new username.", ToastLength.Short).Show();
                     return;
                 }
 

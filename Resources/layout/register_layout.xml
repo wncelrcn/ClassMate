@@ -24,17 +24,18 @@
             android:minHeight="0dp" />
       
         <TextView
-            android:text="Sign up to StudyApp"
+            android:text="Sign up to ClassMate"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minWidth="25px"
             android:minHeight="25px"
+            android:textColor="@color/colorAccent"
             android:layout_marginVertical="20dp"
             android:id="@+id/title" />
 
         <TextView
-            android:text="Let’s set up your StudyApp credentials here!"
+            android:text="Let’s set you up to become a ClassMate!"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

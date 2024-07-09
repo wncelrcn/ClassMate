@@ -8,10 +8,10 @@ using System;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
+    [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class ClassesAddView : AppCompatActivity
     {
-
+        // widget declarations
         TextView title, codeLbl, nameLbl;
         Button addClassBtn;
         ImageButton returnBtn;
@@ -22,29 +22,32 @@ namespace IT123P_FinalMP
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            // Set our view from the "main" layout resource
+            
             SetContentView(Resource.Layout.classes_new_layout);
 
+            // widget initialization
             returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             addClassBtn = FindViewById<Button>(Resource.Id.addClassBtn);
             title = FindViewById<TextView>(Resource.Id.title);
             codeLbl = FindViewById<TextView>(Resource.Id.classCodeLbl);
             nameLbl = FindViewById<TextView>(Resource.Id.classNameLbl);
-
-            addClassBtn.Click += AddClassBtn_Click;
-
             classCodeTxt = FindViewById<EditText>(Resource.Id.classCodeTxt);
             classNameTxt = FindViewById<EditText>(Resource.Id.classNameTxt);
 
+            // event handlers for the buttons
+            addClassBtn.Click += AddClassBtn_Click;
             returnBtn.Click += ReturnBtn_Click;
 
+            // fetch username from previous activity
             username = Intent.GetStringExtra("username");
 
+            // font styles
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
             FontHandler semiBoldFont = new FontHandler(this, "Raleway-Semibold.ttf");
 
+            // set font styles
             semiBoldFont.SetFont(title);
             regularFont.SetFont(codeLbl);
             regularFont.SetFont(nameLbl);
@@ -52,6 +55,7 @@ namespace IT123P_FinalMP
             regularFont.SetFont(classNameTxt);
             semiBoldFont.SetFont(addClassBtn);
 
+            // apply rounded corners to the buttons
             Styler.ApplyRoundedCorners(addClassBtn);
 
         }

@@ -17,7 +17,7 @@ namespace IT123P_FinalMP
 
         HttpWebResponse response;
         HttpWebRequest request;
-        string url = "http://172.18.11.241:8080/IT123P_FinalMP/REST";
+        string url = "http://172.18.24.225/IT123P_FinalMP/REST";
         string result;
         List<Dictionary<string, string>> userClasses = new List<Dictionary<string, string>>();
         LinearLayout currLayout;
@@ -49,14 +49,14 @@ namespace IT123P_FinalMP
 
             if (result.Contains("OK!"))
             {
-                Toast.MakeText(context, "Classes Added", ToastLength.Short).Show();
+                Toast.MakeText(context, "Class Added.", ToastLength.Short).Show();
                 NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "Next...", typeof(ClassesMainView));
                 nextActivityHandler.PassDataToNextActivity("username", username);
                 nextActivityHandler.NavigateToNextActivity(context);
             }
             else
             {
-                Toast.MakeText(context, "Class is not Added", ToastLength.Short).Show();
+                Toast.MakeText(context, "Class is not Added.", ToastLength.Short).Show();
             }
         }
 
@@ -73,14 +73,14 @@ namespace IT123P_FinalMP
 
             if (result.Contains("OK!"))
             {
-                Toast.MakeText(context, "Classes Deleted", ToastLength.Short).Show();
+                Toast.MakeText(context, "Class is Deleted.", ToastLength.Short).Show();
                 NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "Next...", typeof(ClassesMainView));
                 nextActivityHandler.PassDataToNextActivity("username", username);
                 nextActivityHandler.NavigateToNextActivity(context);
             }
             else
             {
-                Toast.MakeText(context, "Class is not Deleted", ToastLength.Short).Show();
+                Toast.MakeText(context, "Class is not Deleted.", ToastLength.Short).Show();
             }
         }
         public async Task GetCurrStudClasses(string username)
@@ -265,8 +265,6 @@ namespace IT123P_FinalMP
                     nextActivity.PassDataToNextActivity("username", username);
                     nextActivity.NavigateToNextActivity(context);
 
-                    // Handle the click event, for example, navigate to another activity
-                    Toast.MakeText(context, "Class Code: " + classes["classCode"], ToastLength.Short).Show();
                 };
             }
         }

@@ -20,7 +20,7 @@ namespace IT123P_FinalMP
         HttpWebResponse response;
         HttpWebRequest request;
 
-        string url = "http://172.18.11.241:8080/IT123P_FinalMP/REST";
+        string url = "http://172.18.24.225/IT123P_FinalMP/REST";
         string result;
 
         private Context context;
@@ -46,7 +46,7 @@ namespace IT123P_FinalMP
             }
             else
             {
-                Toast.MakeText(context, "Username is already taken", ToastLength.Short).Show();
+                Toast.MakeText(context, "Username is already taken.", ToastLength.Short).Show();
                 return false;
             }
 
@@ -69,7 +69,7 @@ namespace IT123P_FinalMP
             }
             else
             {
-                Toast.MakeText(context, "Student ID is already taken", ToastLength.Short).Show();
+                Toast.MakeText(context, "Student ID is already taken.", ToastLength.Short).Show();
                 return false;
             }
 
@@ -123,7 +123,7 @@ namespace IT123P_FinalMP
             else
             {
                 // Failed Login
-                Toast.MakeText(context, "Login Failed", ToastLength.Short).Show();
+                Toast.MakeText(context, "Incorrect username or password.", ToastLength.Short).Show();
             }
         }
 
@@ -145,7 +145,7 @@ namespace IT123P_FinalMP
             }
             catch (Exception)
             {
-                Toast.MakeText(context, "Error updating password", ToastLength.Short).Show();
+                Toast.MakeText(context, "Error updating password.", ToastLength.Short).Show();
                 return false;
             }
         }

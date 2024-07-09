@@ -11,7 +11,7 @@ using Android.Content;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
+    [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class Register_PrivatePolicy : AppCompatActivity
     {
         TextView title, desc;

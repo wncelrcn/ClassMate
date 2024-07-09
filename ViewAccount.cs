@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
+    [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class ViewAccount : AppCompatActivity
     {
 

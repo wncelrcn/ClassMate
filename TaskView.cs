@@ -11,14 +11,15 @@ using Android.Content;
 using Android.Graphics;
 using Android.Media;
 using System;
+using AndroidX.Annotations;
 
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
+    [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class TaskView : AppCompatActivity
     {
-        TextView taskNameTxt, taskDescTxt, toDoDateTxt, dueDateTxt, classTxt;
+        TextView taskNameTxt, taskDescTxt, toDoDateTxt, dueDateTxt, classTxt, separator;
         ImageButton returnBtn, deleteBtn;
         Button markAsDoneBtn, startStopButton, resetBtn;
         EditText timerMinuteText, timerSecondText;
@@ -26,6 +27,7 @@ namespace IT123P_FinalMP
         string layoutReceiver, username, classCode, className, tN, cC;
         private bool isRunning = false;
         private PomodoroLogic pomodoroLogic;
+        
 
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -40,11 +42,13 @@ namespace IT123P_FinalMP
             toDoDateTxt = FindViewById<TextView>(Resource.Id.toDoDate);
             dueDateTxt = FindViewById<TextView>(Resource.Id.dueDate);
             classTxt = FindViewById<TextView>(Resource.Id.taskClass);
-
+            separator = FindViewById<TextView>(Resource.Id.separator);
             markAsDoneBtn = FindViewById<Button>(Resource.Id.markDoneBtn);
             startStopButton = FindViewById<Button>(Resource.Id.startStopButton);
             resetBtn = FindViewById<Button>(Resource.Id.resetButton);
             deleteBtn = FindViewById<ImageButton>(Resource.Id.deleteTaskBtn);
+            timerMinuteText = FindViewById<EditText>(Resource.Id.timerMinuteText);
+            timerSecondText = FindViewById<EditText>(Resource.Id.timerSecondText);
             layoutPomodoro = FindViewById<LinearLayout>(Resource.Id.layoutPomodoro);
             Styler.ApplyRoundedCorners(layoutPomodoro, Color.ParseColor("#DDEDEA"));
 
@@ -83,7 +87,12 @@ namespace IT123P_FinalMP
             regularFont.SetFont(dueDateTxt);
             regularFont.SetFont(classTxt);
             semiBoldFont.SetFont(markAsDoneBtn);
+            semiBoldFont.SetFont(startStopButton);
+            semiBoldFont.SetFont(resetBtn);
 
+            mediumFont.SetFont(separator);
+            mediumFont.SetFont(timerMinuteText);
+            mediumFont.SetFont(timerSecondText);
             Styler.ApplyRoundedCorners(markAsDoneBtn);
 
             timerMinuteText = FindViewById<EditText>(Resource.Id.timerMinuteText);
@@ -196,27 +205,38 @@ namespace IT123P_FinalMP
 
         public void DeleteBtn_Click(object sender, EventArgs e)
         {
-
-            UserTask userTask = new UserTask(this);
-
-            userTask.DeleteTask(username, tN, cC);
-            if (layoutReceiver == "class")
+            DialogButtonClickHandler onOkayClick = () =>
             {
-                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(ClassesSpecific));
-                nextActivityHandler.PassDataToNextActivity("classCode", Intent.GetStringExtra("classCode"));
-                nextActivityHandler.PassDataToNextActivity("className", Intent.GetStringExtra("className"));
-                nextActivityHandler.PassDataToNextActivity("username", Intent.GetStringExtra("username"));
-                nextActivityHandler.NavigateToNextActivity(this);
-            }
-            else if (layoutReceiver == "dashboard")
+                UserTask userTask = new UserTask(this);
+
+                userTask.DeleteTask(username, tN, cC);
+                if (layoutReceiver == "class")
+                {
+                    NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(ClassesSpecific));
+                    nextActivityHandler.PassDataToNextActivity("classCode", Intent.GetStringExtra("classCode"));
+                    nextActivityHandler.PassDataToNextActivity("className", Intent.GetStringExtra("className"));
+                    nextActivityHandler.PassDataToNextActivity("username", Intent.GetStringExtra("username"));
+                    nextActivityHandler.NavigateToNextActivity(this);
+                }
+                else if (layoutReceiver == "dashboard")
+                {
+                    NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(Dashboard));
+                    nextActivityHandler.PassDataToNextActivity("username", Intent.GetStringExtra("username"));
+
+                    nextActivityHandler.NavigateToNextActivity(this);
+
+                }
+
+                return true;
+            };
+
+            DialogButtonClickHandler onCancelClick = () =>
             {
-                NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(Dashboard));
-                nextActivityHandler.PassDataToNextActivity("username", Intent.GetStringExtra("username"));
+                return false;
+            };
 
-                nextActivityHandler.NavigateToNextActivity(this);
-
-            }
-            
+            custom_dialog dialog = new custom_dialog(this, "Are you sure you want to delete this task?", onOkayClick, onCancelClick);
+            dialog.Show();
         }
 
         public void MarkAsDoneBtn_Click(object sender, EventArgs e)

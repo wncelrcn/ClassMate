@@ -11,9 +11,11 @@ using System.Threading.Tasks;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
+    [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class ClassesMainView : AppCompatActivity
     {
+
+        // widget declarations
         TextView title, desc;
         BottomNavigationView bottomNavigationView;
         Button btnAddClass;
@@ -25,17 +27,20 @@ namespace IT123P_FinalMP
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            // Set our view from the "main" layout resource
+            
             SetContentView(Resource.Layout.classes_main_layout);
 
+            // widget initialization
             title = FindViewById<TextView>(Resource.Id.title);
             desc = FindViewById<TextView>(Resource.Id.desc);
             bottomNavigationView = FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation_view);
+            classesLayoutContainer = FindViewById<LinearLayout>(Resource.Id.classContainer);
+            btnAddClass = FindViewById<Button>(Resource.Id.addAClassBtn);
 
+            // get the username from the intent
             username = Intent.GetStringExtra("username");
 
-            classesLayoutContainer = FindViewById<LinearLayout>(Resource.Id.classContainer);
-
+            // set the font of the widgets
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
@@ -43,30 +48,32 @@ namespace IT123P_FinalMP
 
             semiBoldFont.SetFont(title);
             regularFont.SetFont(desc);
-            
-
-            btnAddClass = FindViewById<Button>(Resource.Id.addAClassBtn);
-            btnAddClass.Click += AddClass;
             semiBoldFont.SetFont(btnAddClass);
 
+            // event handler for the add class button
+            btnAddClass.Click += AddClass;
 
+            // bottom navigation view logic
             BottomNavigationViewLogic bottomNav = new BottomNavigationViewLogic(this, bottomNavigationView, username, "ClassesMainView");
             bottomNavigationView.SelectedItemId = Resource.Id.navigation_tasks;
             bottomNavigationView.NavigationItemSelected += bottomNav.BottomNavigationView_NavigationItemSelected;
             bottomNav.SetInitialSelectedItem("ClassesMainView");
 
-
+            // load the classes
             LoadClass();
         }
 
+        // method to load the classes
         public async void LoadClass()
         {
             UserClass userClass = new UserClass(this, classesLayoutContainer);
             await userClass.GetCurrStudClasses(username);
         }
-      
+        
+        // event handler for the add class button
         public void AddClass(object sender, EventArgs e)
         {
+            // navigate to the add class view
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(ClassesAddView));
             nextActivityHandler.PassDataToNextActivity("username", username);
 

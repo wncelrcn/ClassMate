@@ -9,55 +9,63 @@ using System.Collections.Generic;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
+    [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class EditStudentInfo : AppCompatActivity
     {
+
+        // widget declarations
         TextView title, nameLbl, studIDLbl, courseLbl, schoolLbl;
         Button updateBtn;
         ImageButton returnBtn;
         EditText nameTxt, studIdTxt, courseTxt, schoolTxt;
         string username;
+
+        // dictionary to store student info
         Dictionary<string, string> studInfo;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            // Set our view from the "main" layout resource
+            
             SetContentView(Resource.Layout.editstudentinfo_layout);
 
+            // widget initialization
             returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             updateBtn = FindViewById<Button>(Resource.Id.updateBtn);
-
             title = FindViewById<TextView>(Resource.Id.title);
             nameLbl = FindViewById<TextView>(Resource.Id.nameLbl);
             studIDLbl = FindViewById<TextView>(Resource.Id.studIDLbl);
             courseLbl = FindViewById<TextView>(Resource.Id.courseLbl);
             schoolLbl = FindViewById<TextView>(Resource.Id.schoolLbl);
-
-
             nameTxt = FindViewById<EditText>(Resource.Id.newNameTxt);
             studIdTxt = FindViewById<EditText>(Resource.Id.newStudIDTxt);
             courseTxt = FindViewById<EditText>(Resource.Id.newCourseTxt);
             schoolTxt = FindViewById<EditText>(Resource.Id.newSchoolTxt);
 
+            // fetch student info from database
             UserInfoLogic userGetInfo = new UserInfoLogic(this);
-
-            username = Intent.GetStringExtra("username");
-
             studInfo = userGetInfo.GetUserDetails(username);
 
+            // fetch username from previous activity
+            username = Intent.GetStringExtra("username");
 
+            
+
+            // set student info to text fields
             nameTxt.Text = studInfo["studName"];
             studIdTxt.Text = studInfo["studID"];
             courseTxt.Text = studInfo["studCourse"];
             schoolTxt.Text = studInfo["studSchool"];
 
+            // apply rounded corners to buttons
             Styler.ApplyRoundedCorners(updateBtn);
 
+            // event listeners
             returnBtn.Click += ReturnBtn_Click;
             updateBtn.Click += UpdateBtn_Click;
 
+            // font styles
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
@@ -76,6 +84,7 @@ namespace IT123P_FinalMP
 
         }
 
+        // return button event handler
         private void ReturnBtn_Click(object sender, EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(ViewAccount));
@@ -83,19 +92,22 @@ namespace IT123P_FinalMP
             nextActivityHandler.NavigateToNextActivity(this);
         }
 
-
+        // update button event handler
         private void UpdateBtn_Click(object sender, EventArgs e)
         {
+
+            // check if fields are empty
             if (nameTxt.Text == "" || studIdTxt.Text == "" || courseTxt.Text == "" || schoolTxt.Text == "")
             {
                 Toast.MakeText(this, "Please fill up all fields.", ToastLength.Short).Show();
                 return;
             }
-
+            // update student info
             else
             {
+                // instantiate UserInfoLogic class
                 UserInfoLogic updateInfo = new UserInfoLogic(this);
-
+                // update student info
                 updateInfo.UpdateStudentInfo(nameTxt.Text, studIdTxt.Text, courseTxt.Text, schoolTxt.Text, username);
             }
         }

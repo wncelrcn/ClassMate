@@ -9,9 +9,10 @@ using System;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = true)]
     public class Landing : AppCompatActivity
     {
+        // widget declarations
         Button signUpBtn, loginBtn;
         TextView landingTitle1, landingTitle2;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -21,11 +22,13 @@ namespace IT123P_FinalMP
             
             SetContentView(Resource.Layout.landing_layout);
 
+            // widget initialization
             signUpBtn = FindViewById<Button>(Resource.Id.signUpBtn);
             loginBtn = FindViewById<Button>(Resource.Id.loginBtn);
             landingTitle1 = FindViewById<TextView>(Resource.Id.landingTitle1);
             landingTitle2 = FindViewById<TextView>(Resource.Id.landingTitle2);
 
+            // event handlers
             signUpBtn.Click += SignUpBtn_Click;
             loginBtn.Click += LoginBtn_Click;
 
@@ -33,6 +36,7 @@ namespace IT123P_FinalMP
             Styler.ApplyRoundedCorners(signUpBtn);
             Styler.ApplyRoundedCorners(loginBtn);
 
+            // font styles
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
@@ -44,12 +48,14 @@ namespace IT123P_FinalMP
             semiBoldFont.SetFont(signUpBtn);
         }
 
+        // sign up button click event
         public void SignUpBtn_Click(object sender, EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(Register));
             nextActivityHandler.NavigateToNextActivity(this);
         }
 
+        // login button click event
         public void LoginBtn_Click(object sender, EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(Login));

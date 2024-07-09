@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="AddNewTask.cs" />
     <Compile Include="BottomNavigationViewLogic.cs" />
+    <Compile Include="custom_dialog.cs" />
     <Compile Include="Styler.cs" />
     <Compile Include="ClassesAddView.cs" />
     <Compile Include="ClassesMainView.cs" />
@@ -266,6 +267,11 @@
     <AndroidResource Include="Resources\drawable\rounded_layout.xml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\custom_dialog.axml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

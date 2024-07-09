@@ -14,11 +14,13 @@ namespace IT123P_FinalMP
 {
     internal class BottomNavigationViewLogic
     {
+        // Variables
         Context context;
         BottomNavigationView nav;
         string pageLayout;
         string username;
 
+        // Constructor
         public BottomNavigationViewLogic(Context context, BottomNavigationView nav, string username, string pageLayout)
         {
             this.context = context;
@@ -29,8 +31,10 @@ namespace IT123P_FinalMP
             
         }
 
+        // Set the initial selected item in the BottomNavigationView
         public void SetInitialSelectedItem(string page)
         {
+            // Set the selected item in the BottomNavigationView
             switch (page)
             {
                 case "Dashboard":
@@ -44,21 +48,21 @@ namespace IT123P_FinalMP
                     break;
             }
         }
-
+        // Handle the BottomNavigationView's NavigationItemSelected event
         public void BottomNavigationView_NavigationItemSelected(object sender, BottomNavigationView.NavigationItemSelectedEventArgs e)
         {
+            // Handle the BottomNavigationView's NavigationItemSelected event
             NextActivityHandler nextActivityHandler;
             switch (e.Item.ItemId)
             {
+                
                 case Resource.Id.navigation_tasks:
                     // Handle the tasks action
                     if (pageLayout == "Dashboard")
                     {
                         return;
                     }
-
-                    Toast.MakeText(context, "Tasks Layout", ToastLength.Short).Show();
-
+                    // Navigate to the Dashboard activity
                     nextActivityHandler = new NextActivityHandler(context, "Next...", typeof(Dashboard));
                     nextActivityHandler.PassDataToNextActivity("username", username);
                     nextActivityHandler.NavigateToNextActivity(context);
@@ -69,8 +73,7 @@ namespace IT123P_FinalMP
                     {
                         return;
                     }
-
-                    Toast.MakeText(context, "Classes Layout", ToastLength.Short).Show();
+                    // Navigate to the ClassesMainView activity
                     nextActivityHandler = new NextActivityHandler(context, "Next...", typeof(ClassesMainView));
                     nextActivityHandler.PassDataToNextActivity("username", username);
                     nextActivityHandler.NavigateToNextActivity(context);
@@ -82,9 +85,7 @@ namespace IT123P_FinalMP
                     {
                         return;
                     }
-
-                    Toast.MakeText(context, "Account Layout", ToastLength.Short).Show();
-
+                    // Navigate to the ViewAccount activity
                     nextActivityHandler = new NextActivityHandler(context, "Next...", typeof(ViewAccount));
                     nextActivityHandler.PassDataToNextActivity("username", username);
                     nextActivityHandler.NavigateToNextActivity(context);

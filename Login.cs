@@ -13,7 +13,7 @@ using Android.Media;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
+    [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class Login : AppCompatActivity
     {
         Button loginButton;
@@ -86,7 +86,7 @@ namespace IT123P_FinalMP
             public override void UpdateDrawState(TextPaint ds)
             {
                 base.UpdateDrawState(ds);
-                ds.Color = Android.Graphics.Color.Blue;  
+                ds.Color = Android.Graphics.Color.DarkGreen;  
                 ds.UnderlineText = false; 
             }
         }
@@ -100,7 +100,7 @@ namespace IT123P_FinalMP
             // Validation
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                Toast.MakeText(this, "Please fill up all fields", ToastLength.Short).Show();
+                Toast.MakeText(this, "Please fill up all fields.", ToastLength.Short).Show();
             }
             else
             {

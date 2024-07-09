@@ -18,7 +18,7 @@ namespace IT123P_FinalMP
         HttpWebResponse response;
         HttpWebRequest request;
         string result;
-        string url = "http://172.18.11.241:8080/IT123P_FinalMP/REST";
+        string url = "http://172.18.24.225/IT123P_FinalMP/REST";
         LinearLayout currLayout;
         private Context context;
 
@@ -42,7 +42,7 @@ namespace IT123P_FinalMP
             }
             catch (Exception ex)
             {
-                Toast.MakeText(context, "Error fetching tasks. Please try again.", ToastLength.Short).Show();
+                Toast.MakeText(context, "Error fetching tasks, please try again.", ToastLength.Short).Show();
             }
         }
 
@@ -59,7 +59,7 @@ namespace IT123P_FinalMP
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                 {
                     var result = await reader.ReadToEndAsync();
-                    Console.WriteLine($"API Response: {result}"); // Debug API response
+                    
 
                     using JsonDocument doc = JsonDocument.Parse(result);
                     JsonElement root = doc.RootElement;
@@ -95,7 +95,7 @@ namespace IT123P_FinalMP
             }
             catch (Exception ex)
             {
-                Toast.MakeText(context, "Error fetching tasks. Please try again.", ToastLength.Short).Show();
+                Toast.MakeText(context, "Error fetching tasks, please try again.", ToastLength.Short).Show();
             }
         }
 
@@ -126,7 +126,7 @@ namespace IT123P_FinalMP
             catch (Exception ex)
             {
                 
-                Toast.MakeText(context, "Error fetching tasks. Please try again.", ToastLength.Short).Show();
+                Toast.MakeText(context, "Error fetching tasks, please try again.", ToastLength.Short).Show();
             }
         }
 
@@ -177,7 +177,7 @@ namespace IT123P_FinalMP
             catch (Exception ex)
             {
                 
-                Toast.MakeText(context, "Error fetching tasks. Please try again.", ToastLength.Short).Show();
+                Toast.MakeText(context, "Error fetching tasks, please try again.", ToastLength.Short).Show();
             }
         }
 
@@ -331,7 +331,7 @@ namespace IT123P_FinalMP
             }
             catch (Exception ex)
             {
-                Toast.MakeText(context, "Error creating task layout. Please try again.", ToastLength.Short).Show();
+                Toast.MakeText(context, "Error creating task layout, please try again.", ToastLength.Short).Show();
             }
         }
 
@@ -355,11 +355,11 @@ namespace IT123P_FinalMP
                         string result = reader.ReadToEnd();
                         if (result.Contains("OK!"))
                         {
-                            Toast.MakeText(context, "Task Added", ToastLength.Short).Show();
+                            Toast.MakeText(context, "Task Added.", ToastLength.Short).Show();
                         }
                         else
                         {
-                            Toast.MakeText(context, "Task not Added", ToastLength.Short).Show();
+                            Toast.MakeText(context, "Task is not Added.", ToastLength.Short).Show();
                         }
                     }
                 }
@@ -384,23 +384,23 @@ namespace IT123P_FinalMP
                             string result = reader.ReadToEnd();
                             if (result.Contains("OK!"))
                             {
-                                Toast.MakeText(context, "Task Added", ToastLength.Short).Show();
+                                Toast.MakeText(context, "Task Added.", ToastLength.Short).Show();
                             }
                             else
                             {
-                                Toast.MakeText(context, "Task not Added", ToastLength.Short).Show();
+                                Toast.MakeText(context, "Task not Added.", ToastLength.Short).Show();
                             }
                         }
                     }
                     else
                     {
-                        Toast.MakeText(context, "Invalid Date Format", ToastLength.Short).Show();
+                        Toast.MakeText(context, "Invalid Date Format.", ToastLength.Short).Show();
                     }
                 }
             }
             catch (Exception ex)
             {
-                Toast.MakeText(context, $"Error adding task. Please try again. {ex.Message}", ToastLength.Short).Show();
+                Toast.MakeText(context, $"Error adding task, please try again. {ex.Message}", ToastLength.Short).Show();
             }
         }
 
@@ -419,17 +419,17 @@ namespace IT123P_FinalMP
                     string result = reader.ReadToEnd();
                     if (result.Contains("OK!"))
                     {
-                        Toast.MakeText(context, "Task Marked as Done", ToastLength.Short).Show();
+                        Toast.MakeText(context, "Task Marked as Done.", ToastLength.Short).Show();
                     }
                     else
                     {
-                        Toast.MakeText(context, "Task not Marked as Done", ToastLength.Short).Show();
+                        Toast.MakeText(context, "Task not Marked as Done.", ToastLength.Short).Show();
                     }
                 }
             }
             catch (Exception ex)
             {
-                Toast.MakeText(context, "Error marking task as done. Please try again.", ToastLength.Short).Show();
+                Toast.MakeText(context, "Error marking task as done, please try again.", ToastLength.Short).Show();
             }
         }
 
@@ -446,7 +446,7 @@ namespace IT123P_FinalMP
 
             if (result.Contains("OK!"))
             {
-                Toast.MakeText(context, "Task Deleted", ToastLength.Short).Show();
+                Toast.MakeText(context, "Task Deleted.", ToastLength.Short).Show();
 
                 NextActivityHandler nextActivityHandler = new NextActivityHandler(context, "", typeof(Dashboard));
                 nextActivityHandler.PassDataToNextActivity("username", username);
@@ -454,7 +454,7 @@ namespace IT123P_FinalMP
             }
             else
             {
-                Toast.MakeText(context, "Task Not Deleted", ToastLength.Short).Show();
+                Toast.MakeText(context, "Task Not Deleted.", ToastLength.Short).Show();
             }
 
 

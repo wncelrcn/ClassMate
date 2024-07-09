@@ -12,9 +12,11 @@ using Android.Content;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
+    [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class Register_Identity : AppCompatActivity
     {
+
+        // widget declarations
         TextView title;
         Button nextBtn;
         ImageButton returnBtn;
@@ -25,13 +27,12 @@ namespace IT123P_FinalMP
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            // Set our view from the "main" layout resource
+            
             SetContentView(Resource.Layout.register_layout_5);
 
             returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             title = FindViewById<TextView>(Resource.Id.title);
             nextBtn = FindViewById<Button>(Resource.Id.nextBtn);
-
             identityGroup = FindViewById<RadioGroup>(Resource.Id.identityGroup);
             femaleRadBtn = FindViewById<RadioButton>(Resource.Id.femaleRadGrp);
             maleRadBtn = FindViewById<RadioButton>(Resource.Id.maleRadGrp);

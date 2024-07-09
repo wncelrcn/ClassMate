@@ -12,9 +12,10 @@ using Android.Content;
 
 namespace IT123P_FinalMP
 {
-    [Activity(Label = "StudyApp", Theme = "@style/AppTheme", MainLauncher = false)]
+    [Activity(Label = "ClassMate", Theme = "@style/AppTheme", MainLauncher = false)]
     public class Register_Course : AppCompatActivity
     {
+        // widget declarations
         TextView title;
         Button nextBtn;
         ImageButton returnBtn;
@@ -24,28 +25,30 @@ namespace IT123P_FinalMP
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            // Set our view from the "main" layout resource
+            
             SetContentView(Resource.Layout.register_layout_4);
 
+            // widget initialization
             returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
             title = FindViewById<TextView>(Resource.Id.title);
             nextBtn = FindViewById<Button>(Resource.Id.nextBtn);
-
             course = FindViewById<EditText>(Resource.Id.courseTxt);
 
+            // fetch data from previous activity
             username = Intent.GetStringExtra("username");
             password = Intent.GetStringExtra("password");
             studID = Intent.GetStringExtra("studID");
             studName = Intent.GetStringExtra("studName");
             studSchool = Intent.GetStringExtra("studSchool");
 
-
+            // Button Click Events
             returnBtn.Click += ReturnBtn_Click;
             nextBtn.Click += NextBtn_Click;
 
-
+            // Button Styling
             Styler.ApplyRoundedCorners(nextBtn);
 
+            // Font Styling
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
             FontHandler regularFont = new FontHandler(this, "Raleway-Regular.ttf");
@@ -57,6 +60,7 @@ namespace IT123P_FinalMP
 
         }
 
+        // event handlers for return button
         public void ReturnBtn_Click(object sender, System.EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Returning...", typeof(Register_School));
@@ -68,16 +72,17 @@ namespace IT123P_FinalMP
             nextActivityHandler.NavigateToNextActivity(this);
         }
 
+        // event handlers for next button
         public void NextBtn_Click(object sender, System.EventArgs e)
         {
             string cour = course.Text;
-
+            // check if fields are empty
             if (string.IsNullOrEmpty(cour))
             {
-                Toast.MakeText(this, "Please enter your course.", ToastLength.Short).Show();
+                Toast.MakeText(this, "Please enter your field of study.", ToastLength.Short).Show();
                 return;
             }
-
+            // navigate to next activity
             else
             {
                 NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Register_Identity));

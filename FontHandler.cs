@@ -14,15 +14,18 @@ namespace IT123P_FinalMP
 {
     internal class FontHandler
     {
+        // class to handle font styles
         private Context context;
         private string fontType;
 
+        // constructor
         public FontHandler(Context context, string fontType)
         {
             this.context = context;
             this.fontType = "Fonts/" + fontType;
         }
 
+        // set font style
         public void SetFont(TextView textView)
         {
             Typeface tf = Typeface.CreateFromAsset(context.Assets, fontType);

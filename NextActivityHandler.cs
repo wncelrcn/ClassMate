@@ -5,14 +5,17 @@ using System.Collections.Generic;
 
 namespace IT123P_FinalMP
 {
+    // class to handle navigation to the next activity
     internal class NextActivityHandler
     {
+        // class variables
         private Context context;
         private string toastMsg;
         private Type currClass;
         private Dictionary<string, string> dataDictionary;
         private string studNum;
 
+        // constructors
         public NextActivityHandler(Context context, string toastMsg, Type currClass)
         {
             this.context = context;
@@ -21,6 +24,7 @@ namespace IT123P_FinalMP
             this.dataDictionary = new Dictionary<string, string>();
         }
 
+        // constructor for passing student number
         public NextActivityHandler(Context context, string studNum, Type currClass, string toastMsg)
         {
             this.context = context;
@@ -30,6 +34,7 @@ namespace IT123P_FinalMP
             this.dataDictionary = new Dictionary<string, string>();
         }
 
+        // Navigates to the next activity
         public NextActivityHandler(Context context, Type currClass)
         {
             this.context = context;

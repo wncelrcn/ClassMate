@@ -61,7 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddNewTask.cs" />
-    <Compile Include="ButtonStyler.cs" />
+    <Compile Include="BottomNavigationViewLogic.cs" />
+    <Compile Include="Styler.cs" />
     <Compile Include="ClassesAddView.cs" />
     <Compile Include="ClassesMainView.cs" />
     <Compile Include="ClassesSpecific.cs" />
@@ -254,6 +255,17 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\delete.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_accountIcon.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\rounded_layout.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

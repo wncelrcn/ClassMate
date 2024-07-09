@@ -52,7 +52,7 @@ namespace IT123P_FinalMP
             regularFont.SetFont(classNameTxt);
             semiBoldFont.SetFont(addClassBtn);
 
-            ButtonStyler.ApplyRoundedCorners(addClassBtn);
+            Styler.ApplyRoundedCorners(addClassBtn);
 
         }
 
@@ -73,8 +73,6 @@ namespace IT123P_FinalMP
             nextActivityHandler.NavigateToNextActivity(this);
 
         }
-
-
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

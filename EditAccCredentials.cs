@@ -56,7 +56,7 @@ namespace IT123P_FinalMP
             regularFont.SetFont(confirmpasswordTxt);
             semiBoldFont.SetFont(updateBtn);
 
-            ButtonStyler.ApplyRoundedCorners(updateBtn);
+            Styler.ApplyRoundedCorners(updateBtn);
             returnBtn.Click += ReturnBtn_Click;
             updateBtn.Click += UpdateBtn_Click;
         }

@@ -65,7 +65,7 @@ namespace IT123P_FinalMP
             registerText.MovementMethod = LinkMovementMethod.Instance;
 
             // Button Styling
-            ButtonStyler.ApplyRoundedCorners(loginButton);
+            Styler.ApplyRoundedCorners(loginButton);
         }
 
         private class CustomClickableSpan : ClickableSpan

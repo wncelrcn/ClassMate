@@ -21,7 +21,9 @@ namespace IT123P_FinalMP
         BottomNavigationView bottomNavigationView;
         TextView title, studName, studUsername, studID, studCourse, studSchool;
         Button editStudInfoBtn, logOutBtn, editAccBtn;
-        
+        ImageView profilePic;
+
+
         string username, sID, sName, sSchool, sCourse, sIdentity;
         Dictionary<string, string> studInfo;
 
@@ -46,6 +48,7 @@ namespace IT123P_FinalMP
             editAccBtn = FindViewById<Button>(Resource.Id.editAccBtn);
             logOutBtn = FindViewById<Button>(Resource.Id.logOutBtn);
 
+            profilePic = FindViewById<ImageView>(Resource.Id.profilePic);
 
             // Set Fonts
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
@@ -67,9 +70,10 @@ namespace IT123P_FinalMP
             username = Intent.GetStringExtra("username");
 
             // Set the Bottom Navigation View
-            bottomNavigationView.SelectedItemId = Resource.Id.navigation_account;
-            bottomNavigationView.NavigationItemSelected += BottomNavigationView_NavigationItemSelected;
-
+            BottomNavigationViewLogic bottomNav = new BottomNavigationViewLogic(this, bottomNavigationView, username, "ViewAccount");
+            bottomNavigationView.SelectedItemId = Resource.Id.navigation_tasks;
+            bottomNavigationView.NavigationItemSelected += bottomNav.BottomNavigationView_NavigationItemSelected;
+            bottomNav.SetInitialSelectedItem("ViewAccount");
 
             // Set the user's information
             UserInfoLogic userGetInfo = new UserInfoLogic(this);
@@ -77,16 +81,15 @@ namespace IT123P_FinalMP
             SetStudentInfo();
 
             // Button Styling
-            ButtonStyler.ApplyRoundedCorners(editStudInfoBtn);
-            ButtonStyler.ApplyRoundedCorners(logOutBtn);
-            ButtonStyler.ApplyRoundedCorners(editAccBtn);
+            Styler.ApplyRoundedCorners(editStudInfoBtn);
+            Styler.ApplyRoundedCorners(logOutBtn);
+            Styler.ApplyRoundedCorners(editAccBtn);
 
             // Button Click Events
             editStudInfoBtn.Click += EditBtn_Click;
             logOutBtn.Click += logOutBtn_Click;
             editAccBtn.Click += editAccBtn_Click;
         }
-
 
         private void editAccBtn_Click(object sender, EventArgs e)
         {
@@ -108,32 +111,6 @@ namespace IT123P_FinalMP
             nextActivityHandler.NavigateToNextActivity(this);
         }
 
-        private void BottomNavigationView_NavigationItemSelected(object sender, BottomNavigationView.NavigationItemSelectedEventArgs e)
-        {
-            switch (e.Item.ItemId)
-            {
-                case Resource.Id.navigation_tasks:
-                    // Handle the tasks action
-                    Toast.MakeText(this, "Tasks Layout", ToastLength.Short).Show();
-
-                    NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Dashboard));
-                    nextActivityHandler.PassDataToNextActivity("username", username);
-                    nextActivityHandler.NavigateToNextActivity(this);
-                    break;
-                case Resource.Id.navigation_classes:
-                    // Handle the classes action
-                    Toast.MakeText(this, "Classes Layout", ToastLength.Short).Show();
-                    nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(ClassesMainView));
-                    nextActivityHandler.PassDataToNextActivity("username", username);
-                    nextActivityHandler.NavigateToNextActivity(this);
-
-                    break;
-                case Resource.Id.navigation_account:
-
-                    break;
-            }
-        }
-
         public void SetStudentInfo()
         {
             studName.Text = studInfo["studName"];
@@ -142,7 +119,6 @@ namespace IT123P_FinalMP
             studCourse.Text = "Course: " + studInfo["studCourse"];
             studSchool.Text = "School: " + studInfo["studSchool"];
         }
-
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

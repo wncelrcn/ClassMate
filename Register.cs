@@ -52,7 +52,7 @@ namespace IT123P_FinalMP
             registerText.MovementMethod = LinkMovementMethod.Instance;
 
             // Button Styling
-            ButtonStyler.ApplyRoundedCorners(nextBtn);
+            Styler.ApplyRoundedCorners(nextBtn);
 
             // Font Styling
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");

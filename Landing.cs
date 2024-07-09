@@ -30,8 +30,8 @@ namespace IT123P_FinalMP
             loginBtn.Click += LoginBtn_Click;
 
             // Apply rounded corners to buttons
-            ButtonStyler.ApplyRoundedCorners(signUpBtn);
-            ButtonStyler.ApplyRoundedCorners(loginBtn);
+            Styler.ApplyRoundedCorners(signUpBtn);
+            Styler.ApplyRoundedCorners(loginBtn);
 
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");

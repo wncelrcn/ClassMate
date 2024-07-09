@@ -17,7 +17,7 @@ namespace IT123P_FinalMP
 
         HttpWebResponse response;
         HttpWebRequest request;
-        string url = "http://192.168.1.66:8080/IT123P_FinalMP/REST";
+        string url = "http://172.18.11.241:8080/IT123P_FinalMP/REST";
         string result;
         List<Dictionary<string, string>> userClasses = new List<Dictionary<string, string>>();
         LinearLayout currLayout;
@@ -210,7 +210,7 @@ namespace IT123P_FinalMP
                     Orientation = Orientation.Vertical
                 };
 
-                linearLayout.SetBackgroundColor(Android.Graphics.Color.ParseColor("#EDE7F6")); // Light purple background
+                linearLayout.SetBackgroundColor(Android.Graphics.Color.ParseColor("#DDEDEA")); // Light green background
 
                 // Create layout parameters with margins
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(

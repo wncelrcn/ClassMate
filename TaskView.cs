@@ -20,11 +20,13 @@ namespace IT123P_FinalMP
     {
         TextView taskNameTxt, taskDescTxt, toDoDateTxt, dueDateTxt, classTxt;
         ImageButton returnBtn, deleteBtn;
-        string layoutReceiver, username, classCode, className, tN, cC;
         Button markAsDoneBtn, startStopButton, resetBtn;
         EditText timerMinuteText, timerSecondText;
+        LinearLayout layoutPomodoro;
+        string layoutReceiver, username, classCode, className, tN, cC;
         private bool isRunning = false;
         private PomodoroLogic pomodoroLogic;
+
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -43,6 +45,9 @@ namespace IT123P_FinalMP
             startStopButton = FindViewById<Button>(Resource.Id.startStopButton);
             resetBtn = FindViewById<Button>(Resource.Id.resetButton);
             deleteBtn = FindViewById<ImageButton>(Resource.Id.deleteTaskBtn);
+            layoutPomodoro = FindViewById<LinearLayout>(Resource.Id.layoutPomodoro);
+            Styler.ApplyRoundedCorners(layoutPomodoro, Color.ParseColor("#DDEDEA"));
+
 
             layoutReceiver = Intent.GetStringExtra("layout");
 
@@ -79,7 +84,7 @@ namespace IT123P_FinalMP
             regularFont.SetFont(classTxt);
             semiBoldFont.SetFont(markAsDoneBtn);
 
-            ButtonStyler.ApplyRoundedCorners(markAsDoneBtn);
+            Styler.ApplyRoundedCorners(markAsDoneBtn);
 
             timerMinuteText = FindViewById<EditText>(Resource.Id.timerMinuteText);
             timerSecondText = FindViewById<EditText>(Resource.Id.timerSecondText);

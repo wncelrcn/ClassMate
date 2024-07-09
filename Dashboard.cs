@@ -57,10 +57,11 @@ namespace IT123P_FinalMP
             SetCurrentDate();
 
 
-
-
+            BottomNavigationViewLogic bottomNav = new BottomNavigationViewLogic(this, bottomNavigationView, username, "Dashboard");            
             bottomNavigationView.SelectedItemId = Resource.Id.navigation_tasks;
-            bottomNavigationView.NavigationItemSelected += BottomNavigationView_NavigationItemSelected;
+            bottomNavigationView.NavigationItemSelected += bottomNav.BottomNavigationView_NavigationItemSelected;
+            bottomNav.SetInitialSelectedItem("Dashboard");
+
 
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");
             FontHandler mediumFont = new FontHandler(this, "Raleway-Medium.ttf");
@@ -72,8 +73,6 @@ namespace IT123P_FinalMP
             regularFont.SetFont(desc);
             semiBoldFont.SetFont(prevDateBtn);
             semiBoldFont.SetFont(nextDateBtn);
-
-           
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += (sender, args) =>
@@ -87,8 +86,6 @@ namespace IT123P_FinalMP
             };
 
             LoadTasks(username, currentDate);
-           
-
         }
 
         private async void LoadTasks(string username, DateTime date)
@@ -98,6 +95,7 @@ namespace IT123P_FinalMP
             await taskHandler.GetTasksPerDate(username, date.ToString("dd/MM/yyyy"));
             
         }
+
         private void SetCurrentDate()
         {
             DateTime todayDate = DateTime.Now;
@@ -133,36 +131,6 @@ namespace IT123P_FinalMP
             currentDate = currentDate.AddDays(1);
             SetCurrentDate();
             LoadTasks(username, currentDate);
-        }
-
-        private void BottomNavigationView_NavigationItemSelected(object sender, BottomNavigationView.NavigationItemSelectedEventArgs e)
-        {
-            switch (e.Item.ItemId)
-            {
-                case Resource.Id.navigation_tasks:
-
-                    break;
-                case Resource.Id.navigation_classes:
-                    // Handle the classes action
-                    Toast.MakeText(this, "Classes Layout", ToastLength.Short).Show();
-                    NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(ClassesMainView));
-                    nextActivityHandler.PassDataToNextActivity("username", username);
-                    nextActivityHandler.NavigateToNextActivity(this);
-
-                    break;
-                case Resource.Id.navigation_account:
-                    // Handle the account action
-                    Toast.MakeText(this, "Account Layout", ToastLength.Short).Show();
-
-                    nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(ViewAccount));
-
-                    nextActivityHandler.PassDataToNextActivity("username", username);
-
-                    nextActivityHandler.NavigateToNextActivity(this);
-
-
-                    break;
-            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

@@ -43,7 +43,7 @@ namespace IT123P_FinalMP
             returnBtn.Click += ReturnBtn_Click;
             nextBtn.Click += NextBtn_Click;
 
-            ButtonStyler.ApplyRoundedCorners(nextBtn);
+            Styler.ApplyRoundedCorners(nextBtn);
 
 
             FontHandler boldFont = new FontHandler(this, "Raleway-Bold.ttf");

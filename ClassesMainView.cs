@@ -49,9 +49,12 @@ namespace IT123P_FinalMP
             btnAddClass.Click += AddClass;
             semiBoldFont.SetFont(btnAddClass);
 
-            bottomNavigationView.SelectedItemId = Resource.Id.navigation_classes;
 
-            bottomNavigationView.NavigationItemSelected += BottomNavigationView_NavigationItemSelected;
+            BottomNavigationViewLogic bottomNav = new BottomNavigationViewLogic(this, bottomNavigationView, username, "ClassesMainView");
+            bottomNavigationView.SelectedItemId = Resource.Id.navigation_tasks;
+            bottomNavigationView.NavigationItemSelected += bottomNav.BottomNavigationView_NavigationItemSelected;
+            bottomNav.SetInitialSelectedItem("ClassesMainView");
+
 
             LoadClass();
         }
@@ -62,8 +65,6 @@ namespace IT123P_FinalMP
             await userClass.GetCurrStudClasses(username);
         }
       
-
-
         public void AddClass(object sender, EventArgs e)
         {
             NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "", typeof(ClassesAddView));
@@ -72,33 +73,6 @@ namespace IT123P_FinalMP
             nextActivityHandler.NavigateToNextActivity(this);
         }
 
-
-
-
-
-        private void BottomNavigationView_NavigationItemSelected(object sender, BottomNavigationView.NavigationItemSelectedEventArgs e)
-        {
-            switch (e.Item.ItemId)
-            {
-                case Resource.Id.navigation_tasks:
-                    // Handle the tasks action
-                    Toast.MakeText(this, "Tasks Layout", ToastLength.Short).Show();
-
-                    NextActivityHandler nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(Dashboard));
-                    nextActivityHandler.PassDataToNextActivity("username", username);
-                    nextActivityHandler.NavigateToNextActivity(this);
-                    break;
-                case Resource.Id.navigation_classes:
-                    break;
-                case Resource.Id.navigation_account:
-                    Toast.MakeText(this, "Account Layout", ToastLength.Short).Show();
-
-                    nextActivityHandler = new NextActivityHandler(this, "Next...", typeof(ViewAccount));
-                    nextActivityHandler.PassDataToNextActivity("username", username);
-                    nextActivityHandler.NavigateToNextActivity(this);
-                    break;
-            }
-        }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

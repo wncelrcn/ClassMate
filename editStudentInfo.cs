@@ -53,7 +53,7 @@ namespace IT123P_FinalMP
             courseTxt.Text = studInfo["studCourse"];
             schoolTxt.Text = studInfo["studSchool"];
 
-            ButtonStyler.ApplyRoundedCorners(updateBtn);
+            Styler.ApplyRoundedCorners(updateBtn);
 
             returnBtn.Click += ReturnBtn_Click;
             updateBtn.Click += UpdateBtn_Click;

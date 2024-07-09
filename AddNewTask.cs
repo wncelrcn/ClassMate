@@ -21,7 +21,6 @@ namespace IT123P_FinalMP
         private string layoutReceiver, username, classCode, className;
         NextActivityHandler nextActivityHandler;
         UserClass userClass;
-
         Spinner classSpinner;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -85,7 +84,7 @@ namespace IT123P_FinalMP
             returnBtn.Click += ReturnBtn_Click;
             addTaskBtn.Click += AddTaskBtn_Click;
 
-            ButtonStyler.ApplyRoundedCorners(addTaskBtn);
+            Styler.ApplyRoundedCorners(addTaskBtn);
 
         }
 

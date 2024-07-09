@@ -21,7 +21,7 @@ namespace IT123P_FinalMP
     {
 
         // widget declarations
-        TextView taskNameTxt, taskDescTxt, toDoDateTxt, dueDateTxt, classTxt, separator;
+        TextView taskNameTxt, taskDescTxt, toDoDateTxt, dueDateTxt, classTxt, separator, timerLabel;
         ImageButton returnBtn, deleteBtn;
         Button markAsDoneBtn, startStopButton, resetBtn;
         EditText timerMinuteText, timerSecondText;
@@ -53,6 +53,7 @@ namespace IT123P_FinalMP
             timerSecondText = FindViewById<EditText>(Resource.Id.timerSecondText);
             layoutPomodoro = FindViewById<LinearLayout>(Resource.Id.layoutPomodoro);
             returnBtn = FindViewById<ImageButton>(Resource.Id.returnBtn);
+            timerLabel = FindViewById<TextView>(Resource.Id.timerLabel);
             Styler.ApplyRoundedCorners(layoutPomodoro, Color.ParseColor("#DDEDEA"));
 
             // fetch data from previous activity
@@ -92,7 +93,7 @@ namespace IT123P_FinalMP
             semiBoldFont.SetFont(markAsDoneBtn);
             semiBoldFont.SetFont(startStopButton);
             semiBoldFont.SetFont(resetBtn);
-
+            semiBoldFont.SetFont(timerLabel);
             mediumFont.SetFont(separator);
             mediumFont.SetFont(timerMinuteText);
             mediumFont.SetFont(timerSecondText);
